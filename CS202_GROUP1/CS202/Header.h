@@ -95,8 +95,8 @@ private :
 	int x, y;
 	bool isDead;
 public :
-	Player(int x, int y, bool isDead = true);
-	void Move();
+	Player(int x, int y);
+	void Move(char key);
 	bool IsImpact(Barrier*& a);
 	bool IsDead();
 	void DrawPlayer();
