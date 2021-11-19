@@ -5,6 +5,7 @@
 
 #include<iostream>
 #include <fstream>
+#include<vector>
 using namespace std;
 
 
@@ -17,7 +18,7 @@ private :
 	int color;
 public :
 	Barrier(int x, int y , bool isRight , int color);
-	virtual void Move(int x, int y);
+	 void Move(int x, int y);
 	virtual void DrawObject();
 
 
@@ -28,8 +29,7 @@ public :
 class Vehicle : public Barrier
 {
 public :
-	Vehicle(int x, int y, bool isRight , int color) : Barrier(x, y, isRight ,  color) {};
-	virtual void Move(int x, int y);
+	Vehicle(int x, int y, bool isRight , int color) : Barrier(x, y, isRight ,  color) {};	
 	virtual void DrawObject();
 
 	~Vehicle();
@@ -40,8 +40,7 @@ class Animal : public Barrier
 {
 public :
 	Animal(int x, int y, bool isRight, int color) : Barrier(x, y, isRight , color) {};
-	virtual void Move(int x, int y);
-	void DrawObject();
+	virtual void DrawObject();
 
 	~Animal();
 };
@@ -51,7 +50,6 @@ class Car : public Vehicle
 {
 public :
 	Car(int x, int y, bool isRight , int color) : Vehicle(x, y, isRight , color) {};
-	void Move(int x, int y);
 	void DrawObject();
 
 
@@ -63,7 +61,6 @@ class Truck : public Vehicle
 {
 public :
 	Truck(int x, int y, bool isRight, int color) : Vehicle(x, y, isRight , color) {};
-	void Move(int x, int y);
 	void DrawObject();
 
 
@@ -75,7 +72,6 @@ class Dinausor : public Animal
 {
 public :
 	Dinausor(int x, int y, bool isRight, int color) : Animal(x, y, isRight , color) {};
-	void Move(int x, int y);
 	void DrawObject();
 
 
@@ -87,7 +83,6 @@ class Bird : public Animal
 {
 public :
 	Bird(int x, int y, bool isRight , int color) : Animal(x, y, isRight , color) {};
-	void Move(int x, int y);
 	void DrawObject();
 
 
@@ -115,14 +110,15 @@ class Game
 {
 private :
 	Player player;
-	Truck* truck;
-	Car* car;
-	Bird* bird;
-	Dinausor* dinausor;
+	vector<Truck*>  truck;
+	vector<Car*> car;
+	vector <Bird *> bird;
+	vector <Dinausor*> dinausor;
 public :
 	Game();
 	void DrawGame();
-
+	void UpdatePosPlayer(char key );
+	void UpdatePosBarrier();
 
 	~Game();
 };

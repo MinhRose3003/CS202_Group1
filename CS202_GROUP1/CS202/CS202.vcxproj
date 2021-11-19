@@ -19,7 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bird.cpp" />
+    <ClCompile Include="Car.cpp" />
+    <ClCompile Include="Dinausor.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Truck.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics.h" />
