@@ -2,23 +2,25 @@
 #ifndef _Header_h_
 #define _Header_h_
 
-
+#include "Graphics.h"
 #include<iostream>
 #include <fstream>
 #include<vector>
+
+
 using namespace std;
 
 
 
 class Barrier
 {
-private :
+private:
 	int x, y;
 	bool isRight;
 	int color;
-public :
-	Barrier(int x, int y , bool isRight , int color);
-	 void Move(int x, int y);
+public:
+	Barrier(int x, int y, bool isRight, int color);
+	void Move(int x, int y);
 	virtual void DrawObject();
 
 
@@ -28,8 +30,8 @@ public :
 
 class Vehicle : public Barrier
 {
-public :
-	Vehicle(int x, int y, bool isRight , int color) : Barrier(x, y, isRight ,  color) {};	
+public:
+	Vehicle(int x, int y, bool isRight, int color) : Barrier(x, y, isRight, color) {};
 	virtual void DrawObject();
 
 	~Vehicle();
@@ -38,8 +40,8 @@ public :
 
 class Animal : public Barrier
 {
-public :
-	Animal(int x, int y, bool isRight, int color) : Barrier(x, y, isRight , color) {};
+public:
+	Animal(int x, int y, bool isRight, int color) : Barrier(x, y, isRight, color) {};
 	virtual void DrawObject();
 
 	~Animal();
@@ -48,8 +50,8 @@ public :
 
 class Car : public Vehicle
 {
-public :
-	Car(int x, int y, bool isRight , int color) : Vehicle(x, y, isRight , color) {};
+public:
+	Car(int x, int y, bool isRight, int color) : Vehicle(x, y, isRight, color) {};
 	void DrawObject();
 
 
@@ -59,8 +61,8 @@ public :
 
 class Truck : public Vehicle
 {
-public :
-	Truck(int x, int y, bool isRight, int color) : Vehicle(x, y, isRight , color) {};
+public:
+	Truck(int x, int y, bool isRight, int color) : Vehicle(x, y, isRight, color) {};
 	void DrawObject();
 
 
@@ -70,8 +72,8 @@ public :
 
 class Dinausor : public Animal
 {
-public :
-	Dinausor(int x, int y, bool isRight, int color) : Animal(x, y, isRight , color) {};
+public:
+	Dinausor(int x, int y, bool isRight, int color) : Animal(x, y, isRight, color) {};
 	void DrawObject();
 
 
@@ -81,8 +83,8 @@ public :
 
 class Bird : public Animal
 {
-public :
-	Bird(int x, int y, bool isRight , int color) : Animal(x, y, isRight , color) {};
+public:
+	Bird(int x, int y, bool isRight, int color) : Animal(x, y, isRight, color) {};
 	void DrawObject();
 
 
@@ -91,15 +93,18 @@ public :
 
 class Player
 {
-private :
+private:
 	int x, y;
 	bool isDead;
-public :
+public:
+	Player();
 	Player(int x, int y);
+	Player& operator = (Player& a);
 	void Move(char key);
 	bool IsImpact(Barrier*& a);
 	bool IsDead();
 	void DrawPlayer();
+	void ClearPlayer();
 
 
 	~Player();
@@ -108,17 +113,20 @@ public :
 
 class Game
 {
-private :
+private:
 	Player player;
 	vector<Truck*>  truck;
 	vector<Car*> car;
-	vector <Bird *> bird;
+	vector <Bird*> bird;
 	vector <Dinausor*> dinausor;
-public :
+	bool isPlaying;
+public:
 	Game();
 	void DrawGame();
-	void UpdatePosPlayer(char key );
+
+	void UpdatePosPlayer(char key);
 	void UpdatePosBarrier();
+	bool IsPlaying();
 
 	~Game();
 };
