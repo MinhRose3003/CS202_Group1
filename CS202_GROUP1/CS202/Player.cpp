@@ -1,92 +1,70 @@
 #include "Header.h"
 
 
-Player::Player()
+Player::Player(float x, float y)
 {
-	x = 0;
-	y = 0;
-	isDead = false;
+
+	moveSpeed = 10.f;
+	shape.setPosition(x,y);
+
+	shape.setSize(Vector2f(50.f, 50.f));
+	shape.setFillColor(Color::Red);
+	
+
 }
 
-Player::Player(int x, int y)
-{
-	this->x = x;
-	this->y = y;
-	isDead = true;
-}
 
-Player& Player ::operator = (Player& a)
+void Player::UpdateInputKeyBoard()
 {
-	if(this != &a)
-	{ 
-		x = a.x;
-		y = a.y;
-		isDead = a.isDead;
+	if (Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::Left))
+	{
+		shape.move(-moveSpeed, 0.f);
 	}
-	return *this;
-}
- void Player::Move(char key)
-{
-	 if (key == 'w') // up
-	 {
-		
-		 ClearPlayer();
-		 y = y - 1;
-		 DrawPlayer();
-	 }
-	 else if (key == 's') // down
-	 {
-		 ClearPlayer();
-		 y = y + 1;
-		 DrawPlayer();
-	 }
-	 else if (key == 'a') // left 
-	 {
-		 ClearPlayer();
-		 x = x - 1;
-		 DrawPlayer();
-	 }
-	 else if (key == 'd') // right 
-	 {
-		 ClearPlayer();
-		 x = x + 1;
-		 DrawPlayer();
-	 }
-}
- bool Player::IsImpact(Barrier*& a)
-{
-	 return true;
-}
-bool Player::IsDead()
-{
-	return isDead;
-}
-void Player::DrawPlayer()
-{
-	gotoXY(x, y);
-	cout << char(208);
-	gotoXY(x, y-1);
-	cout << char(206);
-	gotoXY(x, y - 2);
-	cout << char(232);
-	gotoXY(x - 1, y - 1);
-	cout << char(205);
-	gotoXY(x + 1, y - 1);
-	cout << char(205);
+	else if (Keyboard::isKeyPressed(Keyboard::D) || Keyboard::isKeyPressed(Keyboard::Right))
+	{
+		shape.move(moveSpeed, 0.f);
+	}
+	else if (Keyboard::isKeyPressed(Keyboard::S) || Keyboard::isKeyPressed(Keyboard::Down))
+	{
+		shape.move(0, moveSpeed);
+	}
+	else if (Keyboard::isKeyPressed(Keyboard::W) || Keyboard::isKeyPressed(Keyboard::Up))
+	{
+		shape.move(0, -moveSpeed);
+	}
 }
 
-void Player::ClearPlayer()
+void Player::UpdateBound(RenderTarget * window)
 {
-	gotoXY(x, y);
-	cout << " ";
-	gotoXY(x, y - 1);
-	cout << " ";
-	gotoXY(x, y - 2);
-	cout << " ";
-	gotoXY(x - 1, y - 1);
-	cout << " ";
-	gotoXY(x + 1, y - 1);
-	cout << " ";
+	FloatRect playerBound = shape.getGlobalBounds();
+	if (playerBound.left <= 0.f)
+	{
+		shape.setPosition(0.f, playerBound.top);
+	}
+	 if (playerBound.left + playerBound.width >= window->getSize().x)
+	{
+		 shape.setPosition(window->getSize().x - playerBound.width, playerBound.top);
+	}
+	 if (playerBound.top <= 0.f)
+	{
+		 shape.setPosition(playerBound.left, 0.f);
+	}
+	 if (playerBound.top + playerBound.height >= window->getSize().y)
+	 {
+		 shape.setPosition(playerBound.left, window->getSize().y - playerBound.height);
+	}
+}
+
+void Player :: Update(RenderTarget * window)
+{
+	UpdateInputKeyBoard();
+
+	UpdateBound(window);
+}
+
+void Player::Render(RenderTarget * window)
+{
+	window->draw(shape);
 }
 
 Player :: ~Player() {}

@@ -6,8 +6,14 @@
 #include<iostream>
 #include <fstream>
 #include<vector>
+#include <ctime>
 
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Network.hpp>
 
+using namespace sf;
 using namespace std;
 
 
@@ -91,29 +97,41 @@ public:
 	~Bird();
 };
 
-class Player
+class Player 
 {
 private:
-	int x, y;
-	bool isDead;
+	RectangleShape shape;
+
+	float moveSpeed;
+
 public:
-	Player();
-	Player(int x, int y);
-	Player& operator = (Player& a);
-	void Move(char key);
-	bool IsImpact(Barrier*& a);
-	bool IsDead();
-	void DrawPlayer();
-	void ClearPlayer();
-
-
+	Player(float x = 0.f ,float y =0.f);
 	~Player();
+
+	//update
+	void UpdateInputKeyBoard();
+	void UpdateBound(RenderTarget* window);
+	void Update(RenderTarget* window);
+
+	//render
+	void Render(RenderTarget* window);
 
 };
 
 class Game
 {
 private:
+	RenderWindow* window;
+	VideoMode videoMode;
+	Event event;
+
+	int maxEnemy;
+	int point;
+	float timeSpawn;
+	float timeSpawnMax;
+	
+	vector<RectangleShape > enemies;
+
 	Player player;
 	vector<Truck*>  truck;
 	vector<Car*> car;
@@ -122,13 +140,35 @@ private:
 	bool isPlaying;
 public:
 	Game();
+	virtual ~Game();
+
+	void InitVariable();
+	void InitWindow();
+	void InitEnemy();
+
+	//update 
+	void Update();
+	void PollingEvent();
+	void UpdateEnemy();
+
+
+	//render 
+	void Render();
+	void RenderEnemies();
+
+
+	//Function 
+	const bool IsRunningGame() const;	
+	void SpawnEnemy();
+	
+
 	void DrawGame();
 
 	void UpdatePosPlayer(char key);
 	void UpdatePosBarrier();
 	bool IsPlaying();
 
-	~Game();
+	
 };
 
 
