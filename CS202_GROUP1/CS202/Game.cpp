@@ -4,9 +4,6 @@ using namespace sf;
 
 void Game::InitVariable()
 {
-	window = nullptr;
-
-
 	 maxEnemy = 5;
 	 point = 0;
 	 timeSpawn = 1000.f;
@@ -17,25 +14,23 @@ void Game:: InitWindow()
 {
 	videoMode.height = 800;
 	videoMode.width = 1000;
-
-	window = new RenderWindow(videoMode, "CS202_Group01", Style::Titlebar | Style::Close);
-	
-	window->setFramerateLimit(60);
+	window.create(videoMode, "CS202_Group01", Style::Titlebar | Style::Close);
+	window.setFramerateLimit(144);
 }
 
-
+void Game::InitPlayer()
+{
+	this->player = new Player();
+}
 Game:: Game()
 {
 	InitVariable();
 	InitWindow();
-
-	
+	InitPlayer();
 }
 
 Game ::~Game()
 {
-	delete []window;
-
 
 	/*truck.clear();
 	car.clear();
@@ -45,22 +40,22 @@ Game ::~Game()
 
 const bool Game :: IsRunningGame() const 
 {
-	return window->isOpen();
+	return window.isOpen();
 }
 
 void Game::PollingEvent()
 {
-	while (window->pollEvent(event))
+	while (window.pollEvent(event))
 	{
 		switch (this->event.type)
 		{
 		case Event::Closed:
-			window->close();
+			window.close();
 			break;
 		case Event::KeyPressed:
 			if (event.key.code == Keyboard::Escape)
 			{
-				window->close();
+				window.close();
 			}
 			break;
 		}
@@ -99,30 +94,38 @@ void Game::UpdateEnemy()
 	}
 }
 
-void Game::RenderEnemies()
+void Game::UpdatePlayer()
 {
-	for (int i = 0; i < enemies.size(); i++)
-	{
-		window->draw(enemies[i]);
-	}
+	player->Update(window);
 }
 
-void Game :: Update()
+void Game::Update()
 {
 	PollingEvent();
 
 	UpdateEnemy();
 
-	player.Update(window);
+	UpdatePlayer();
+}
+
+void Game::RenderPlayer()
+{
+	player->Render(window);
+}
+void Game::RenderEnemies()
+{
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		window.draw(enemies[i]);
+	}
 }
 
 void Game ::Render()
 {
-	window->clear();
+	window.clear();
 
 	RenderEnemies();
+	RenderPlayer();
 
-	player.Render(window);
-
-	window->display();
+	window.display();
 }

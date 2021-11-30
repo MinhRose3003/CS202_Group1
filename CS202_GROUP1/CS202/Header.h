@@ -18,110 +18,121 @@ using namespace std;
 
 
 
-class Barrier
-{
-private:
-	int x, y;
-	bool isRight;
-	int color;
-public:
-	Barrier(int x, int y, bool isRight, int color);
-	void Move(int x, int y);
-	virtual void DrawObject();
-
-
-	~Barrier();
-};
-
-
-class Vehicle : public Barrier
-{
-public:
-	Vehicle(int x, int y, bool isRight, int color) : Barrier(x, y, isRight, color) {};
-	virtual void DrawObject();
-
-	~Vehicle();
-};
-
-
-class Animal : public Barrier
-{
-public:
-	Animal(int x, int y, bool isRight, int color) : Barrier(x, y, isRight, color) {};
-	virtual void DrawObject();
-
-	~Animal();
-};
-
-
-class Car : public Vehicle
-{
-public:
-	Car(int x, int y, bool isRight, int color) : Vehicle(x, y, isRight, color) {};
-	void DrawObject();
-
-
-	~Car();
-};
-
-
-class Truck : public Vehicle
-{
-public:
-	Truck(int x, int y, bool isRight, int color) : Vehicle(x, y, isRight, color) {};
-	void DrawObject();
-
-
-	~Truck();
-};
-
-
-class Dinausor : public Animal
-{
-public:
-	Dinausor(int x, int y, bool isRight, int color) : Animal(x, y, isRight, color) {};
-	void DrawObject();
-
-
-	~Dinausor();
-};
-
-
-class Bird : public Animal
-{
-public:
-	Bird(int x, int y, bool isRight, int color) : Animal(x, y, isRight, color) {};
-	void DrawObject();
-
-
-	~Bird();
-};
+//class Barrier
+//{
+//private:
+//	int x, y;
+//	float speed;
+//	bool isRight;
+//
+//public:
+//	Barrier(int x, int y, bool isRight, float speed );
+//	~Barrier();
+//	virtual void Update(RenderTarget* window);
+//	virtual void Render(RenderTarget* window);
+//};
+//
+//
+//class Vehicle : public Barrier
+//{
+//
+//public:
+//	Vehicle(int x, int y, bool isRight, float speed);
+//	~Vehicle();
+//	virtual void Update(RenderTarget* window);
+//	virtual void Render(RenderTarget* window);
+//};
+//
+//
+//class Animal : public Barrier
+//{
+//public:
+//	Animal(int x, int y, bool isRight, float speed);
+//	~Animal();
+//	virtual void Update(RenderTarget* window);
+//	virtual void Render(RenderTarget* window);
+//};
+//
+//
+//class Car : public Vehicle
+//{
+//private :
+//	RectangleShape shape;
+//public:
+//	Car(int x, int y, bool isRight , float speed) : Vehicle(x, y, isRight , speed) {};
+//	~Car();
+//	 void Update(RenderTarget* window);
+//	 void Render(RenderTarget* window);
+//};
+//
+//
+//class Truck : public Vehicle
+//{
+//private:
+//	RectangleShape shape;
+//public:
+//	Truck(int x, int y, bool isRight , float speed ) : Vehicle(x, y, isRight , speed) {};
+//	~Truck();
+//	 void Update(RenderTarget* window);
+//	 void Render(RenderTarget* window);
+//};
+//
+//
+//class Dinausor : public Animal
+//{
+//private:
+//	RectangleShape shape;
+//public:
+//	Dinausor(int x, int y, bool isRight , float speed) : Animal(x, y, isRight, speed) {};
+//	~Dinausor();
+//	 void Update(RenderTarget* window);
+//	 void Render(RenderTarget* window);
+//};
+//
+//
+//class Bird : public Animal
+//{
+//private:
+//	RectangleShape shape;
+//public:
+//	Bird(int x, int y, bool isRight , float speed) : Animal(x, y, isRight , speed) {};
+//	~Bird();
+//	 void Update(RenderTarget* window);
+//	 void Render(RenderTarget* window);
+//};
 
 class Player 
 {
 private:
-	RectangleShape shape;
 
+	Texture texture;
+	Sprite sprite;
 	float moveSpeed;
 
 public:
 	Player(float x = 0.f ,float y =0.f);
 	~Player();
+	void InitTexture();
+	void InitSprite();
+	void InitVariable();
+
+	//Animation 
+	IntRect currentFrame;
 
 	//update
-	void UpdateInputKeyBoard();
-	void UpdateBound(RenderTarget* window);
-	void Update(RenderTarget* window);
+	void UpdateMovement();
+	void UpdateBound(RenderTarget & window);
+	void Update(RenderTarget &window);
 
 	//render
-	void Render(RenderTarget* window);
+	void Render(RenderTarget &window);
 
 };
 
 class Game
 {
 private:
-	RenderWindow* window;
+	RenderWindow  window;
 	VideoMode videoMode;
 	Event event;
 
@@ -132,11 +143,11 @@ private:
 	
 	vector<RectangleShape > enemies;
 
-	Player player;
-	vector<Truck*>  truck;
+	Player * player;
+	/*vector<Truck*>  truck;
 	vector<Car*> car;
 	vector <Bird*> bird;
-	vector <Dinausor*> dinausor;
+	vector <Dinausor*> dinausor;*/
 	bool isPlaying;
 public:
 	Game();
@@ -145,16 +156,19 @@ public:
 	void InitVariable();
 	void InitWindow();
 	void InitEnemy();
+	void InitPlayer();
 
 	//update 
 	void Update();
 	void PollingEvent();
 	void UpdateEnemy();
+	void UpdatePlayer();
 
 
 	//render 
 	void Render();
 	void RenderEnemies();
+	void RenderPlayer();
 
 
 	//Function 

@@ -1,70 +1,86 @@
 #include "Header.h"
 
 
-Player::Player(float x, float y)
+
+void Player::InitVariable()
 {
-
-	moveSpeed = 10.f;
-	shape.setPosition(x,y);
-
-	shape.setSize(Vector2f(50.f, 50.f));
-	shape.setFillColor(Color::Red);
-	
-
+	moveSpeed = 1.f;
+}
+void Player::InitTexture()
+{
+	if (!texture.loadFromFile("Sprite/Player.png"))
+	{
+		cout << "Minh";
+	}
+}
+void Player::InitSprite()
+{
+	sprite.setTexture(texture);
+	currentFrame = IntRect(0, 0, 32, 64);
+	sprite.setTextureRect(currentFrame);
 }
 
 
-void Player::UpdateInputKeyBoard()
+Player::Player(float x, float y)
+{
+	InitVariable();
+	InitTexture();
+	InitSprite();
+}
+
+void Player::UpdateMovement()
 {
 	if (Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::Left))
 	{
-		shape.move(-moveSpeed, 0.f);
+		sprite.move(-moveSpeed, 0.f);
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::D) || Keyboard::isKeyPressed(Keyboard::Right))
 	{
-		shape.move(moveSpeed, 0.f);
+		sprite.move(moveSpeed, 0.f);
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::S) || Keyboard::isKeyPressed(Keyboard::Down))
 	{
-		shape.move(0, moveSpeed);
+		sprite.move(0.f, moveSpeed);
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::W) || Keyboard::isKeyPressed(Keyboard::Up))
 	{
-		shape.move(0, -moveSpeed);
+		sprite.move(0.f, -moveSpeed);
 	}
 }
 
-void Player::UpdateBound(RenderTarget * window)
+//void Player::UpdateBound(RenderTarget & window)
+//{
+//	FloatRect playerBound = shape.getGlobalBounds();
+//	if (playerBound.left <= 0.f)
+//	{
+//		shape.setPosition(0.f, playerBound.top);
+//	}
+//	 if (playerBound.left + playerBound.width >= window->getSize().x)
+//	{
+//		 shape.setPosition(window->getSize().x - playerBound.width, playerBound.top);
+//	}
+//	 if (playerBound.top <= 0.f)
+//	{
+//		 shape.setPosition(playerBound.left, 0.f);
+//	}
+//	 if (playerBound.top + playerBound.height >= window->getSize().y)
+//	 {
+//		 shape.setPosition(playerBound.left, window->getSize().y - playerBound.height);
+//	}
+//}
+
+void Player :: Update(RenderTarget & window)
 {
-	FloatRect playerBound = shape.getGlobalBounds();
-	if (playerBound.left <= 0.f)
-	{
-		shape.setPosition(0.f, playerBound.top);
-	}
-	 if (playerBound.left + playerBound.width >= window->getSize().x)
-	{
-		 shape.setPosition(window->getSize().x - playerBound.width, playerBound.top);
-	}
-	 if (playerBound.top <= 0.f)
-	{
-		 shape.setPosition(playerBound.left, 0.f);
-	}
-	 if (playerBound.top + playerBound.height >= window->getSize().y)
-	 {
-		 shape.setPosition(playerBound.left, window->getSize().y - playerBound.height);
-	}
+	UpdateMovement();
+
+	//UpdateBound(window);
 }
 
-void Player :: Update(RenderTarget * window)
+void Player::Render(RenderTarget &window)
 {
-	UpdateInputKeyBoard();
-
-	UpdateBound(window);
+	window.draw(sprite);
 }
 
-void Player::Render(RenderTarget * window)
+Player :: ~Player()
 {
-	window->draw(shape);
 }
-
-Player :: ~Player() {}
