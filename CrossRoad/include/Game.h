@@ -15,6 +15,9 @@ private:
 	VideoMode videoMode;
 	Event event;
 
+	Texture BackGroundTexture;
+	Sprite Background;
+
 	int maxEnemy;
 	int point;
 	float timeSpawn;
@@ -33,6 +36,7 @@ public:
 	void InitWindow();
 	//void InitEnemy();
 	void InitPlayer();
+	void InitBackGround();
 
 	//update 
 	void Update();

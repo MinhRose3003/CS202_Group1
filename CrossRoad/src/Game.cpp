@@ -7,15 +7,28 @@ void Game::InitVariable()
 	 maxEnemy = 5;
 	 point = 0;
 	 timeSpawn = 1000.f;
-	 timeSpawnMax = 1000.f;
+	 timeSpawnMax = 200.f;
 }
 
 void Game::InitWindow()
 {
-	videoMode.height = 800;
-	videoMode.width = 1000;
+	videoMode.height = 840;
+	videoMode.width = 1144;
 	window.create(videoMode, "CrossTheRoad", Style::Titlebar | Style::Close);
 	window.setFramerateLimit(144);
+	InitBackGround();
+}
+
+void Game::InitBackGround()
+{
+	if (!BackGroundTexture.loadFromFile("Sprite/background.png"))
+	{
+		cout << "Cannot open Sprite/background.png\n";
+	}
+
+	Background.setTexture(BackGroundTexture);
+	IntRect currentFrame = IntRect(0, 0, 1144, 840);
+	Background.setTextureRect(currentFrame);
 }
 
 void Game::InitPlayer()
@@ -96,7 +109,7 @@ void Game::UpdateEnemy()
 
 void Game::UpdateBarriers()
 {
-	if (barriers.size() && !(barriers[0]->Intersect(FloatRect(0, 0, 900, 600))))
+	if (barriers.size() && !(barriers[0]->Intersect(FloatRect(0, 0, 1144, 840))))
 	{
 		barriers.erase(barriers.begin());
 	}
@@ -154,6 +167,8 @@ void Game::RenderBarries()
 void Game::Render()
 {
 	window.clear();
+
+	window.draw(Background);
 
 	//RenderEnemies();
 	RenderBarries();
