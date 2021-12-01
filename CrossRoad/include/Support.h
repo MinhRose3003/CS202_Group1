@@ -5,10 +5,12 @@
 #define NOMINMAX
 
 #include "Graphics.h"
-#include<iostream>
+#include <iostream>
 #include <fstream>
-#include<vector>
+#include <vector>
 #include <ctime>
+#include <random>
+#include <chrono>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
