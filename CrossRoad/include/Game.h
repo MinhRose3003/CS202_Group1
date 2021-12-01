@@ -2,6 +2,11 @@
 #define _COREGAME_LIB_
 
 #include "Player.h"
+#include "Barrier.h"
+#include "Car.h"
+#include "Truck.h"
+#include "Bird.h"
+#include "Dinausor.h"
 
 class Game
 {
@@ -15,13 +20,10 @@ private:
 	float timeSpawn;
 	float timeSpawnMax;
 
-	vector<RectangleShape > enemies;
+	std::vector<RectangleShape> enemies;
 
 	Player * player;
-	/*vector<Truck*>  truck;
-	vector<Car*> car;
-	vector <Bird*> bird;
-	vector <Dinausor*> dinausor;*/
+	std::vector<Barrier*> barriers;
 	bool isPlaying;
 public:
 	Game();
@@ -29,7 +31,7 @@ public:
 
 	void InitVariable();
 	void InitWindow();
-	void InitEnemy();
+	//void InitEnemy();
 	void InitPlayer();
 
 	//update 
@@ -37,13 +39,13 @@ public:
 	void PollingEvent();
 	void UpdateEnemy();
 	void UpdatePlayer();
-
+	void UpdateBarriers();
 
 	//render 
 	void Render();
 	void RenderEnemies();
 	void RenderPlayer();
-
+	void RenderBarries();
 
 	//Function 
 	const bool IsRunningGame() const;
