@@ -12,12 +12,14 @@ void Player::InitTexture()
 		cout << "Cannot open Sprite/Player.png\n";
 	}
 }
-void Player::InitSprite()
+void Player::InitSprite(float x, float y)
 {
 	sprite.setTexture(texture);
 	currentFrame = IntRect(0, 144, 32, 48);
 	sprite.setTextureRect(currentFrame);
-	sprite.setScale(2.f, 2.f);
+	sprite.setScale(1.5, 1.5);
+
+	sprite.setPosition(x, y);
 }
 
 void Player::InitAnimation()
@@ -28,7 +30,7 @@ Player::Player(float x, float y)
 {
 	InitVariable();
 	InitTexture();
-	InitSprite();
+	InitSprite(x, y);
 	InitAnimation();
 }
 

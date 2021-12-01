@@ -29,7 +29,7 @@ public:
 	Player(float x = 0.f, float y = 0.f);
 	~Player();
 	void InitTexture();
-	void InitSprite();
+	void InitSprite(float x, float y);
 	void InitVariable();
 	void InitAnimation();
 	
