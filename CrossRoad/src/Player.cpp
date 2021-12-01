@@ -14,8 +14,10 @@ void Player::InitTexture()
 void Player::InitSprite()
 {
 	sprite.setTexture(texture);
-	currentFrame = IntRect(0, 0, 32, 64);
+	currentFrame = IntRect(0, 0, 32, 32);
 	sprite.setTextureRect(currentFrame);
+
+	cout << "test";
 }
 
 
@@ -25,6 +27,7 @@ Player::Player(float x, float y)
 	InitTexture();
 	InitSprite();
 }
+
 
 void Player::UpdateMovement()
 {
