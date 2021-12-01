@@ -1,7 +1,7 @@
 #ifndef _BIRD_LIB_
 #define _BIRD_LIB_
 
-#include "Bird.h"
+#include "Animal.h"
 
 class Bird : public Animal
 {
