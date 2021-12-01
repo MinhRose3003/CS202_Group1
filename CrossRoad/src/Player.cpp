@@ -3,13 +3,13 @@
 void Player::InitVariable()
 {
 	moveSpeed = 2.f;
-	animationState = PLAYER_ANIMATION_STATE::IDLE;
+	animationState = PLAYER_ANIMATION_STATE::MOVING_UP;
 }
 void Player::InitTexture()
 {
 	if (!texture.loadFromFile("Sprite/Player.png"))
 	{
-		cout << "Minh";
+		cout << "Cannot open Sprite/Player.png\n";
 	}
 }
 void Player::InitSprite()
@@ -17,7 +17,7 @@ void Player::InitSprite()
 	sprite.setTexture(texture);
 	currentFrame = IntRect(0, 144, 32, 48);
 	sprite.setTextureRect(currentFrame);
-	sprite.setScale(5.f, 5.f);
+	sprite.setScale(2.f, 2.f);
 }
 
 void Player::InitAnimation()
@@ -34,7 +34,7 @@ Player::Player(float x, float y)
 
 void Player::UpdateAnimation()
 {
-	if (animationState == PLAYER_ANIMATION_STATE::IDLE || animationState == PLAYER_ANIMATION_STATE::MOVING_UP)
+	if (animationState == PLAYER_ANIMATION_STATE::MOVING_UP)
 	{
 		if (timeAnimation.getElapsedTime().asSeconds() >= 0.1f)
 		{
@@ -117,6 +117,9 @@ void Player::UpdateMovement()
 	{
 		sprite.move(0.f, -moveSpeed);
 		animationState = PLAYER_ANIMATION_STATE::MOVING_UP;
+	}
+	else {
+		animationState = PLAYER_ANIMATION_STATE::IDLE;
 	}
 }
 
