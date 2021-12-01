@@ -94,6 +94,29 @@ void Game::UpdateEnemy()
 	}
 }
 
+void Game::UpdateBarriers()
+{
+	if (barriers.size() && !(barriers[0]->Intersect(FloatRect(0, 0, 900, 600))))
+	{
+		barriers.erase(barriers.begin());
+	}
+	if (timeSpawn >= timeSpawnMax)
+	{
+		barriers.push_back(new Car(0, 400, 1, 1.f));
+		cout << "Generate a Car " << barriers.size() << '\n';
+		timeSpawn = 0;
+	}
+	else 
+	{
+		timeSpawn += 1.f;
+	}
+
+	for (int i = 0; i < barriers.size(); ++i) 
+	{
+		barriers[i] -> UpdateMovement();
+	}
+}
+
 void Game::UpdatePlayer()
 {
 	player->Update(window);
@@ -103,7 +126,8 @@ void Game::Update()
 {
 	PollingEvent();
 
-	UpdateEnemy();
+	//UpdateEnemy();
+	UpdateBarriers();
 
 	UpdatePlayer();
 }
@@ -119,12 +143,20 @@ void Game::RenderEnemies()
 		window.draw(enemies[i]);
 	}
 }
+void Game::RenderBarries()
+{
+	for (int i = 0; i < barriers.size(); i++)
+	{
+		barriers[i]->Render(window);
+	}
+}
 
 void Game::Render()
 {
 	window.clear();
 
-	RenderEnemies();
+	//RenderEnemies();
+	RenderBarries();
 	RenderPlayer();
 
 	window.display();
