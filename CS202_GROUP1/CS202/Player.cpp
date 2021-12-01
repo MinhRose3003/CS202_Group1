@@ -5,6 +5,8 @@
 void Player::InitVariable()
 {
 	moveSpeed = 1.f;
+	animationTimer.restart();
+	moving = false;
 }
 void Player::InitTexture()
 {
@@ -16,8 +18,14 @@ void Player::InitTexture()
 void Player::InitSprite()
 {
 	sprite.setTexture(texture);
-	currentFrame = IntRect(0, 0, 32, 64);
+	currentFrame = IntRect(0, 0, 32, 32	);
 	sprite.setTextureRect(currentFrame);
+	sprite.setScale(5.f, 5.f);
+}
+
+void Player::InitAnimation()
+{
+
 }
 
 
@@ -26,24 +34,42 @@ Player::Player(float x, float y)
 	InitVariable();
 	InitTexture();
 	InitSprite();
+	InitAnimation();
+}
+
+void Player::UpdateAnimation()
+{
+	if (moving == false)
+	{
+		currentFrame.left += 32.f;
+		if (currentFrame.left >= 160.f)
+		{
+
+		}
+	}
 }
 
 void Player::UpdateMovement()
 {
+	moving = false;
 	if (Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::Left))
 	{
+		moving = true;
 		sprite.move(-moveSpeed, 0.f);
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::D) || Keyboard::isKeyPressed(Keyboard::Right))
 	{
+		moving = true;
 		sprite.move(moveSpeed, 0.f);
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::S) || Keyboard::isKeyPressed(Keyboard::Down))
 	{
+		moving = true;
 		sprite.move(0.f, moveSpeed);
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::W) || Keyboard::isKeyPressed(Keyboard::Up))
 	{
+		moving = true;
 		sprite.move(0.f, -moveSpeed);
 	}
 }
@@ -72,6 +98,7 @@ void Player::UpdateMovement()
 void Player :: Update(RenderTarget & window)
 {
 	UpdateMovement();
+	UpdateAnimation();
 
 	//UpdateBound(window);
 }

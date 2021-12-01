@@ -1,16 +1,16 @@
 #include "Header.h"
 
-using namespace sf;
+
 
 void Game::InitVariable()
 {
-	 maxEnemy = 5;
-	 point = 0;
-	 timeSpawn = 1000.f;
-	 timeSpawnMax = 1000.f;
+	maxEnemy = 5;
+	point = 0;
+	timeSpawn = 1000.f;
+	timeSpawnMax = 1000.f;
 }
 
-void Game:: InitWindow()
+void Game::InitWindow()
 {
 	videoMode.height = 800;
 	videoMode.width = 1000;
@@ -22,7 +22,7 @@ void Game::InitPlayer()
 {
 	this->player = new Player();
 }
-Game:: Game()
+Game::Game()
 {
 	InitVariable();
 	InitWindow();
@@ -38,7 +38,7 @@ Game ::~Game()
 	dinausor.clear();*/
 }
 
-const bool Game :: IsRunningGame() const 
+const bool Game::IsRunningGame() const
 {
 	return window.isOpen();
 }
@@ -120,7 +120,7 @@ void Game::RenderEnemies()
 	}
 }
 
-void Game ::Render()
+void Game::Render()
 {
 	window.clear();
 

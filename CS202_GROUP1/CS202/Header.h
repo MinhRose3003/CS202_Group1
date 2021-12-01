@@ -107,6 +107,9 @@ private:
 
 	Texture texture;
 	Sprite sprite;
+	IntRect currentFrame;
+	Clock animationTimer;
+	bool moving;
 	float moveSpeed;
 
 public:
@@ -115,12 +118,14 @@ public:
 	void InitTexture();
 	void InitSprite();
 	void InitVariable();
+	void InitAnimation();
 
 	//Animation 
-	IntRect currentFrame;
+	
 
 	//update
 	void UpdateMovement();
+	void UpdateAnimation();
 	void UpdateBound(RenderTarget & window);
 	void Update(RenderTarget &window);
 
