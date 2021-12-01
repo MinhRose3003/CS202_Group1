@@ -3,12 +3,26 @@
 
 #include "Support.h"
 
+
+enum PLAYER_ANIMATION_STATE
+{
+	IDLE = 0 ,
+	MOVING_LEFT , 
+	MOVING_RIGHT , 
+	MOVING_UP , 
+	MOVING_DOWN
+};
+
 class Player
 {
 private:
 
 	Texture texture;
 	Sprite sprite;
+	IntRect currentFrame;
+	Clock timeAnimation;
+	short animationState;
+
 	float moveSpeed;
 
 public:
@@ -17,12 +31,12 @@ public:
 	void InitTexture();
 	void InitSprite();
 	void InitVariable();
-
-	//Animation 
-	IntRect currentFrame;
+	void InitAnimation();
+	
 
 	//update
 	void UpdateMovement();
+	void UpdateAnimation();
 	void UpdateBound(RenderTarget & window);
 	void Update(RenderTarget &window);
 

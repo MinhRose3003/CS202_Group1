@@ -2,7 +2,8 @@
 
 void Player::InitVariable()
 {
-	moveSpeed = 1.f;
+	moveSpeed = 2.f;
+	animationState = PLAYER_ANIMATION_STATE::IDLE;
 }
 void Player::InitTexture()
 {
@@ -14,38 +15,108 @@ void Player::InitTexture()
 void Player::InitSprite()
 {
 	sprite.setTexture(texture);
-	currentFrame = IntRect(0, 0, 32, 32);
+	currentFrame = IntRect(0, 144, 32, 48);
 	sprite.setTextureRect(currentFrame);
-
-	cout << "test";
+	sprite.setScale(5.f, 5.f);
 }
 
+void Player::InitAnimation()
+{
 
+}
 Player::Player(float x, float y)
 {
 	InitVariable();
 	InitTexture();
 	InitSprite();
+	InitAnimation();
 }
 
+void Player::UpdateAnimation()
+{
+	if (animationState == PLAYER_ANIMATION_STATE::IDLE || animationState == PLAYER_ANIMATION_STATE::MOVING_UP)
+	{
+		if (timeAnimation.getElapsedTime().asSeconds() >= 0.1f)
+		{
+			currentFrame.top = 144.f;
+			currentFrame.left += 32.f;
+			if (currentFrame.left >= 128.f)
+			{
+				currentFrame.left = 0.f;
+			}
 
+			timeAnimation.restart();
+			sprite.setTextureRect(currentFrame);
+		}
+	}
+	else if (animationState == PLAYER_ANIMATION_STATE::MOVING_LEFT)
+	{
+		if (timeAnimation.getElapsedTime().asSeconds() >= 0.1f)
+		{
+			currentFrame.top = 48.f;
+			currentFrame.left += 32.f;
+			if (currentFrame.left >= 128.f)
+			{
+				currentFrame.left = 0.f;
+			}
+
+			timeAnimation.restart();
+			sprite.setTextureRect(currentFrame);
+		}
+	}
+	else if (animationState == PLAYER_ANIMATION_STATE::MOVING_RIGHT)
+	{
+		if (timeAnimation.getElapsedTime().asSeconds() >= 0.1f)
+		{
+			currentFrame.top = 96.f;
+			currentFrame.left += 32.f;
+			if (currentFrame.left >= 128.f)
+			{
+				currentFrame.left = 0.f;
+			}
+
+			timeAnimation.restart();
+			sprite.setTextureRect(currentFrame);
+		}
+	}
+	else if (animationState == PLAYER_ANIMATION_STATE::MOVING_DOWN)
+	{
+		if (timeAnimation.getElapsedTime().asSeconds() >= 0.1f)
+		{
+			currentFrame.top = 0.f;
+			currentFrame.left += 32.f;
+			if (currentFrame.left >= 128.f)
+			{
+				currentFrame.left = 0.f;
+			}
+
+			timeAnimation.restart();
+			sprite.setTextureRect(currentFrame);
+		}
+	}
+	
+}
 void Player::UpdateMovement()
 {
 	if (Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::Left))
-	{
+	{	
 		sprite.move(-moveSpeed, 0.f);
+		animationState = PLAYER_ANIMATION_STATE::MOVING_LEFT;
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::D) || Keyboard::isKeyPressed(Keyboard::Right))
 	{
 		sprite.move(moveSpeed, 0.f);
+		animationState = PLAYER_ANIMATION_STATE::MOVING_RIGHT;
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::S) || Keyboard::isKeyPressed(Keyboard::Down))
-	{
+	{	
 		sprite.move(0.f, moveSpeed);
+		animationState = PLAYER_ANIMATION_STATE::MOVING_DOWN;
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::W) || Keyboard::isKeyPressed(Keyboard::Up))
 	{
 		sprite.move(0.f, -moveSpeed);
+		animationState = PLAYER_ANIMATION_STATE::MOVING_UP;
 	}
 }
 
@@ -73,6 +144,7 @@ void Player::UpdateMovement()
 void Player :: Update(RenderTarget & window)
 {
 	UpdateMovement();
+	UpdateAnimation();
 
 	//UpdateBound(window);
 }
