@@ -1,14 +1,15 @@
 #include "../include/Bird.h"
 
-Bird::Bird(int x, int y, bool isRight, float speed) : Animal(x, y, isRight, speed)
+void Bird::InitTexture(bool isRight)
 {
 
 }
-void Bird::DrawObject()
+void Bird::InitSprite(float x, float y)
 {
 
 }
-Bird::~Bird()
-{
 
+bool Bird::Intersect(FloatRect person)
+{
+	return false;
 }

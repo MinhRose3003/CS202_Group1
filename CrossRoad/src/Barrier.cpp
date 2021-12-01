@@ -1,13 +1,13 @@
 #include "../include/Barrier.h"
 
-Barrier::Barrier(int x, int y, bool isRight, float speed)
-{
-	this->x = x;
-	this->y = y;
-	this->isRight = isRight;
-	this->speed = speed;
+void Barrier::InitVariable(bool isRight) {
+	if (isRight) moveSpeed = 1.f;
+	else moveSpeed = -1.f;
 }
 
-void Barrier::Move(int x, int y) {
-
+void Barrier::UpdateMovement() {
+	sprite.move(moveSpeed, 0.f);
+}
+void Barrier::Render(RenderTarget &window) {
+	window.draw(sprite);
 }

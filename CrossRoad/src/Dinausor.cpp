@@ -1,14 +1,15 @@
 #include "../include/Dinausor.h"
 
-Dinausor::Dinausor(int x, int y, bool isRight, float speed) : Animal(x, y, isRight, speed)
+void Dinausor::InitTexture(bool isRight)
 {
 
 }
-void Dinausor::DrawObject()
+void Dinausor::InitSprite(float x, float y)
 {
 
 }
-Dinausor::~Dinausor()
-{
 
+bool Dinausor::Intersect(FloatRect person)
+{
+	return false;
 }
