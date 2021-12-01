@@ -11,22 +11,32 @@
 class Game
 {
 private:
+	// window
 	RenderWindow  window;
 	VideoMode videoMode;
 	Event event;
 
+	// background
 	Texture BackGroundTexture;
 	Sprite Background;
 
+	//config
+	int width, height;
+	int xp, yp;
+	vector<int> line;
+
+	// enemy config
 	int maxEnemy;
 	int point;
 	float timeSpawn;
 	float timeSpawnMax;
+	vector<RectangleShape> enemies;
 
-	std::vector<RectangleShape> enemies;
-
+	// player + barriers
 	Player * player;
-	std::vector<Barrier*> barriers;
+	vector<Barrier*> barriers[8];
+	vector<int> count;
+	vector<int> countMax;
 	bool isPlaying;
 public:
 	Game();

@@ -7,13 +7,27 @@ void Game::InitVariable()
 	 maxEnemy = 5;
 	 point = 0;
 	 timeSpawn = 1000.f;
-	 timeSpawnMax = 200.f;
+	 timeSpawnMax = 50.f;
+
+	 width = 1144;
+	 height = 840;
+	 xp = 516; 
+	 yp = 725;
+	 line = {180, 235, 300, 360, 430, 490, 565, 615};
+
+	 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+
+	 count.assign(8, 0);
+	 countMax.assign(8, 0);
+	 for (int i = 0; i < 8; ++i) {
+		 countMax[i] = uniform_int_distribution<int>(200, 500)(rng);
+	 }
 }
 
 void Game::InitWindow()
 {
-	videoMode.height = 840;
-	videoMode.width = 1144;
+	videoMode.height = height;
+	videoMode.width = width;
 	window.create(videoMode, "CrossTheRoad", Style::Titlebar | Style::Close);
 	window.setFramerateLimit(144);
 	InitBackGround();
@@ -27,13 +41,13 @@ void Game::InitBackGround()
 	}
 
 	Background.setTexture(BackGroundTexture);
-	IntRect currentFrame = IntRect(0, 0, 1144, 840);
+	IntRect currentFrame = IntRect(0, 0, width, height);
 	Background.setTextureRect(currentFrame);
 }
 
 void Game::InitPlayer()
 {
-	this->player = new Player();
+	this->player = new Player((float)xp, (float)yp);
 }
 Game::Game()
 {
@@ -44,11 +58,11 @@ Game::Game()
 
 Game::~Game()
 {
-
-	/*truck.clear();
-	car.clear();
-	bird.clear();
-	dinausor.clear();*/
+	for (int j = 0; j < 8; ++j) {
+		for (int i = 0; i < barriers[j].size(); ++i) {
+			delete barriers[j][i];
+		}
+	}
 }
 
 const bool Game::IsRunningGame() const 
@@ -109,25 +123,35 @@ void Game::UpdateEnemy()
 
 void Game::UpdateBarriers()
 {
-	if (barriers.size() && !(barriers[0]->Intersect(FloatRect(0, 0, 1144, 840))))
-	{
-		barriers.erase(barriers.begin());
-	}
-	if (timeSpawn >= timeSpawnMax)
-	{
-		barriers.push_back(new Car(0, 400, 1, 1.f));
-		cout << "Generate a Car " << barriers.size() << '\n';
-		timeSpawn = 0;
-	}
-	else 
-	{
-		timeSpawn += 1.f;
+	mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+
+	for (int j = 0; j < 8; ++j) {
+		if (barriers[j].size() && !(barriers[j][0]->Intersect(FloatRect(0, 0, (float)width, (float)height)))) 
+		{
+			barriers[j].erase(barriers[j].begin());
+		}
+		if (count[j] >= countMax[j])
+		{
+			if (j&1)
+				barriers[j].push_back(new Car(width, (float)line[j], 0, 1.f));
+			else
+				barriers[j].push_back(new Car(0, (float)line[j], 1, 1.f));
+			count[j] = 0;
+			countMax[j] = uniform_int_distribution<int>(500, 1000)(rng);
+		}
+		else
+		{
+			count[j] += 1;
+		}
 	}
 
-	for (int i = 0; i < barriers.size(); ++i) 
-	{
-		barriers[i] -> UpdateMovement();
+	for (int j = 0; j < 8; ++j) {
+		for (int i = 0; i < barriers[j].size(); ++i)
+		{
+			barriers[j][i]->UpdateMovement();
+		}
 	}
+	
 }
 
 void Game::UpdatePlayer()
@@ -158,9 +182,11 @@ void Game::RenderEnemies()
 }
 void Game::RenderBarries()
 {
-	for (int i = 0; i < barriers.size(); i++)
-	{
-		barriers[i]->Render(window);
+	for (int j = 0; j < 8; ++j) {
+		for (int i = 0; i < barriers[j].size(); i++)
+		{
+			barriers[j][i]->Render(window);
+		}
 	}
 }
 
