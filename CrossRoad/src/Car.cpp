@@ -8,24 +8,24 @@ Car::Car(float x, float y, bool isRight, float speed) {
 void Car::InitTexture(bool isRight)
 {
 	if (isRight) {
-		if (!texture.loadFromFile("Sprite/Audi-right.png"))
+		if (!texture.loadFromFile("Sprite/car-right.png"))
 		{
-			cout << "Cannot find Sprite/Audi-right.png" << '\n';
+			cout << "Cannot find Sprite/car-right.png" << '\n';
 		}
 	}
 	else {
-		if (!texture.loadFromFile("Sprite/Audi-left.png"))
+		if (!texture.loadFromFile("Sprite/car-left.png"))
 		{
-			cout << "Cannot find Sprite/Audi-left.png" << '\n';
+			cout << "Cannot find Sprite/car-left.png" << '\n';
 		}
 	}
 }
 void Car::InitSprite(float x, float y)
 {
 	sprite.setTexture(texture);
-	IntRect currentFrame = IntRect(0, 0, 256, 256);
+	IntRect currentFrame = IntRect(0, 0, 77, 42);
 	sprite.setTextureRect(currentFrame);
-	sprite.setScale(0.5, 0.5);
+	//sprite.setScale(0.5, 0.5);
 	sprite.setPosition(x, y);
 }
 
