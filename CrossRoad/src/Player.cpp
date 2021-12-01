@@ -94,6 +94,15 @@ void Player::UpdateAnimation()
 			sprite.setTextureRect(currentFrame);
 		}
 	}
+	else {
+		if (timeAnimation.getElapsedTime().asSeconds() >= 0.1f)
+		{
+			currentFrame.left = 0.f;
+
+			timeAnimation.restart();
+			sprite.setTextureRect(currentFrame);
+		}
+	}
 	
 }
 void Player::UpdateMovement()
