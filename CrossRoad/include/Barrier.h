@@ -1,18 +1,26 @@
 #ifndef _BARRIER_LIB_
 #define _BARRIER_LIB_
 
+#include "Support.h"
+
 class Barrier
 {
-private:
-	int x, y;
-	bool isRight;
-	float speed;
-public:
-	Barrier(int x, int y, bool isRight, float speed);
-	void Move(int x, int y);
-	virtual void DrawObject() = 0;
+protected:
+	Texture texture;
+	Sprite sprite;
+	float moveSpeed;
 
-	virtual ~Barrier() {};
+public:
+	virtual ~Barrier() {}
+
+	virtual void InitTexture(bool isRight) = 0;
+	virtual void InitSprite(float x, float y) = 0;
+	void InitVariable(bool isRight);
+
+	void UpdateMovement();
+	void Render(RenderTarget &window);
+
+	virtual bool Intersect(FloatRect person) = 0;
 };
 
 #endif

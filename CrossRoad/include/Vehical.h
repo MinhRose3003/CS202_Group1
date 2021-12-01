@@ -6,10 +6,12 @@
 class Vehicle : public Barrier
 {
 public:
-	Vehicle(int x, int y, bool isRight, float speed);
-	virtual void DrawObject() = 0;
+	virtual ~Vehicle() {}
 
-	virtual ~Vehicle() {};
+	virtual void InitTexture(bool isRight) = 0;
+	virtual void InitSprite(float x, float y) = 0;
+
+	virtual bool Intersect(FloatRect person) = 0;
 };
 
 #endif

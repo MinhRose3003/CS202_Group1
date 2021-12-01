@@ -6,10 +6,10 @@
 class Bird : public Animal
 {
 public:
-	Bird(int x, int y, bool isRight, float speed);
-	void DrawObject();
+	void InitTexture(bool isRight);
+	void InitSprite(float x, float y);
 
-	~Bird();
+	bool Intersect(FloatRect person);
 };
 
 #endif

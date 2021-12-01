@@ -6,10 +6,12 @@
 class Car : public Vehicle
 {
 public:
-	Car(int x, int y, bool isRight, float speed);
-	void DrawObject();
+	Car(float x, float y, bool isRight, float speed);
 
-	~Car();
+	void InitTexture(bool isRight);
+	void InitSprite(float x, float y);
+
+	bool Intersect(FloatRect person);
 };
 
 #endif

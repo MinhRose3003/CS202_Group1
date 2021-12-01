@@ -6,11 +6,10 @@
 class Dinausor : public Animal
 {
 public:
-	Dinausor(int x, int y, bool isRight, float speed);
-	void DrawObject();
+	void InitTexture(bool isRight);
+	void InitSprite(float x, float y);
 
-
-	~Dinausor();
+	bool Intersect(FloatRect person);
 };
 
 #endif
