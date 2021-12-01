@@ -89,37 +89,8 @@ void Game::PollingEvent()
 	}
 }
 
-void Game::SpawnEnemy()
-{
-	RectangleShape enemy;
-	enemy.setPosition(400.f, 400.f);
-	enemy.setSize(Vector2f(100.f, 100.f));
-	enemy.setScale(Vector2f(0.5f, 0.5f));
-	enemy.setFillColor(Color::Cyan);
-	enemy.setOutlineColor(Color::Green);
-	enemy.setOutlineThickness(1.f);
 
-	enemies.push_back(enemy);
-}
 
-void Game::UpdateEnemy()
-{
-	if (enemies.size() > maxEnemy) return;
-	if (timeSpawn >= timeSpawnMax)
-	{
-		SpawnEnemy();
-		timeSpawn = 0.f;
-	}
-	else
-	{
-		timeSpawn += 1.f;
-	}
-
-	for (int i = 0; i < enemies.size(); i++)
-	{
-		enemies[i].move(10.f, 0.f);
-	}
-}
 
 void Game::UpdateBarriers()
 {
@@ -133,9 +104,9 @@ void Game::UpdateBarriers()
 		if (count[j] >= countMax[j])
 		{
 			if (j&1)
-				barriers[j].push_back(new Car(width, (float)line[j], 0, 1.f));
+				barriers[j].push_back(GetBarrier(width, (float)line[j], 0, 1.f));
 			else
-				barriers[j].push_back(new Car(0, (float)line[j], 1, 1.f));
+				barriers[j].push_back(GetBarrier(0, (float)line[j], 1, 1.f));
 			count[j] = 0;
 			countMax[j] = uniform_int_distribution<int>(500, 1000)(rng);
 		}
@@ -163,7 +134,6 @@ void Game::Update()
 {
 	PollingEvent();
 
-	//UpdateEnemy();
 	UpdateBarriers();
 
 	UpdatePlayer();
@@ -172,13 +142,6 @@ void Game::Update()
 void Game::RenderPlayer()
 {
 	player->Render(window);
-}
-void Game::RenderEnemies()
-{
-	for (int i = 0; i < enemies.size(); i++)
-	{
-		window.draw(enemies[i]);
-	}
 }
 void Game::RenderBarries()
 {
@@ -196,9 +159,29 @@ void Game::Render()
 
 	window.draw(Background);
 
-	//RenderEnemies();
 	RenderBarries();
 	RenderPlayer();
 
 	window.display();
+}
+
+Barrier* Game::GetBarrier(float x, float y, bool isRight, float speed)
+{
+	int random = rand() % (2 - 1 + 1) + 1;
+	if (random == 1)
+	{
+		return new Car(x, y, isRight, speed);
+	}
+	else if (random == 2)
+	{
+		return new Truck(x, y, isRight, speed);
+	}
+	/*else if (random == 3)
+	{
+		return new Bird(x, y, isRight, speed);
+	}
+	else
+	{
+		return new Dinausor(x, y, isRight, speed);
+	}*/
 }

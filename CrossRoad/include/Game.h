@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _COREGAME_LIB_
 #define _COREGAME_LIB_
 
@@ -51,26 +52,23 @@ public:
 	//update 
 	void Update();
 	void PollingEvent();
-	void UpdateEnemy();
 	void UpdatePlayer();
 	void UpdateBarriers();
 
 	//render 
 	void Render();
-	void RenderEnemies();
 	void RenderPlayer();
 	void RenderBarries();
 
 	//Function 
 	const bool IsRunningGame() const;
-	void SpawnEnemy();
+	Barrier* GetBarrier(float x, float y, bool isRight, float speed);
 
 
-	void DrawGame();
 
-	void UpdatePosPlayer(char key);
-	void UpdatePosBarrier();
-	bool IsPlaying();
+	
+
+
 
 
 };

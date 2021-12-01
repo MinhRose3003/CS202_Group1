@@ -1,15 +1,38 @@
 #include "../include/Truck.h"
 
+Truck :: Truck(float x, float y, bool isRight, float speed)
+{
+	InitVariable(isRight);
+	InitTexture(isRight);
+	InitSprite(x, y);
+}
+
 void Truck::InitTexture(bool isRight)
 {
-
+	if (isRight) {
+		if (!texture.loadFromFile("Sprite/truck-right.png"))
+		{
+			cout << "Cannot find Sprite/truck-right.png" << '\n';
+		}
+	}
+	else {
+		if (!texture.loadFromFile("Sprite/truck-left.png"))
+		{
+			cout << "Cannot find Sprite/truck-left.png" << '\n';
+		}
+	}
 }
 void Truck::InitSprite(float x, float y)
 {
-
+	sprite.setTexture(texture);
+	IntRect currentFrame = IntRect(0, 0, 494, 306);
+	sprite.setTextureRect(currentFrame);
+	sprite.setPosition(x, y);
+	sprite.setScale(0.2f, 0.2f);
 }
 
 bool Truck::Intersect(FloatRect person)
 {
-	return false;
+	FloatRect rect = sprite.getGlobalBounds();
+	return rect.intersects(person);
 }
