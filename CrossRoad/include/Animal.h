@@ -6,10 +6,10 @@
 class Animal : public Barrier
 {
 public:
-	Animal(int x, int y, bool isRight, int color) : Barrier(x, y, isRight, color) {};
+	Animal(int x, int y, bool isRight, float speed);
 	virtual void DrawObject() = 0;
 
-	~Animal();
+	virtual ~Animal() {};
 };
 
 #endif

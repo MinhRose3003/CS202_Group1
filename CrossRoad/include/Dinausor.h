@@ -6,7 +6,7 @@
 class Dinausor : public Animal
 {
 public:
-	Dinausor(int x, int y, bool isRight, int color) : Animal(x, y, isRight, color) {};
+	Dinausor(int x, int y, bool isRight, float speed);
 	void DrawObject();
 
 

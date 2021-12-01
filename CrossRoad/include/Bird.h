@@ -6,9 +6,8 @@
 class Bird : public Animal
 {
 public:
-	Bird(int x, int y, bool isRight, int color) : Animal(x, y, isRight, color) {};
+	Bird(int x, int y, bool isRight, float speed);
 	void DrawObject();
-
 
 	~Bird();
 };

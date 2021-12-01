@@ -6,9 +6,8 @@
 class Truck : public Vehicle
 {
 public:
-	Truck(int x, int y, bool isRight, int color) : Vehicle(x, y, isRight, color) {};
+	Truck(int x, int y, bool isRight, float speed);
 	void DrawObject();
-
 
 	~Truck();
 };

@@ -6,13 +6,13 @@ class Barrier
 private:
 	int x, y;
 	bool isRight;
-	int color;
+	float speed;
 public:
-	Barrier(int x, int y, bool isRight, int color);
+	Barrier(int x, int y, bool isRight, float speed);
 	void Move(int x, int y);
 	virtual void DrawObject() = 0;
 
-	~Barrier();
+	virtual ~Barrier() {};
 };
 
 #endif

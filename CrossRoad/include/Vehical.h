@@ -6,10 +6,10 @@
 class Vehicle : public Barrier
 {
 public:
-	Vehicle(int x, int y, bool isRight, int color) : Barrier(x, y, isRight, color) {};
-	virtual void DrawObject();
+	Vehicle(int x, int y, bool isRight, float speed);
+	virtual void DrawObject() = 0;
 
-	~Vehicle();
+	virtual ~Vehicle() {};
 };
 
 #endif
