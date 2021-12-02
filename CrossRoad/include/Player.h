@@ -30,13 +30,15 @@ private:
 	float moveSpeed;
 
 public:
-	Player(float x = 0.f, float y = 0.f);
+	Player(float x = 0.f, float y = 0.f, float speed = 2.f);
 	~Player();
 	void InitImage();
 	void InitTexture();
 	void InitSprite(float x, float y);
-	void InitVariable();
+	void InitVariable(float speed);
 	void InitAnimation();
+
+	void Init(float x, float y, float speed);
 	
 	//update
 	void UpdateMovement();

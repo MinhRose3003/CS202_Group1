@@ -1,8 +1,8 @@
 #include "../include/Player.h"
 
-void Player::InitVariable()
+void Player::InitVariable(float speed)
 {
-	moveSpeed = 2.f;
+	moveSpeed = speed;
 	animationState = PLAYER_ANIMATION_STATE::MOVING_UP;
 
 	width = 32;
@@ -33,13 +33,20 @@ void Player::InitSprite(float x, float y)
 	sprite.setPosition(x, y);
 }
 
+void Player::Init(float x, float y, float speed)
+{
+	InitVariable(speed);
+	InitSprite(x, y);
+	InitAnimation();
+}
+
 void Player::InitAnimation()
 {
 
 }
-Player::Player(float x, float y)
+Player::Player(float x, float y, float speed)
 {
-	InitVariable();
+	InitVariable(speed);
 	InitImage();
 	InitTexture();
 	InitSprite(x, y);

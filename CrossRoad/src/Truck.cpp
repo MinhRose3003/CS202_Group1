@@ -2,7 +2,7 @@
 
 Truck :: Truck(float x, float y, bool isRight, float speed)
 {
-	InitVariable(isRight);
+	InitVariable(isRight, speed);
 	InitImage(isRight);
 	InitTexture(isRight);
 	InitSprite(x, y);
