@@ -20,4 +20,9 @@
 using namespace sf;
 using namespace std;
 
+inline sf::IntRect FToIRect(const sf::FloatRect& f) {
+	return sf::IntRect((int)f.left, (int)f.top, (int)f.width, (int)f.height);
+}
+
+
 #endif // !_Support_h_
