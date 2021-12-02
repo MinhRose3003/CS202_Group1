@@ -17,23 +17,27 @@ class Player
 {
 private:
 
+	Image image;
 	Texture texture;
 	Sprite sprite;
 	IntRect currentFrame;
 	Clock timeAnimation;
 	short animationState;
 
+	int width, height;
+	float scale;
+
 	float moveSpeed;
 
 public:
 	Player(float x = 0.f, float y = 0.f);
 	~Player();
+	void InitImage();
 	void InitTexture();
 	void InitSprite(float x, float y);
 	void InitVariable();
 	void InitAnimation();
 	
-
 	//update
 	void UpdateMovement();
 	void UpdateAnimation();
@@ -43,6 +47,9 @@ public:
 	//render
 	void Render(RenderTarget &window);
 
+	//collision check
+	Sprite GetHitbox();
+	Image GetImage();
 };
 
 #endif
