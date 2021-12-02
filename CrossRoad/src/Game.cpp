@@ -4,24 +4,26 @@ using namespace sf;
 
 void Game::InitVariable()
 {
-	 maxEnemy = 5;
-	 point = 0;
-	 timeSpawn = 1000.f;
-	 timeSpawnMax = 50.f;
+	isPlaying = true;
 
-	 width = 1144;
-	 height = 840;
-	 xp = 516; 
-	 yp = 725;
-	 line = {180, 235, 300, 360, 430, 490, 565, 615};
+	maxEnemy = 5;
+	point = 0;
+	timeSpawn = 1000.f;
+	timeSpawnMax = 50.f;
 
-	 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+	width = 1144;
+	height = 840;
+	xp = 516; 
+	yp = 725;
+	line = {180, 235, 300, 360, 430, 490, 565, 615};
 
-	 count.assign(8, 0);
-	 countMax.assign(8, 0);
-	 for (int i = 0; i < 8; ++i) {
-		 countMax[i] = uniform_int_distribution<int>(200, 500)(rng);
-	 }
+	mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+
+	count.assign(8, 0);
+	countMax.assign(8, 0);
+	for (int i = 0; i < 8; ++i) {
+		countMax[i] = uniform_int_distribution<int>(200, 500)(rng);
+	}
 }
 
 void Game::InitWindow()
@@ -67,7 +69,7 @@ Game::~Game()
 
 const bool Game::IsRunningGame() const 
 {
-	return window.isOpen();
+	return window.isOpen() && isPlaying;
 }
 
 void Game::PollingEvent()
@@ -97,8 +99,9 @@ void Game::UpdateBarriers()
 	mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 	for (int j = 0; j < 8; ++j) {
-		if (barriers[j].size() && !(barriers[j][0]->Intersect(FloatRect(0, 0, (float)width, (float)height)))) 
+		if (barriers[j].size() && !visible(barriers[j][0])) 
 		{
+			// cout << "Remove car\n";
 			barriers[j].erase(barriers[j].begin());
 		}
 		if (count[j] >= countMax[j])
@@ -130,6 +133,20 @@ void Game::UpdatePlayer()
 	player->Update(window);
 }
 
+void Game::CheckColide()
+{
+	for (int j = 0; j < 8; ++j) {
+		for (int i = 0; i < barriers[j].size(); ++i) {
+			if (PixelPerfectCollision(player->GetHitbox(), barriers[j][i]->GetHitbox(),
+										player->GetImage(), barriers[j][i]->GetImage())) {
+				cout << "Colide!\n";
+				isPlaying = false;
+				return;
+			}
+		}
+	}
+}
+
 void Game::Update()
 {
 	PollingEvent();
@@ -137,6 +154,8 @@ void Game::Update()
 	UpdateBarriers();
 
 	UpdatePlayer();
+
+	CheckColide();
 }
 
 void Game::RenderPlayer()
@@ -184,4 +203,53 @@ Barrier* Game::GetBarrier(float x, float y, bool isRight, float speed)
 	{
 		return new Dinausor(x, y, isRight, speed);
 	}*/
+}
+
+bool Game::PixelPerfectCollision(const sf::Sprite& a, const sf::Sprite& b,
+	const sf::Image& imgA, const sf::Image& imgB) {
+	sf::IntRect boundsA(FToIRect(a.getGlobalBounds()));
+	sf::IntRect boundsB(FToIRect(b.getGlobalBounds()));
+	sf::IntRect intersection;
+
+	if (boundsA.intersects(boundsB, intersection)) {
+		const sf::Transform& inverseA(a.getInverseTransform());
+		const sf::Transform& inverseB(b.getInverseTransform());
+
+		const sf::Vector2u& sizeA(imgA.getSize());
+		const sf::Vector2u& sizeB(imgB.getSize());
+
+		const sf::Uint8* pixA = imgA.getPixelsPtr();
+		const sf::Uint8* pixB = imgB.getPixelsPtr();
+
+		sf::Vector2f vecA, vecB;
+		int xMax = intersection.left + intersection.width;
+		int yMax = intersection.top + intersection.height;
+
+		for (int x = intersection.left; x < xMax; x++)
+			for (int y = intersection.top; y < yMax; y++) {
+				vecA = inverseA.transformPoint(x, y);
+				vecB = inverseB.transformPoint(x, y);
+
+				int idxA = ((int)vecA.x + ((int)vecA.y)*sizeA.x) * 4 + 3;
+				int idxB = ((int)vecB.x + ((int)vecB.y)*sizeB.x) * 4 + 3;
+
+				if (vecA.x > 0 && vecA.y > 0 &&
+					vecB.x > 0 && vecB.y > 0 &&
+					vecA.x < sizeA.x && vecA.y < sizeA.y &&
+					vecB.x < sizeB.x && vecB.y < sizeB.y &&
+					pixA[idxA] > 0 &&
+					pixB[idxB] > 0) {
+					return true;
+				}
+			}
+	}
+
+	return false;
+}
+
+bool Game::visible(Barrier* barrier)
+{
+	Sprite n_sprite = barrier->GetHitbox();
+	FloatRect n_rect = n_sprite.getGlobalBounds();
+	return n_rect.intersects(FloatRect(0, 0, (float)width, (float)height));
 }

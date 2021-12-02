@@ -54,6 +54,7 @@ public:
 	void PollingEvent();
 	void UpdatePlayer();
 	void UpdateBarriers();
+	void CheckColide();
 
 	//render 
 	void Render();
@@ -62,14 +63,10 @@ public:
 
 	//Function 
 	const bool IsRunningGame() const;
+	bool visible(Barrier* barrier);
 	Barrier* GetBarrier(float x, float y, bool isRight, float speed);
-
-
-
-	
-
-
-
+	bool PixelPerfectCollision(const sf::Sprite& a, const sf::Sprite& b,
+								const sf::Image& imgA, const sf::Image& imgB);
 
 };
 
