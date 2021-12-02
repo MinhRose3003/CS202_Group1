@@ -13,6 +13,8 @@ int main()
 			game.Update();
 
 			game.Render();
+
+			game.CheckColide();
 		}
 	}
 

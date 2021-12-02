@@ -154,8 +154,6 @@ void Game::Update()
 	UpdateBarriers();
 
 	UpdatePlayer();
-
-	CheckColide();
 }
 
 void Game::RenderPlayer()
