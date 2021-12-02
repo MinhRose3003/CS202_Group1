@@ -198,7 +198,7 @@ void Game::UpdateBarriers()
 			if (j&1)
 				barriers[j].push_back(GetBarrier((float)width, (float)line[j], 0, 1.f));
 			else
-				barriers[j].push_back(GetBarrier(0, (float)line[j], 1, 1.f));
+				barriers[j].push_back(GetBarrier(-64, (float)line[j], 1, 1.f));
 			count[j] = 0;
 			countMax[j] = uniform_int_distribution<int>(500, 1000)(rng);
 		}
