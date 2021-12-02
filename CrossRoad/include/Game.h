@@ -24,6 +24,8 @@ private:
 	// background
 	Texture BackGroundTexture;
 	Sprite Background;
+	Texture DarkBackGroundTexture;
+	Sprite DarkBackground;
 
 	//config
 	int width, height;

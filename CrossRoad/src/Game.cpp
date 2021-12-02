@@ -40,6 +40,15 @@ void Game::InitBackGround()
 	Background.setTexture(BackGroundTexture);
 	IntRect currentFrame = IntRect(0, 0, width, height);
 	Background.setTextureRect(currentFrame);
+
+	if (!DarkBackGroundTexture.loadFromFile("Sprite/background-darken.png"))
+	{
+		cout << "Cannot open Sprite/background-darken.png\n";
+	}
+
+	DarkBackground.setTexture(DarkBackGroundTexture);
+	IntRect DarkcurrentFrame = IntRect(0, 0, width, height);
+	DarkBackground.setTextureRect(currentFrame);
 }
 
 void Game::InitPlayer()
@@ -131,6 +140,7 @@ void Game::Run()
 
 		window.clear();
 		
+		window.draw(DarkBackground);
 		menu->Draw(window);
 
 		window.display();
