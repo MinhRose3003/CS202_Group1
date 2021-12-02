@@ -17,7 +17,7 @@ void Game::InitVariable()
 	count.assign(8, 0);
 	countMax.assign(8, 0);
 	for (int i = 0; i < 8; ++i) {
-		countMax[i] = uniform_int_distribution<int>(200, 500)(rng);
+		countMax[i] = uniform_int_distribution<int>(1, 1000)(rng);
 	}
 }
 
@@ -27,7 +27,19 @@ void Game::InitWindow()
 	videoMode.width = width;
 	window.create(videoMode, "CrossTheRoad", Style::Titlebar | Style::Close);
 	window.setFramerateLimit(144);
+
+	InitIcon();
 	InitBackGround();
+}
+
+void Game::InitIcon()
+{
+	Image icon;
+	if (!icon.loadFromFile("Sprite/icon.png"))
+	{
+		cout << "Cannot load Sprite/icon.png\n";
+	}
+	window.setIcon(32, 32, icon.getPixelsPtr());
 }
 
 void Game::InitBackGround()

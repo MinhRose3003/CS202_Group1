@@ -45,6 +45,7 @@ public:
 	void InitVariable();
 	void InitWindow();
 	void InitPlayer();
+	void InitIcon();
 	void InitBackGround();
 	void InitMenu();
 	void InitGame();
