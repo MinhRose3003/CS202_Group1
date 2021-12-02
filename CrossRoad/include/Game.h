@@ -2,6 +2,7 @@
 #ifndef _COREGAME_LIB_
 #define _COREGAME_LIB_
 
+#include "Menu.h"
 #include "Player.h"
 #include "Barrier.h"
 #include "Car.h"
@@ -17,6 +18,9 @@ private:
 	VideoMode videoMode;
 	Event event;
 
+	// menu
+	Menu *menu;
+
 	// background
 	Texture BackGroundTexture;
 	Sprite Background;
@@ -25,13 +29,6 @@ private:
 	int width, height;
 	int xp, yp;
 	vector<int> line;
-
-	// enemy config
-	int maxEnemy;
-	int point;
-	float timeSpawn;
-	float timeSpawnMax;
-	vector<RectangleShape> enemies;
 
 	// player + barriers
 	Player * player;
@@ -45,9 +42,13 @@ public:
 
 	void InitVariable();
 	void InitWindow();
-	//void InitEnemy();
 	void InitPlayer();
 	void InitBackGround();
+	void InitMenu();
+	void InitGame();
+	void LoadGame();
+
+	void Run();
 
 	//update 
 	void Update();

@@ -6,11 +6,6 @@ void Game::InitVariable()
 {
 	isPlaying = true;
 
-	maxEnemy = 5;
-	point = 0;
-	timeSpawn = 1000.f;
-	timeSpawnMax = 50.f;
-
 	width = 1144;
 	height = 840;
 	xp = 516; 
@@ -51,19 +46,94 @@ void Game::InitPlayer()
 {
 	this->player = new Player((float)xp, (float)yp);
 }
-Game::Game()
-{
-	InitVariable();
-	InitWindow();
-	InitPlayer();
-}
 
-Game::~Game()
+void Game::InitGame()
 {
+	if (player) delete player;
 	for (int j = 0; j < 8; ++j) {
 		for (int i = 0; i < barriers[j].size(); ++i) {
 			delete barriers[j][i];
 		}
+		barriers[j].clear();
+	}
+
+	InitVariable();
+	InitPlayer();
+}
+
+void Game::InitMenu()
+{
+	menu = new Menu(width, height);
+}
+
+Game::Game()
+{
+	InitVariable();
+	InitWindow();
+	InitMenu();
+
+	player = nullptr;
+}
+
+Game::~Game()
+{
+	delete menu;
+	if (player) delete player;
+	for (int j = 0; j < 8; ++j) {
+		for (int i = 0; i < barriers[j].size(); ++i) {
+			delete barriers[j][i];
+		}
+	}
+}
+
+void Game::Run()
+{
+	while (window.isOpen())
+	{
+		while (window.pollEvent(event))
+		{
+			switch (this->event.type)
+			{
+			case Event::Closed:
+				window.close();
+				break;
+			case Event::KeyReleased:
+				switch (event.key.code) {
+				case Keyboard::Up:
+				case Keyboard::W:
+					menu->MoveUp();
+					break;
+				case Keyboard::Down:
+				case Keyboard::S:
+					menu->MoveDown();
+					break;
+				case Keyboard::Return:
+					switch (menu->GetItem()) {
+					case 1:
+						InitGame();
+						while (isPlaying) {
+							Update();
+							Render();
+							CheckColide();
+						}
+						break;
+					case 2:
+						cout << "This function isn't completed!\n";
+						break;
+					case 3:
+						window.close();
+						break;
+					}
+				}
+				
+			}
+		}
+
+		window.clear();
+		
+		menu->Draw(window);
+
+		window.display();
 	}
 }
 
@@ -84,15 +154,12 @@ void Game::PollingEvent()
 		case Event::KeyPressed:
 			if (event.key.code == Keyboard::Escape)
 			{
-				window.close();
+				isPlaying = false;
 			}
 			break;
 		}
 	}
 }
-
-
-
 
 void Game::UpdateBarriers()
 {
@@ -107,7 +174,7 @@ void Game::UpdateBarriers()
 		if (count[j] >= countMax[j])
 		{
 			if (j&1)
-				barriers[j].push_back(GetBarrier(width, (float)line[j], 0, 1.f));
+				barriers[j].push_back(GetBarrier((float)width, (float)line[j], 0, 1.f));
 			else
 				barriers[j].push_back(GetBarrier(0, (float)line[j], 1, 1.f));
 			count[j] = 0;
