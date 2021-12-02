@@ -27,10 +27,14 @@ private:
 	Texture DarkBackGroundTexture;
 	Sprite DarkBackground;
 
-	//config
+	// settings
 	int width, height;
 	int xp, yp;
+	float sp;
+	float barrierSpeed;
 	vector<int> line;
+	int level;
+	int lCount, rCount;
 
 	// player + barriers
 	Player * player;
@@ -50,6 +54,7 @@ public:
 	void InitMenu();
 	void InitGame();
 	void LoadGame();
+	void UpVariable();
 
 	void Run();
 
@@ -59,6 +64,7 @@ public:
 	void UpdatePlayer();
 	void UpdateBarriers();
 	void CheckColide();
+	void CheckLevelUp();
 
 	//render 
 	void Render();

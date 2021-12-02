@@ -10,7 +10,28 @@ void Game::InitVariable()
 	height = 840;
 	xp = 516; 
 	yp = 725;
+	sp = 2.f; // level-up
+	barrierSpeed = 1.f; // level-up
 	line = {180, 235, 300, 360, 430, 490, 565, 615};
+	level = 1; // level-up
+	lCount = 400; // level-up
+	rCount = 800; // level-up
+
+	mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+
+	count.assign(8, 0);
+	countMax.assign(8, 0);
+	for (int i = 0; i < 8; ++i) {
+		countMax[i] = uniform_int_distribution<int>(1, 1000)(rng);
+	}
+}
+void Game::UpVariable()
+{
+	sp += 0.05;
+	barrierSpeed += 0.5;
+	lCount = max(100, lCount - 30);
+	rCount = max(200, rCount - 50);
+	level += 1;
 
 	mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
@@ -65,12 +86,11 @@ void Game::InitBackGround()
 
 void Game::InitPlayer()
 {
-	this->player = new Player((float)xp, (float)yp);
+	player->Init(xp, yp, sp);
 }
 
 void Game::InitGame()
 {
-	if (player) delete player;
 	for (int j = 0; j < 8; ++j) {
 		for (int i = 0; i < barriers[j].size(); ++i) {
 			delete barriers[j][i];
@@ -82,6 +102,26 @@ void Game::InitGame()
 	InitPlayer();
 }
 
+void Game::CheckLevelUp()
+{
+	Sprite n_sprite = player->GetHitbox();
+	float top = n_sprite.getGlobalBounds().top;
+	if (top > 110) return;
+
+	for (int j = 0; j < 8; ++j) {
+		for (int i = 0; i < barriers[j].size(); ++i) {
+			delete barriers[j][i];
+		}
+		barriers[j].clear();
+	}
+
+	UpVariable();
+
+	InitPlayer();
+
+	cout << "Level: " << level << '\n';
+}
+
 void Game::InitMenu()
 {
 	menu = new Menu(width, height);
@@ -89,17 +129,18 @@ void Game::InitMenu()
 
 Game::Game()
 {
+	player = new Player;
+
 	InitVariable();
+	InitPlayer();
 	InitWindow();
 	InitMenu();
-
-	player = nullptr;
 }
 
 Game::~Game()
 {
 	delete menu;
-	if (player) delete player;
+	delete player;
 	for (int j = 0; j < 8; ++j) {
 		for (int i = 0; i < barriers[j].size(); ++i) {
 			delete barriers[j][i];
@@ -136,6 +177,7 @@ void Game::Run()
 							Update();
 							Render();
 							CheckColide();
+							CheckLevelUp();
 						}
 						break;
 					case 2:
@@ -196,11 +238,11 @@ void Game::UpdateBarriers()
 		if (count[j] >= countMax[j])
 		{
 			if (j&1)
-				barriers[j].push_back(GetBarrier((float)width, (float)line[j], 0, 1.f));
+				barriers[j].push_back(GetBarrier((float)width, (float)line[j], 0, barrierSpeed));
 			else
-				barriers[j].push_back(GetBarrier(-64, (float)line[j], 1, 1.f));
+				barriers[j].push_back(GetBarrier(-64, (float)line[j], 1, barrierSpeed));
 			count[j] = 0;
-			countMax[j] = uniform_int_distribution<int>(500, 1000)(rng);
+			countMax[j] = uniform_int_distribution<int>(lCount, rCount)(rng);
 		}
 		else
 		{
