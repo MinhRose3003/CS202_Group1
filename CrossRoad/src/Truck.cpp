@@ -3,10 +3,26 @@
 Truck :: Truck(float x, float y, bool isRight, float speed)
 {
 	InitVariable(isRight);
+	InitImage(isRight);
 	InitTexture(isRight);
 	InitSprite(x, y);
 }
 
+void Truck::InitImage(bool isRight)
+{
+	if (isRight) {
+		if (!image.loadFromFile("Sprite/truck-right.png"))
+		{
+			cout << "Cannot find Sprite/truck-right.png" << '\n';
+		}
+	}
+	else {
+		if (!image.loadFromFile("Sprite/truck-left.png"))
+		{
+			cout << "Cannot find Sprite/truck-left.png" << '\n';
+		}
+	}
+}
 void Truck::InitTexture(bool isRight)
 {
 	if (isRight) {
@@ -31,8 +47,16 @@ void Truck::InitSprite(float x, float y)
 	sprite.setScale(0.2f, 0.2f);
 }
 
-bool Truck::Intersect(FloatRect person)
+//bool Truck::Intersect(FloatRect person)
+//{
+//	FloatRect rect = sprite.getGlobalBounds();
+//	return rect.intersects(person);
+//}
+Sprite Truck::GetHitbox()
 {
-	FloatRect rect = sprite.getGlobalBounds();
-	return rect.intersects(person);
+	return sprite;
+}
+Image Truck::GetImage()
+{
+	return image;
 }

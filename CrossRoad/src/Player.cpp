@@ -4,6 +4,17 @@ void Player::InitVariable()
 {
 	moveSpeed = 2.f;
 	animationState = PLAYER_ANIMATION_STATE::MOVING_UP;
+
+	width = 32;
+	height = 48;
+	scale = 1.2;
+}
+void Player::InitImage()
+{
+	if (!image.loadFromFile("Sprite/Player.png"))
+	{
+		cout << "Cannot open Sprite/Player.png\n";
+	}
 }
 void Player::InitTexture()
 {
@@ -15,9 +26,9 @@ void Player::InitTexture()
 void Player::InitSprite(float x, float y)
 {
 	sprite.setTexture(texture);
-	currentFrame = IntRect(0, 144, 32, 48);
+	currentFrame = IntRect(0, 144, width, height);
 	sprite.setTextureRect(currentFrame);
-	sprite.setScale(1.5, 1.5);
+	sprite.setScale(scale, scale);
 
 	sprite.setPosition(x, y);
 }
@@ -29,6 +40,7 @@ void Player::InitAnimation()
 Player::Player(float x, float y)
 {
 	InitVariable();
+	InitImage();
 	InitTexture();
 	InitSprite(x, y);
 	InitAnimation();
@@ -166,6 +178,28 @@ void Player :: Update(RenderTarget & window)
 void Player::Render(RenderTarget &window)
 {
 	window.draw(sprite);
+}
+
+Sprite Player::GetHitbox()
+{
+	Sprite n_sprite = sprite;
+	IntRect n_frame = currentFrame;
+	int hitbox = 10;
+
+	n_frame.top = n_frame.top + n_frame.height - hitbox;
+	n_frame.height = hitbox;
+
+	Vector2f p = n_sprite.getPosition();
+	p.y = p.y + (height - hitbox) * scale;
+	
+	n_sprite.setTextureRect(n_frame);
+	n_sprite.setPosition(p);
+
+	return n_sprite;
+}
+Image Player::GetImage()
+{
+	return image;
 }
 
 Player :: ~Player()

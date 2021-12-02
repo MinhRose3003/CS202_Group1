@@ -3,10 +3,15 @@
 Dinausor :: Dinausor(float x, float y, bool isRight, float speed)
 {
 	InitVariable(isRight);
+	InitImage(isRight);
 	InitTexture(isRight);
 	InitSprite(x,y);
 }
 
+void Dinausor::InitImage(bool isRight)
+{
+
+}
 void Dinausor::InitTexture(bool isRight)
 {
 
@@ -16,7 +21,11 @@ void Dinausor::InitSprite(float x, float y)
 
 }
 
-bool Dinausor::Intersect(FloatRect person)
+Sprite Dinausor::GetHitbox()
 {
-	return false;
+	return sprite;
+}
+Image Dinausor::GetImage()
+{
+	return image;
 }

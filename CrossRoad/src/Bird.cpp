@@ -3,8 +3,14 @@
 Bird :: Bird (float x, float y, bool isRight, float speed)
 {
 	InitVariable(isRight);
+	InitImage(isRight);
 	InitTexture(isRight);
 	InitSprite(x, y);
+}
+
+void Bird::InitImage(bool isRight)
+{
+
 }
 void Bird::InitTexture(bool isRight)
 {
@@ -15,7 +21,11 @@ void Bird::InitSprite(float x, float y)
 
 }
 
-bool Bird::Intersect(FloatRect person)
+Sprite Bird::GetHitbox()
 {
-	return false;
+	return sprite;
+}
+Image Bird::GetImage()
+{
+	return image;
 }
