@@ -146,33 +146,22 @@ void Player::UpdateMovement()
 	}
 }
 
-//void Player::UpdateBound(RenderTarget & window)
-//{
-//	FloatRect playerBound = shape.getGlobalBounds();
-//	if (playerBound.left <= 0.f)
-//	{
-//		shape.setPosition(0.f, playerBound.top);
-//	}
-//	 if (playerBound.left + playerBound.width >= window->getSize().x)
-//	{
-//		 shape.setPosition(window->getSize().x - playerBound.width, playerBound.top);
-//	}
-//	 if (playerBound.top <= 0.f)
-//	{
-//		 shape.setPosition(playerBound.left, 0.f);
-//	}
-//	 if (playerBound.top + playerBound.height >= window->getSize().y)
-//	 {
-//		 shape.setPosition(playerBound.left, window->getSize().y - playerBound.height);
-//	}
-//}
+void Player::UpdateBound(RenderTarget & window)
+{
+	FloatRect n_rect = sprite.getGlobalBounds();
+
+	float x = max(0.f, min(window.getSize().x - n_rect.width, n_rect.left));
+	float y = max(0.f, min(window.getSize().y - n_rect.height, n_rect.top));
+
+	sprite.setPosition(x, y);
+}
 
 void Player :: Update(RenderTarget & window)
 {
 	UpdateMovement();
 	UpdateAnimation();
 
-	//UpdateBound(window);
+	UpdateBound(window);
 }
 
 void Player::Render(RenderTarget &window)
