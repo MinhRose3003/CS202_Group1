@@ -58,3 +58,12 @@ void Coin::RenderCoin(RenderTarget & window)
 {
 	window.draw(sprite);
 }
+
+Sprite Coin ::GetHitbox()
+{
+	return sprite;
+}
+Image Coin::GetImage()
+{
+	return image;
+}

@@ -30,6 +30,9 @@ private:
 
 	float moveSpeed;
 
+	//Point 
+	int point;
+
 public:
 	Player(float x = 0.f, float y = 0.f, float speed = 2.f);
 	~Player();
@@ -53,6 +56,10 @@ public:
 	//collision check
 	Sprite GetHitbox();
 	Image GetImage();
+
+	//Get-Set
+	void AddPoint();
+	int GetPoint();
 };
 
 #endif

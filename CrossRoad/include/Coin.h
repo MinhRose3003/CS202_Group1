@@ -24,6 +24,9 @@ public :
 	void UpdateAnimation();
 
 	void RenderCoin(RenderTarget& window);
+
+	Sprite GetHitbox();
+	Image GetImage();
 	~Coin();
 };
 

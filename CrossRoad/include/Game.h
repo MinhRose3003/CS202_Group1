@@ -52,10 +52,16 @@ private:
 	vector<int> count;
 	vector<int> countMax;
 	bool isPlaying;
+
+	//Font
+	Font font;
+	Text textPoint;
+	Text point;
 public:
 	Game();
 	virtual ~Game();
 
+	void InitFont();
 	void InitCoin();
 	void InitVariable();
 	void InitWindow();
@@ -78,12 +84,14 @@ public:
 	void UpdateCoin();
 	void CheckColide();
 	void CheckLevelUp();
+	void GetPoint();
 
 	//render 
 	void Render();
 	void RenderPlayer();
 	void RenderBarries();
 	void RenderCoin();
+	void RenderTextPoint();
 
 	//Function 
 	const bool IsRunningGame() const;

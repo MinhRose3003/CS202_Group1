@@ -3,6 +3,7 @@
 void Player::InitVariable(float speed)
 {
 	moveSpeed = speed;
+	point = 0;
 	animationState = PLAYER_ANIMATION_STATE::MOVING_UP;
 
 	width = 32;
@@ -198,6 +199,15 @@ Image Player::GetImage()
 	return image;
 }
 
+void Player::AddPoint()
+{
+	point += 10;
+}
+
+int Player ::GetPoint()
+{
+	return point;
+}
 Player :: ~Player()
 {
 }

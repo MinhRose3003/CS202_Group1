@@ -115,6 +115,32 @@ void Game::InitGame()
 	InitPlayer();
 }
 
+void Game::InitFont()
+{
+	if (!font.loadFromFile("font/Kenta-qZ3O1.ttf"))
+	{
+		cout << "Cannot load font from font/Kenta-qZ3O1.ttf\n";
+	}
+
+	textPoint.setCharacterSize(50);
+	textPoint.setFont(font);
+	textPoint.setFillColor(Color::Black);
+	textPoint.setString("Point  ");
+	textPoint.setOrigin(textPoint.getLocalBounds().width / 2, textPoint.getLocalBounds().height / 2);
+	textPoint.setPosition(100.f ,10.f);
+
+	point.setCharacterSize(50);
+	point.setFont(font);
+	point.setFillColor(Color::Black);
+	point.setString("Point ");
+	point.setOrigin(textPoint.getLocalBounds().width / 2, textPoint.getLocalBounds().height / 2);
+	point.setPosition(250.f, 10.f);
+
+	stringstream ss; 
+	ss << player->GetPoint();
+	point.setString(ss.str());
+	
+}
 void Game::CheckLevelUp()
 {
 	Sprite n_sprite = player->GetHitbox();
@@ -152,6 +178,7 @@ Game::Game()
 	player = new Player;
 	//InitMusic();
 	InitVariable();
+	InitFont();
 	InitPlayer();
 	InitCoin();
 	InitWindow();
@@ -199,6 +226,7 @@ void Game::Run()
 							Update();
 							Render();
 							CheckColide();
+							GetPoint();
 							CheckLevelUp();
 						}
 						break;
@@ -300,6 +328,31 @@ void Game::CheckColide()
 	}
 }
 
+void Game::GetPoint()
+{
+	int k = 0;
+	bool getPoint = false;
+	for (int i = 0; i < coinList.size(); i++)
+	{
+		if (PixelPerfectCollision(player->GetHitbox(), coinList[i]->GetHitbox(),
+			player->GetImage(), coinList[i]->GetImage()))
+		{
+			player->AddPoint();
+			k = i;
+			getPoint = true;
+			break;
+		}
+	}
+	if (getPoint)
+	{
+		coinList.erase(coinList.begin() + k);
+	}
+
+	stringstream ss;
+	ss << player->GetPoint();
+	point.setString(ss.str());
+}
+
 void Game::UpdateCoin()
 {
 	for (int i = 0; i < coinList.size(); i++)
@@ -339,6 +392,12 @@ void Game::RenderCoin()
 		coinList[i]->RenderCoin(window);
 	}
 }
+
+void Game::RenderTextPoint()
+{
+	window.draw(textPoint);
+	window.draw(point);
+}
 void Game::Render()
 {
 	window.clear();
@@ -347,7 +406,7 @@ void Game::Render()
 	RenderCoin();
 	RenderBarries();
 	RenderPlayer();
-	
+	RenderTextPoint();
 
 	window.display();
 }
