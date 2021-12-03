@@ -1,37 +1,33 @@
 #include "../include/Coin.h"
 
-void Coin::InitVarible(float x, float y)
-{
-	this->x = x;
-	this->y = y;
-}
+
 void Coin::InitImage()
 {
-	if (!image.loadFromFile("Sprite/Coin/png"))
+	if (!image.loadFromFile("Sprite/Coin2.png"))
 	{
-		cout << "ERROR LOAD COIN ";
+		cout << "ERROR LOAD COIN " << endl;
 	}
 }
 void Coin::InitTexture()
 {
-	if (!texture.loadFromFile("Sprite/Coin/png"))
+	if (!texture.loadFromFile("Sprite/Coin2.png"))
 	{
-		cout << "ERROR LOAD COIN ";
+		cout << "ERROR LOAD COIN " << endl;
 	}
 }
-void Coin::InitSprite()
+void Coin::InitSprite(float x , float y)
 {
 	sprite.setTexture(texture);
-	currenFrame = IntRect(0, 0, 46.667f, 56.f);
+	currenFrame = IntRect(0, 0, 860/6, 167);
 	sprite.setTextureRect(currenFrame);
 	sprite.setPosition(x, y);
+	sprite.setScale(0.3f, 0.3f);
 }
 Coin::Coin(float x, float y)
 {
-	InitVarible(x, y);
 	InitImage();
 	InitTexture();
-	InitSprite();
+	InitSprite(x,y);
 }
 
 Coin :: ~Coin()
@@ -41,16 +37,14 @@ Coin :: ~Coin()
 
 void Coin::UpdateAnimation()
 {
-	Clock timeAnimation;
-	if (timeAnimation.getElapsedTime().asSeconds() >= 0.1f)
+	if (timeAnimation.getElapsedTime().asSeconds() >= 0.2f)
 	{
 		currenFrame.top = 0.f;
-		currenFrame.left += 46.667f;
-		if (currenFrame.left >= 280.f)
+		currenFrame.left += 143.334f;
+		if (currenFrame.left >= 2150/3)
 		{
 			currenFrame.left = 0.f;
 		}
-
 		timeAnimation.restart();
 		sprite.setTextureRect(currenFrame);
 	}

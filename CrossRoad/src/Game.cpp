@@ -84,6 +84,19 @@ void Game::InitBackGround()
 	DarkBackground.setTextureRect(currentFrame);
 }
 
+void Game::InitCoin()
+{
+	//coinList.clear();
+	for (int i = 0; i < 10; i++)
+	{
+		int rX = rand() % ((width -50 ) - 50 + 1) + 50;
+		int rY = rand() % ((height - 50) - 50 + 1) + 50;
+		float tmp1 = (float)rX;
+		float tmp2 = (float)rY;
+		Coin *coin = new Coin(tmp1, tmp2);
+		coinList.push_back(coin);
+	}
+}
 void Game::InitPlayer()
 {
 	player->Init(xp, yp, sp);
@@ -140,8 +153,10 @@ Game::Game()
 	//InitMusic();
 	InitVariable();
 	InitPlayer();
+	InitCoin();
 	InitWindow();
 	InitMenu();
+	
 }
 
 Game::~Game()
@@ -285,6 +300,13 @@ void Game::CheckColide()
 	}
 }
 
+void Game::UpdateCoin()
+{
+	for (int i = 0; i < coinList.size(); i++)
+	{
+		coinList[i]->UpdateCoin();
+	}
+}
 void Game::Update()
 {
 	PollingEvent();
@@ -292,6 +314,8 @@ void Game::Update()
 	UpdateBarriers();
 
 	UpdatePlayer();
+
+	UpdateCoin();
 }
 
 void Game::RenderPlayer()
@@ -308,14 +332,22 @@ void Game::RenderBarries()
 	}
 }
 
+void Game::RenderCoin()
+{
+	for (int i = 0; i < coinList.size(); i++)
+	{
+		coinList[i]->RenderCoin(window);
+	}
+}
 void Game::Render()
 {
 	window.clear();
 
 	window.draw(Background);
-
+	RenderCoin();
 	RenderBarries();
 	RenderPlayer();
+	
 
 	window.display();
 }

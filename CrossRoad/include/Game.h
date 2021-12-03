@@ -9,6 +9,7 @@
 #include "Truck.h"
 #include "Bird.h"
 #include "Dinausor.h"
+#include "Coin.h"
 
 
 
@@ -24,8 +25,8 @@ private:
 	Menu* menu;
 
 	//Music 
-	Sound sound;
-	SoundBuffer  soundBuffer;
+	//Sound sound;
+	//SoundBuffer  soundBuffer;
 
 	// background
 	Texture BackGroundTexture;
@@ -33,7 +34,8 @@ private:
 	Texture DarkBackGroundTexture;
 	Sprite DarkBackground;
 
-
+	//Coin 
+	vector <Coin *> coinList;
 	
 	// settings
 	int width, height;
@@ -54,6 +56,7 @@ public:
 	Game();
 	virtual ~Game();
 
+	void InitCoin();
 	void InitVariable();
 	void InitWindow();
 	void InitPlayer();
@@ -72,6 +75,7 @@ public:
 	void PollingEvent();
 	void UpdatePlayer();
 	void UpdateBarriers();
+	void UpdateCoin();
 	void CheckColide();
 	void CheckLevelUp();
 
@@ -79,6 +83,7 @@ public:
 	void Render();
 	void RenderPlayer();
 	void RenderBarries();
+	void RenderCoin();
 
 	//Function 
 	const bool IsRunningGame() const;

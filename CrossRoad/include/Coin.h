@@ -10,15 +10,15 @@ private:
 	Image image;
 	Texture texture;
 	Sprite sprite;
-
 	IntRect currenFrame;
-	float x, y;
+
+	Clock timeAnimation;
+
 public :
 	Coin(float x, float y);
-	void InitVarible(float x, float y);
 	void InitImage();
 	void InitTexture();
-	void InitSprite();
+	void InitSprite(float x, float y);
 
 	void UpdateCoin();
 	void UpdateAnimation();
