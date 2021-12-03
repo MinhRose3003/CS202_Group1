@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _BIRD_LIB_
 #define _BIRD_LIB_
 

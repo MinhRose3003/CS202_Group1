@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _DINAUSOR_LIB_
 #define _DINAUSOR_LIB_
 

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _TRUCK_LIB_
 #define _TRUCK_LIB_
 

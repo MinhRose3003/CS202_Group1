@@ -1,3 +1,4 @@
+#pragma once
 #ifndef __MENU_GAME_LIB_
 #define __MENU_GAME_LIB_
 

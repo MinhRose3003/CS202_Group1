@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _BARRIER_LIB_
 #define _BARRIER_LIB_
 

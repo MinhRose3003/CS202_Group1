@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _CAR_LIB_
 #define _CAR_LIB_
 

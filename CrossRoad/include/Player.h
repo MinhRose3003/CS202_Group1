@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _PLAYER_LIB_
 #define _PLAYER_LIB_
 

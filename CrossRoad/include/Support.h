@@ -5,6 +5,7 @@
 #define NOMINMAX
 
 #include "Graphics.h"
+#include <Windows.h>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -16,6 +17,9 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Network.hpp>
+#include <SFML/Audio.hpp>
+
+
 
 using namespace sf;
 using namespace std;
