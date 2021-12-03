@@ -1,5 +1,5 @@
 #include "../include/Game.h"
-
+#include <SFML/Audio.hpp>
 using namespace sf;
 
 void Game::InitVariable()
@@ -121,7 +121,14 @@ void Game::CheckLevelUp()
 
 	cout << "Level: " << level << '\n';
 }
-
+//void Game::InitMusic()
+//{
+//	if (!soundBuffer.loadFromFile("Sound/musicGame.wav"))
+//	{
+//		cout << "ERROR LOAD MUSIC" << endl;
+//	}
+//	sound.setBuffer(soundBuffer);
+//}
 void Game::InitMenu()
 {
 	menu = new Menu(width, height);
@@ -130,7 +137,7 @@ void Game::InitMenu()
 Game::Game()
 {
 	player = new Player;
-
+	//InitMusic();
 	InitVariable();
 	InitPlayer();
 	InitWindow();

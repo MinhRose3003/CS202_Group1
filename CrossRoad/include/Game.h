@@ -10,6 +10,8 @@
 #include "Bird.h"
 #include "Dinausor.h"
 
+
+
 class Game
 {
 private:
@@ -19,7 +21,11 @@ private:
 	Event event;
 
 	// menu
-	Menu *menu;
+	Menu* menu;
+
+	//Music 
+	Sound sound;
+	SoundBuffer  soundBuffer;
 
 	// background
 	Texture BackGroundTexture;
@@ -27,6 +33,8 @@ private:
 	Texture DarkBackGroundTexture;
 	Sprite DarkBackground;
 
+
+	
 	// settings
 	int width, height;
 	int xp, yp;
@@ -37,7 +45,7 @@ private:
 	int lCount, rCount;
 
 	// player + barriers
-	Player * player;
+	Player* player;
 	vector<Barrier*> barriers[8];
 	vector<int> count;
 	vector<int> countMax;
@@ -51,6 +59,7 @@ public:
 	void InitPlayer();
 	void InitIcon();
 	void InitBackGround();
+	void InitMusic();
 	void InitMenu();
 	void InitGame();
 	void LoadGame();
@@ -76,7 +85,7 @@ public:
 	bool visible(Barrier* barrier);
 	Barrier* GetBarrier(float x, float y, bool isRight, float speed);
 	bool PixelPerfectCollision(const sf::Sprite& a, const sf::Sprite& b,
-								const sf::Image& imgA, const sf::Image& imgB);
+		const sf::Image& imgA, const sf::Image& imgB);
 
 };
 
