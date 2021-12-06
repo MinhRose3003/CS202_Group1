@@ -4,7 +4,7 @@
 
 #define NOMINMAX
 
-#include "Graphics.h"
+//#include "Graphics.h"
 #include <Windows.h>
 #include <iostream>
 #include <fstream>
@@ -12,15 +12,13 @@
 #include <ctime>
 #include <random>
 #include <chrono>
+#include <sstream>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Network.hpp>
-
-
-
 
 using namespace sf;
 using namespace std;

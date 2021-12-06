@@ -11,8 +11,6 @@
 #include "Dinausor.h"
 #include "Coin.h"
 
-
-
 class Game
 {
 private:
@@ -25,8 +23,8 @@ private:
 	Menu* menu;
 
 	//Music 
-	//Sound sound;
-	//SoundBuffer  soundBuffer;
+	Sound sound;
+	SoundBuffer  soundBuffer;
 
 	// background
 	Texture BackGroundTexture;
