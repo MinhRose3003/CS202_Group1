@@ -19,9 +19,6 @@ private:
 	VideoMode videoMode;
 	Event event;
 
-	// menu
-	Menu* menu;
-
 	//Music 
 	Sound sound;
 	SoundBuffer  soundBuffer;
@@ -32,71 +29,80 @@ private:
 	Texture DarkBackGroundTexture;
 	Sprite DarkBackground;
 
-	//Coin 
-	vector <Coin *> coinList;
+	// menu
+	Menu* menu;
 	
-	// settings
+	// default
 	int width, height;
 	int xp, yp;
-	float sp;
-	float barrierSpeed;
 	vector<int> line;
-	int level;
-	int lCount, rCount;
 
-	// player + barriers
+	// player
 	Player* player;
+	float sp;
+
+	// barriers
+	float barrierSpeed;
+	int lCount, rCount;
 	vector<Barrier*> barriers[8];
 	vector<int> count;
 	vector<int> countMax;
-	bool isPlaying;
 
-	//Font
+	// Coin 
+	vector <Coin *> coinList;
+
+	// textPoint
 	Font font;
 	Text textPoint;
-	Text point;
+
+	int level;
+	bool isPlaying;
 public:
 	Game();
 	virtual ~Game();
 
-	void InitFont();
-	void InitCoin();
-	void InitVariable();
-	void InitWindow();
-	void InitPlayer();
-	void InitIcon();
-	void InitBackGround();
-	void InitMusic();
-	void InitMenu();
-	void InitGame();
-	void LoadGame();
-	void UpVariable();
+	// main
+	void InitVariable(); // settings of game
+	void InitWindow(); // create window
+	void InitBackGround(); // load background + darken background image
+	void InitMusic(); // load and play background sound
+	void InitTextPoint(); // point text box
+	void InitMenu(); // create Menu (list of text box)
 
-	void Run();
+	void PollingEvent(); // hotkeys / escape while playing
+	void Run(); // main
+	void Update(); // update animation + position of objects
+	void Render(); // draw game
+	void RenderMenu(); // draw menu
 
-	//update 
-	void Update();
-	void PollingEvent();
-	void UpdatePlayer();
-	void UpdateBarriers();
-	void UpdateCoin();
-	void CheckColide();
-	void CheckLevelUp();
-	void GetPoint();
+	void InitLevel(); // init game (reset player + barrier + coin)
+	void CheckLevelUp(); // make change when level up
+	void CheckColide(); // check colide between player and barriers
 
-	//render 
-	void Render();
-	void RenderPlayer();
-	void RenderBarries();
-	void RenderCoin();
-	void RenderTextPoint();
+	void LoadGame(); // load from text file or bin file or something (miss)
 
-	//Function 
-	const bool IsRunningGame() const;
-	bool visible(Barrier* barrier);
-	Barrier* GetBarrier(float x, float y, bool isRight, float speed);
-	bool PixelPerfectCollision(const sf::Sprite& a, const sf::Sprite& b,
-		const sf::Image& imgA, const sf::Image& imgB);
+	// player
+	void InitPlayer(); // set player poisition to the beginning
+	void UpgradePlayer();
+	void UpdatePlayer(); // update player animation + position
+	void RenderPlayer(); // draw player 
+
+	// barriers
+	void InitBarriers();
+	void UpgradeBarriers();
+	void UpdateBarriers(); // update barriers animation + position
+	bool visible(Barrier* barrier); // check if barrier is out of window
+	Barrier* GetBarrier(float x, float y, bool isRight, float speed); // get new barrier 
+	void RenderBarries(); // draw barriers
+
+	// coin
+	void InitCoin(); // create coin at random position
+	void UpdateCoin(); // update coins animation + position
+	void RenderCoin(); // draw coins
+
+	// point
+	void UpdateTextPoint(); // add point when collect coin
+	void RenderTextPoint(); // draw point text box
 
 };
 

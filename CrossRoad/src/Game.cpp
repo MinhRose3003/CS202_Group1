@@ -3,44 +3,12 @@ using namespace sf;
 
 void Game::InitVariable()
 {
-	isPlaying = true;
-
 	width = 1144;
 	height = 840;
 	xp = 516; 
 	yp = 725;
-	sp = 2.f; // level-up
-	barrierSpeed = 1.f; // level-up
 	line = {180, 235, 300, 360, 430, 490, 565, 615};
-	level = 1; // level-up
-	lCount = 400; // level-up
-	rCount = 800; // level-up
-
-	mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-
-	count.assign(8, 0);
-	countMax.assign(8, 0);
-	for (int i = 0; i < 8; ++i) {
-		countMax[i] = uniform_int_distribution<int>(1, 1000)(rng);
-	}
 }
-void Game::UpVariable()
-{
-	sp += 0.05;
-	barrierSpeed += 0.5;
-	lCount = max(100, lCount - 30);
-	rCount = max(200, rCount - 50);
-	level += 1;
-
-	mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-
-	count.assign(8, 0);
-	countMax.assign(8, 0);
-	for (int i = 0; i < 8; ++i) {
-		countMax[i] = uniform_int_distribution<int>(1, 1000)(rng);
-	}
-}
-
 void Game::InitWindow()
 {
 	videoMode.height = height;
@@ -48,12 +16,6 @@ void Game::InitWindow()
 	window.create(videoMode, "CrossTheRoad", Style::Titlebar | Style::Close);
 	window.setFramerateLimit(144);
 
-	InitIcon();
-	InitBackGround();
-}
-
-void Game::InitIcon()
-{
 	Image icon;
 	if (!icon.loadFromFile("Sprite/icon.png"))
 	{
@@ -61,7 +23,6 @@ void Game::InitIcon()
 	}
 	window.setIcon(32, 32, icon.getPixelsPtr());
 }
-
 void Game::InitBackGround()
 {
 	if (!BackGroundTexture.loadFromFile("Sprite/background.png"))
@@ -82,83 +43,6 @@ void Game::InitBackGround()
 	IntRect DarkcurrentFrame = IntRect(0, 0, width, height);
 	DarkBackground.setTextureRect(currentFrame);
 }
-
-void Game::InitCoin()
-{
-	//coinList.clear();
-	for (int i = 0; i < 10; i++)
-	{
-		int rX = rand() % ((width -50 ) - 50 + 1) + 50;
-		int rY = rand() % ((height - 50) - 50 + 1) + 50;
-		float tmp1 = (float)rX;
-		float tmp2 = (float)rY;
-		Coin *coin = new Coin(tmp1, tmp2);
-		coinList.push_back(coin);
-	}
-}
-void Game::InitPlayer()
-{
-	player->Init(xp, yp, sp);
-}
-
-void Game::InitGame()
-{
-	for (int j = 0; j < 8; ++j) {
-		for (int i = 0; i < barriers[j].size(); ++i) {
-			delete barriers[j][i];
-		}
-		barriers[j].clear();
-	}
-
-	InitVariable();
-	InitPlayer();
-}
-
-void Game::InitFont()
-{
-	if (!font.loadFromFile("font/Kenta-qZ3O1.ttf"))
-	{
-		cout << "Cannot load font from font/Kenta-qZ3O1.ttf\n";
-	}
-
-	textPoint.setCharacterSize(50);
-	textPoint.setFont(font);
-	textPoint.setFillColor(Color::Black);
-	textPoint.setString("Point  ");
-	textPoint.setOrigin(textPoint.getLocalBounds().width / 2, textPoint.getLocalBounds().height / 2);
-	textPoint.setPosition(100.f ,10.f);
-
-	point.setCharacterSize(50);
-	point.setFont(font);
-	point.setFillColor(Color::Black);
-	point.setString("Point ");
-	point.setOrigin(textPoint.getLocalBounds().width / 2, textPoint.getLocalBounds().height / 2);
-	point.setPosition(250.f, 10.f);
-
-	stringstream ss; 
-	ss << player->GetPoint();
-	point.setString(ss.str());
-	
-}
-void Game::CheckLevelUp()
-{
-	Sprite n_sprite = player->GetHitbox();
-	float top = n_sprite.getGlobalBounds().top;
-	if (top > 110) return;
-
-	for (int j = 0; j < 8; ++j) {
-		for (int i = 0; i < barriers[j].size(); ++i) {
-			delete barriers[j][i];
-		}
-		barriers[j].clear();
-	}
-
-	UpVariable();
-
-	InitPlayer();
-
-	cout << "Level: " << level << '\n';
-}
 void Game::InitMusic()
 {
 	if (!soundBuffer.loadFromFile("Sound/musicGame.wav"))
@@ -169,6 +53,19 @@ void Game::InitMusic()
 	sound.setLoop(true);
 	sound.play();
 }
+void Game::InitTextPoint()
+{
+	if (!font.loadFromFile("font/Kenta-qZ3O1.ttf"))
+	{
+		cout << "Cannot load font from font/Kenta-qZ3O1.ttf\n";
+	}
+
+	textPoint.setCharacterSize(50);
+	textPoint.setFont(font);
+	textPoint.setFillColor(Color::Black);
+	textPoint.setOrigin(textPoint.getLocalBounds().width / 2, textPoint.getLocalBounds().height / 2);
+	textPoint.setPosition(100.f, 10.f);
+}
 void Game::InitMenu()
 {
 	menu = new Menu(width, height);
@@ -177,14 +74,18 @@ void Game::InitMenu()
 Game::Game()
 {
 	player = new Player;
-	InitMusic();
+
 	InitVariable();
-	InitFont();
-	InitPlayer();
-	InitCoin();
+
 	InitWindow();
-	InitMenu();
+
+	InitMusic();
+
+	InitBackGround();
 	
+	InitTextPoint();
+
+	InitMenu();
 }
 
 Game::~Game()
@@ -196,8 +97,34 @@ Game::~Game()
 			delete barriers[j][i];
 		}
 	}
+	for (int i = 0; i < coinList.size(); ++i) {
+		delete coinList[i];
+	}
 }
 
+void Game::InitLevel()
+{
+	isPlaying = true;
+	level = 1;
+	InitPlayer();
+	InitBarriers();
+	InitCoin();
+
+	cout << "Level: " << level << '\n';
+}
+void Game::CheckLevelUp()
+{
+	Sprite n_sprite = player->GetHitbox();
+	float top = n_sprite.getGlobalBounds().top;
+	if (top > 110) return;
+
+	level += 1;
+	UpgradePlayer();
+	UpgradeBarriers();
+	InitCoin();
+
+	cout << "Level: " << level << '\n';
+}
 void Game::Run()
 {
 	while (window.isOpen())
@@ -222,12 +149,12 @@ void Game::Run()
 				case Keyboard::Return:
 					switch (menu->GetItem()) {
 					case 1:
-						InitGame();
+						InitLevel();
 						while (isPlaying) {
+							PollingEvent();
 							Update();
 							Render();
 							CheckColide();
-							GetPoint();
 							CheckLevelUp();
 						}
 						break;
@@ -243,18 +170,8 @@ void Game::Run()
 			}
 		}
 
-		window.clear();
-		
-		window.draw(DarkBackground);
-		menu->Draw(window);
-
-		window.display();
+		RenderMenu();
 	}
-}
-
-const bool Game::IsRunningGame() const 
-{
-	return window.isOpen() && isPlaying;
 }
 
 void Game::PollingEvent()
@@ -276,44 +193,6 @@ void Game::PollingEvent()
 	}
 }
 
-void Game::UpdateBarriers()
-{
-	mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-
-	for (int j = 0; j < 8; ++j) {
-		if (barriers[j].size() && !visible(barriers[j][0])) 
-		{
-			// cout << "Remove car\n";
-			barriers[j].erase(barriers[j].begin());
-		}
-		if (count[j] >= countMax[j])
-		{
-			if (j&1)
-				barriers[j].push_back(GetBarrier((float)width, (float)line[j], 0, barrierSpeed));
-			else
-				barriers[j].push_back(GetBarrier(-64, (float)line[j], 1, barrierSpeed));
-			count[j] = 0;
-			countMax[j] = uniform_int_distribution<int>(lCount, rCount)(rng);
-		}
-		else
-		{
-			count[j] += 1;
-		}
-	}
-
-	for (int j = 0; j < 8; ++j) {
-		for (int i = 0; i < barriers[j].size(); ++i)
-		{
-			barriers[j][i]->UpdateMovement();
-		}
-	}
-	
-}
-
-void Game::UpdatePlayer()
-{
-	player->Update(window);
-}
 
 void Game::CheckColide()
 {
@@ -329,75 +208,22 @@ void Game::CheckColide()
 	}
 }
 
-void Game::GetPoint()
-{
-	int k = 0;
-	bool getPoint = false;
-	for (int i = 0; i < coinList.size(); i++)
-	{
-		if (PixelPerfectCollision(player->GetHitbox(), coinList[i]->GetHitbox(),
-			player->GetImage(), coinList[i]->GetImage()))
-		{
-			player->AddPoint();
-			k = i;
-			getPoint = true;
-			break;
-		}
-	}
-	if (getPoint)
-	{
-		coinList.erase(coinList.begin() + k);
-	}
-
-	stringstream ss;
-	ss << player->GetPoint();
-	point.setString(ss.str());
-}
-
-void Game::UpdateCoin()
-{
-	for (int i = 0; i < coinList.size(); i++)
-	{
-		coinList[i]->UpdateCoin();
-	}
-}
 void Game::Update()
 {
-	PollingEvent();
-
 	UpdateBarriers();
-
 	UpdatePlayer();
-
 	UpdateCoin();
+	UpdateTextPoint();
 }
 
-void Game::RenderPlayer()
+void Game::RenderMenu()
 {
-	player->Render(window);
-}
-void Game::RenderBarries()
-{
-	for (int j = 0; j < 8; ++j) {
-		for (int i = 0; i < barriers[j].size(); i++)
-		{
-			barriers[j][i]->Render(window);
-		}
-	}
-}
+	window.clear();
 
-void Game::RenderCoin()
-{
-	for (int i = 0; i < coinList.size(); i++)
-	{
-		coinList[i]->RenderCoin(window);
-	}
-}
+	window.draw(DarkBackground);
+	menu->Draw(window);
 
-void Game::RenderTextPoint()
-{
-	window.draw(textPoint);
-	window.draw(point);
+	window.display();
 }
 void Game::Render()
 {
@@ -412,72 +238,3 @@ void Game::Render()
 	window.display();
 }
 
-Barrier* Game::GetBarrier(float x, float y, bool isRight, float speed)
-{
-	int random = rand() % (2 - 1 + 1) + 1;
-	if (random == 1)
-	{
-		return new Car(x, y, isRight, speed);
-	}
-	else if (random == 2)
-	{
-		return new Truck(x, y, isRight, speed);
-	}
-	/*else if (random == 3)
-	{
-		return new Bird(x, y, isRight, speed);
-	}
-	else
-	{
-		return new Dinausor(x, y, isRight, speed);
-	}*/
-}
-
-bool Game::PixelPerfectCollision(const sf::Sprite& a, const sf::Sprite& b,
-	const sf::Image& imgA, const sf::Image& imgB) {
-	sf::IntRect boundsA(FToIRect(a.getGlobalBounds()));
-	sf::IntRect boundsB(FToIRect(b.getGlobalBounds()));
-	sf::IntRect intersection;
-
-	if (boundsA.intersects(boundsB, intersection)) {
-		const sf::Transform& inverseA(a.getInverseTransform());
-		const sf::Transform& inverseB(b.getInverseTransform());
-
-		const sf::Vector2u& sizeA(imgA.getSize());
-		const sf::Vector2u& sizeB(imgB.getSize());
-
-		const sf::Uint8* pixA = imgA.getPixelsPtr();
-		const sf::Uint8* pixB = imgB.getPixelsPtr();
-
-		sf::Vector2f vecA, vecB;
-		int xMax = intersection.left + intersection.width;
-		int yMax = intersection.top + intersection.height;
-
-		for (int x = intersection.left; x < xMax; x++)
-			for (int y = intersection.top; y < yMax; y++) {
-				vecA = inverseA.transformPoint(x, y);
-				vecB = inverseB.transformPoint(x, y);
-
-				int idxA = ((int)vecA.x + ((int)vecA.y)*sizeA.x) * 4 + 3;
-				int idxB = ((int)vecB.x + ((int)vecB.y)*sizeB.x) * 4 + 3;
-
-				if (vecA.x > 0 && vecA.y > 0 &&
-					vecB.x > 0 && vecB.y > 0 &&
-					vecA.x < sizeA.x && vecA.y < sizeA.y &&
-					vecB.x < sizeB.x && vecB.y < sizeB.y &&
-					pixA[idxA] > 0 &&
-					pixB[idxB] > 0) {
-					return true;
-				}
-			}
-	}
-
-	return false;
-}
-
-bool Game::visible(Barrier* barrier)
-{
-	Sprite n_sprite = barrier->GetHitbox();
-	FloatRect n_rect = n_sprite.getGlobalBounds();
-	return n_rect.intersects(FloatRect(0, 0, (float)width, (float)height));
-}
