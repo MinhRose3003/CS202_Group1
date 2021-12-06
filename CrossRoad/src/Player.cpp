@@ -1,9 +1,9 @@
 #include "../include/Player.h"
 
-void Player::InitVariable(float speed)
+void Player::InitVariable(float speed, int point)
 {
 	moveSpeed = speed;
-	point = 0;
+	this->point = point;
 	animationState = PLAYER_ANIMATION_STATE::MOVING_UP;
 
 	width = 32;
@@ -34,9 +34,9 @@ void Player::InitSprite(float x, float y)
 	sprite.setPosition(x, y);
 }
 
-void Player::Init(float x, float y, float speed)
+void Player::Init(float x, float y, float speed, int point)
 {
-	InitVariable(speed);
+	InitVariable(speed, point);
 	InitSprite(x, y);
 	InitAnimation();
 }
@@ -47,7 +47,7 @@ void Player::InitAnimation()
 }
 Player::Player(float x, float y, float speed)
 {
-	InitVariable(speed);
+	InitVariable(speed, 0);
 	InitImage();
 	InitTexture();
 	InitSprite(x, y);
@@ -193,6 +193,10 @@ Sprite Player::GetHitbox()
 	n_sprite.setPosition(p);
 
 	return n_sprite;
+}
+Sprite Player::GetHitboxFull()
+{
+	return sprite;
 }
 Image Player::GetImage()
 {

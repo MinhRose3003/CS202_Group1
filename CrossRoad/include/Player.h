@@ -39,10 +39,10 @@ public:
 	void InitImage();
 	void InitTexture();
 	void InitSprite(float x, float y);
-	void InitVariable(float speed);
+	void InitVariable(float speed, int point);
 	void InitAnimation();
 
-	void Init(float x, float y, float speed);
+	void Init(float x, float y, float speed, int point = 0);
 	
 	//update
 	void UpdateMovement();
@@ -55,6 +55,7 @@ public:
 
 	//collision check
 	Sprite GetHitbox();
+	Sprite GetHitboxFull();
 	Image GetImage();
 
 	//Get-Set
