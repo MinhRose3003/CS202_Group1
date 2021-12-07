@@ -24,6 +24,45 @@ void Game::CheckLevelUp()
 
 	cout << "Level: " << level << '\n';
 }
+void Game::Update()
+{
+	UpdateBarriers();
+	UpdatePlayer();
+	UpdateCoin();
+	UpdateTextPoint();
+}
+void Game::CheckColide()
+{
+	for (int j = 0; j < 8; ++j) {
+		for (int i = 0; i < barriers[j].size(); ++i) {
+			if (PixelPerfectCollision(player->GetHitbox(), barriers[j][i]->GetHitbox(),
+				player->GetImage(), barriers[j][i]->GetImage())) {
+				cout << "Colide!\n";
+				isPlaying = false;
+				return;
+			}
+		}
+	}
+}
+void Game::PollingEvent()
+{
+	while (window.pollEvent(event))
+	{
+		switch (this->event.type)
+		{
+		case Event::Closed:
+			window.close();
+			break;
+		case Event::KeyReleased:
+			switch (event.key.code)
+			{
+			case Keyboard::Escape:
+				Pause();
+			}
+			break;
+		}
+	}
+}
 void Game::Run()
 {
 	while (window.isOpen())
@@ -36,7 +75,8 @@ void Game::Run()
 				window.close();
 				break;
 			case Event::KeyReleased:
-				switch (event.key.code) {
+				switch (event.key.code) 
+				{
 				case Keyboard::Up:
 				case Keyboard::W:
 					menu->MoveUp();
@@ -64,63 +104,149 @@ void Game::Run()
 						window.close();
 						break;
 					}
+					break;
+				case Keyboard::Escape:
+					window.close();
 				}
-				
 			}
 		}
 
 		RenderMenu();
 	}
 }
-
-void Game::PollingEvent()
+void Game::Pause()
 {
-	while (window.pollEvent(event))
+	while (window.isOpen())
 	{
-		switch (this->event.type)
+		while (window.pollEvent(event))
 		{
-		case Event::Closed:
-			window.close();
-			break;
-		case Event::KeyPressed:
-			if (event.key.code == Keyboard::Escape)
+			switch (this->event.type)
 			{
-				isPlaying = false;
+			case Event::Closed:
+				window.close();
+				break;
+			case Event::KeyReleased:
+				switch (event.key.code) 
+				{
+				case Keyboard::Up:
+				case Keyboard::W:
+					pauseMenu->MoveUp();
+					break;
+				case Keyboard::Down:
+				case Keyboard::S:
+					pauseMenu->MoveDown();
+					break;
+				case Keyboard::Return:
+					switch (pauseMenu->GetItem()) {
+					case 1:
+						return;
+					case 2:
+						SaveGame();
+						break;
+					case 3:
+						LoadGame();
+						break;
+					case 4:
+						isPlaying = false;
+						return;
+					}
+					break;
+				case Keyboard::Escape:
+					return;
+				}
 			}
-			break;
 		}
+
+		RenderPauseMenu();
 	}
 }
-
-
-void Game::CheckColide()
+void Game::SaveGame()
 {
-	for (int j = 0; j < 8; ++j) {
-		for (int i = 0; i < barriers[j].size(); ++i) {
-			if (PixelPerfectCollision(player->GetHitbox(), barriers[j][i]->GetHitbox(),
-										player->GetImage(), barriers[j][i]->GetImage())) {
-				cout << "Colide!\n";
-				isPlaying = false;
-				return;
+	string input = GetFilename();
+	cout << "SaveGame: This function isn't completed!\n";
+}
+void Game::LoadGame()
+{
+	string input = GetFilename();
+	cout << "LoadGame: This function isn't completed!\n";
+}
+string Game::GetFilename()
+{
+	string input;
+	while (window.isOpen())
+	{
+		textInput.setString("Filename " + input);
+		RenderGetFilename();
+
+		while (window.pollEvent(event))
+		{
+			switch (this->event.type)
+			{
+			case Event::Closed:
+				window.close();
+				break;
+			case Event::TextEntered:
+				switch (event.text.unicode) {
+				case '\b':
+					if (input.size() > 0)
+						input.erase(input.size() - 1, 1);
+					break;
+				default:
+					if (validFileChar(event.text.unicode))
+						input += event.text.unicode;
+				}
+				break;
+			case Event::KeyReleased:
+				switch (event.key.code) 
+				{
+				case Keyboard::Return:
+					return input;
+					break;
+				case Keyboard::Escape:
+					return "";
+					break;
+				}
+				break;
 			}
 		}
 	}
-}
 
-void Game::Update()
-{
-	UpdateBarriers();
-	UpdatePlayer();
-	UpdateCoin();
-	UpdateTextPoint();
+	return "";
 }
-
 void Game::RenderMenu()
 {
 	window.clear();
 
-	window.draw(DarkBackground);
+	Background.setColor(sf::Color(80, 80, 80));
+	window.draw(Background);
+
 	menu->Draw(window);
+
+	window.display();
+}
+void Game::RenderPauseMenu()
+{
+	window.clear();
+
+	Background.setColor(sf::Color(80, 80, 80));
+	window.draw(Background);
+
+	RenderCoin(true);
+	RenderBarriers(true);
+	RenderPlayer(true);
+	RenderTextPoint(true);
+	pauseMenu->Draw(window);
+
+	window.display();
+}
+void Game::RenderGetFilename()
+{
+	window.clear();
+
+	Background.setColor(sf::Color(80, 80, 80));
+	window.draw(Background);
+
+	window.draw(textInput);
 
 	window.display();
 }
@@ -128,12 +254,13 @@ void Game::Render()
 {
 	window.clear();
 
+	Background.setColor(sf::Color(255, 255, 255));
 	window.draw(Background);
+
 	RenderCoin();
-	RenderBarries();
+	RenderBarriers();
 	RenderPlayer();
 	RenderTextPoint();
 
 	window.display();
 }
-
