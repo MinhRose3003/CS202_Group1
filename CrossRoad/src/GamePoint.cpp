@@ -14,7 +14,7 @@ void Game::UpdateTextPoint()
 	}
 	textPoint.setString("Point  " + to_string(player->GetPoint()));
 }
-void Game::RenderTextPoint()
+void Game::RenderTextPoint(bool dark)
 {
 	window.draw(textPoint);
 }
