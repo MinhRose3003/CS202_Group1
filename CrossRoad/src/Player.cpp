@@ -1,10 +1,10 @@
 #include "../include/Player.h"
 
-void Player::InitVariable(float speed, int point)
+void Player::InitVariable(float speed, int point, int state)
 {
 	moveSpeed = speed;
 	this->point = point;
-	animationState = PLAYER_ANIMATION_STATE::MOVING_UP;
+	animationState = PLAYER_ANIMATION_STATE(state);
 
 	width = 32;
 	height = 48;
@@ -34,9 +34,9 @@ void Player::InitSprite(float x, float y)
 	sprite.setPosition(x, y);
 }
 
-void Player::Init(float x, float y, float speed, int point)
+void Player::Init(float x, float y, float speed, int point, int state)
 {
-	InitVariable(speed, point);
+	InitVariable(speed, point, state);
 	InitSprite(x, y);
 	InitAnimation();
 }
@@ -172,8 +172,12 @@ void Player :: Update(RenderTarget & window)
 	UpdateBound(window);
 }
 
-void Player::Render(RenderTarget &window)
+void Player::Render(RenderTarget &window, bool dark)
 {
+	if (dark)
+		sprite.setColor(Color(80, 80, 80));
+	else
+		sprite.setColor(Color(255, 255, 255));
 	window.draw(sprite);
 }
 
