@@ -29,7 +29,6 @@ void Game::Update()
 	UpdateBarriers();
 	UpdatePlayer();
 	UpdateCoin();
-	UpdateTextPoint();
 }
 void Game::CheckColide()
 {
@@ -43,6 +42,20 @@ void Game::CheckColide()
 			}
 		}
 	}
+}
+void Game::GetCoin()
+{
+	for (int i = 0; i < coinList.size(); i++)
+	{
+		if (PixelPerfectCollision(player->GetHitboxFull(), coinList[i]->GetHitbox(),
+			player->GetImage(), coinList[i]->GetImage()))
+		{
+			player->AddPoint();
+			coinList.erase(coinList.begin() + i);
+			break;
+		}
+	}
+
 }
 void Game::PollingEvent()
 {
@@ -95,6 +108,7 @@ void Game::Run()
 							Render();
 							CheckColide();
 							CheckLevelUp();
+							GetCoin();
 						}
 						break;
 					case 2:
@@ -163,19 +177,34 @@ void Game::Pause()
 void Game::SaveGame()
 {
 	string input = GetFilename();
-	cout << "SaveGame: This function isn't completed!\n";
+	ofstream fout("save/" + input, ios::out | ios::binary);
+	if (!fout) {
+		cout << "Cannot open file save/" + input << '\n';
+	}
+
+	fout.write((char*)&level, sizeof(int));
+
+	fout.close();
 }
 void Game::LoadGame()
 {
 	string input = GetFilename();
 	cout << "LoadGame: This function isn't completed!\n";
+	ifstream fin("save/" + input, ios::out | ios::binary);
+	if (!fin) {
+		cout << "Cannot open file save/" + input << '\n';
+	}
+
+
+
+	fin.close();
 }
 string Game::GetFilename()
 {
 	string input;
 	while (window.isOpen())
 	{
-		textInput.setString("Filename " + input);
+		textInput.setString("Filename  " + input);
 		RenderGetFilename();
 
 		while (window.pollEvent(event))
@@ -213,6 +242,12 @@ string Game::GetFilename()
 
 	return "";
 }
+
+void Game::RenderTexts(bool dark)
+{
+	textPoint.setString("Point  " + to_string(player->GetPoint()));
+	window.draw(textPoint);
+}
 void Game::RenderMenu()
 {
 	window.clear();
@@ -234,7 +269,7 @@ void Game::RenderPauseMenu()
 	RenderCoin(true);
 	RenderBarriers(true);
 	RenderPlayer(true);
-	RenderTextPoint(true);
+	RenderTexts(true);
 	pauseMenu->Draw(window);
 
 	window.display();
@@ -260,7 +295,7 @@ void Game::Render()
 	RenderCoin();
 	RenderBarriers();
 	RenderPlayer();
-	RenderTextPoint();
+	RenderTexts();
 
 	window.display();
 }

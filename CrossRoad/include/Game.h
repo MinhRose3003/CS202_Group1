@@ -71,6 +71,7 @@ public:
 	void CheckLevelUp(); // change settings when level up (upgrade player + barriers, reset coin) 
 	void Update(); // update animation + position of objects
 	void CheckColide(); // check colide between player and barriers
+	void GetCoin(); // +10 if player collects coin
 	// UI 
 	void PollingEvent(); // hotkeys / escape while playing
 	void Run(); // main
@@ -83,6 +84,7 @@ public:
 	void RenderMenu(); // draw menu
 	void RenderPauseMenu(); // draw pause menu
 	void RenderGetFilename(); // draw get filename screen
+	void RenderTexts(bool dark = false); // draw texts
 
 	// player
 	void InitPlayer(); // init player position, speed
@@ -109,9 +111,6 @@ public:
 	void SaveCoin(ostream &fout);
 	void LoadCoin(istream &fin);
 
-	// point
-	void UpdateTextPoint(); // update text point (+10 if player collects coin)
-	void RenderTextPoint(bool dark = false); // draw point text
 };
 
 #endif

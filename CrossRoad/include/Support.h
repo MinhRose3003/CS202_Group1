@@ -69,7 +69,7 @@ inline bool PixelPerfectCollision(const sf::Sprite& a, const sf::Sprite& b,
 }
 inline bool validFileChar(Uint32 c)
 {
-	return c != 27;
+	return c != 27 && c != '\r';
 	//return c == '.' || c == '/' || c == ':' || ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z');
 }
 
