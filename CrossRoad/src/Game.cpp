@@ -177,6 +177,7 @@ void Game::Pause()
 						break;
 					case 3:
 						LoadGame();
+						SaveGame(true);
 						break;
 					case 4:
 						isPlaying = false;
