@@ -51,11 +51,18 @@ void Game::InitTexts()
 	}
 
 	// Point ...
-	textPoint.setCharacterSize(50);
+	textPoint.setCharacterSize(30);
 	textPoint.setFont(font);
 	textPoint.setFillColor(Color::Black);
 	textPoint.setOrigin(textPoint.getLocalBounds().width / 2, textPoint.getLocalBounds().height / 2);
-	textPoint.setPosition(100.f, 10.f);
+	textPoint.setPosition(50.f, 70.f);
+
+	// Level ...
+	textLevel.setCharacterSize(30);
+	textLevel.setFont(font);
+	textLevel.setFillColor(Color::Black);
+	textLevel.setOrigin(textLevel.getLocalBounds().width / 2, textLevel.getLocalBounds().height / 2);
+	textLevel.setPosition(50.f, 40.f);
 
 	// PlayerInput ...
 	textInput.setCharacterSize(50);

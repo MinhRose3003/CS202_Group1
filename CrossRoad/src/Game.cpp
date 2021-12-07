@@ -265,6 +265,9 @@ void Game::RenderTexts(bool dark)
 {
 	textPoint.setString("Point  " + to_string(player->GetPoint()));
 	window.draw(textPoint);
+
+	textLevel.setString("Level  " + to_string(level));
+	window.draw(textLevel);
 }
 void Game::RenderMenu()
 {

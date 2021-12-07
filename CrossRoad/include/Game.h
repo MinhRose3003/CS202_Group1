@@ -51,7 +51,7 @@ private:
 
 	// text
 	Font font;
-	Text textPoint, textInput;
+	Text textPoint, textInput, textLevel;
 
 	int level;
 	bool isPlaying;
