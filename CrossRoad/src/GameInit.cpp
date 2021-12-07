@@ -73,6 +73,8 @@ void Game::InitMenu()
 Game::Game()
 {
 	player = new Player;
+	count.assign(8, 0);
+	countMax.assign(8, 0);
 
 	InitVariable();
 
