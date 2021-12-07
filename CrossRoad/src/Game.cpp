@@ -9,7 +9,7 @@ void Game::InitLevel()
 	InitBarriers();
 	InitCoin();
 
-	cout << "Level: " << level << '\n';
+	//cout << "Level: " << level << '\n';
 }
 void Game::CheckLevelUp()
 {
@@ -22,7 +22,7 @@ void Game::CheckLevelUp()
 	UpgradeBarriers();
 	InitCoin();
 
-	cout << "Level: " << level << '\n';
+	//cout << "Level: " << level << '\n';
 }
 void Game::Update()
 {
@@ -112,15 +112,24 @@ void Game::Run()
 						}
 						break;
 					case 2:
-						cout << "This function isn't completed!\n";
+						LoadGame();
+						Pause();
+						while (isPlaying) {
+							PollingEvent();
+							Update();
+							Render();
+							CheckColide();
+							CheckLevelUp();
+							GetCoin();
+						}
 						break;
 					case 3:
 						window.close();
 						break;
 					}
 					break;
-				case Keyboard::Escape:
-					window.close();
+				/*case Keyboard::Escape:
+					window.close();*/
 				}
 			}
 		}
@@ -180,22 +189,31 @@ void Game::SaveGame()
 	ofstream fout("save/" + input, ios::out | ios::binary);
 	if (!fout) {
 		cout << "Cannot open file save/" + input << '\n';
+		return;
 	}
 
 	fout.write((char*)&level, sizeof(int));
+	SavePlayer(fout);
+	SaveBarriers(fout);
+	SaveCoin(fout);
 
 	fout.close();
 }
 void Game::LoadGame()
 {
 	string input = GetFilename();
-	cout << "LoadGame: This function isn't completed!\n";
 	ifstream fin("save/" + input, ios::out | ios::binary);
 	if (!fin) {
 		cout << "Cannot open file save/" + input << '\n';
+		return;
 	}
 
+	isPlaying = true;
 
+	fin.read((char*)&level, sizeof(int));
+	LoadPlayer(fin);
+	LoadBarriers(fin);
+	LoadCoin(fin);
 
 	fin.close();
 }

@@ -16,7 +16,6 @@ void Game::InitBarriers()
 	rCount = 800; 
 
 	count.assign(8, 0);
-	countMax.assign(8, 0);
 	for (int i = 0; i < 8; ++i) {
 		countMax[i] = uniform_int_distribution<int>(1, 1000)(rng);
 	}
@@ -37,9 +36,77 @@ void Game::UpgradeBarriers()
 	rCount = max(200, rCount - 50);
 
 	count.assign(8, 0);
-	countMax.assign(8, 0);
 	for (int i = 0; i < 8; ++i) {
 		countMax[i] = uniform_int_distribution<int>(1, 1000)(rng);
+	}
+}
+void Game::SaveBarriers(ostream &fout)
+{
+	for (int j = 0; j < 8; ++j) {
+		int n = barriers[j].size();
+		fout.write((char*)&n, sizeof(int));
+		for (int i = 0; i < n; ++i) {
+			int type = TypeOfBarrier(barriers[j][i]);
+			Vector2f p = barriers[j][i]->GetPosition();
+			bool isRight = barriers[j][i]->GetIsRight();
+			float speed = abs(barriers[j][i]->GetSpeed());
+
+			fout.write((char*)&type, sizeof(int));
+			fout.write((char*)&p.x, sizeof(float));
+			fout.write((char*)&p.y, sizeof(float));
+			fout.write((char*)&isRight, sizeof(bool));
+			fout.write((char*)&speed, sizeof(float));
+		}
+	}
+
+	fout.write((char*)&barrierSpeed, sizeof(float));
+	fout.write((char*)&lCount, sizeof(int));
+	fout.write((char*)&rCount, sizeof(int));
+
+	for (int i = 0; i < 8; ++i) {
+		fout.write((char*)&count[i], sizeof(int));
+	}
+	for (int i = 0; i < 8; ++i) {
+		fout.write((char*)&countMax[i], sizeof(int));
+	}
+}
+void Game::LoadBarriers(istream &fin)
+{
+	for (int j = 0; j < 8; ++j) {
+		for (int i = 0; i < barriers[j].size(); ++i) {
+			delete barriers[j][i];
+		}
+		barriers[j].clear();
+	}
+
+	for (int j = 0; j < 8; ++j) {
+		int n;
+		fin.read((char*)&n, sizeof(int));
+		for (int i = 0; i < n; ++i) {
+			int type;
+			float x, y;
+			bool isRight;
+			float speed;
+
+			fin.read((char*)&type, sizeof(int));
+			fin.read((char*)&x, sizeof(float));
+			fin.read((char*)&y, sizeof(float));
+			fin.read((char*)&isRight, sizeof(bool));
+			fin.read((char*)&speed, sizeof(float));
+
+			barriers[j].push_back(GetBarrier(type, x, y, isRight, speed));
+		}
+	}
+
+	fin.read((char*)&barrierSpeed, sizeof(float));
+	fin.read((char*)&lCount, sizeof(int));
+	fin.read((char*)&rCount, sizeof(int));
+
+	for (int i = 0; i < 8; ++i) {
+		fin.read((char*)&count[i], sizeof(int));
+	}
+	for (int i = 0; i < 8; ++i) {
+		fin.read((char*)&countMax[i], sizeof(int));
 	}
 }
 void Game::UpdateBarriers()
@@ -84,25 +151,43 @@ void Game::RenderBarriers(bool dark)
 		}
 	}
 }
-Barrier* Game::GetBarrier(float x, float y, bool isRight, float speed)
+int Game::TypeOfBarrier(Barrier* barrier)
 {
-	int random = rand() % (2 - 1 + 1) + 1;
-	if (random == 1)
+	if (dynamic_cast<Car*>(barrier))
+		return 1;
+	if (dynamic_cast<Truck*>(barrier))
+		return 2;
+	if (dynamic_cast<Bird*>(barrier))
+		return 3;
+	if (dynamic_cast<Dinausor*>(barrier))
+		return 4;
+	cout << "cannot identify\n";
+	return 1; // default
+}
+Barrier* Game::GetBarrier(int type, float x, float y, bool isRight, float speed)
+{
+	if (type == 1)
 	{
 		return new Car(x, y, isRight, speed);
 	}
-	else if (random == 2)
+	else if (type == 2)
 	{
 		return new Truck(x, y, isRight, speed);
 	}
-	/*else if (random == 3)
+	/*else if (type == 3)
 	{
 		return new Bird(x, y, isRight, speed);
 	}
-	else
+	else if (type == 4)
 	{
 		return new Dinausor(x, y, isRight, speed);
 	}*/
+	return new Car(x, y, isRight, speed); // default
+}
+Barrier* Game::GetBarrier(float x, float y, bool isRight, float speed)
+{
+	int random = rand() % (2 - 1 + 1) + 1;
+	return GetBarrier(random, x, y, isRight, speed);
 }
 
 bool Game::visible(Barrier* barrier)
