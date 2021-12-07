@@ -100,7 +100,9 @@ public:
 	void UpdateBarriers(); // update barriers animation + position
 	void RenderBarriers(bool dark = false); // draw barriers
 	bool visible(Barrier* barrier); // check if barrier is out of window
+	int TypeOfBarrier(Barrier* barrier);
 	Barrier* GetBarrier(float x, float y, bool isRight, float speed); // create new barrier 
+	Barrier* GetBarrier(int type, float x, float y, bool isRight, float speed); // create new barrier 
 	void SaveBarriers(ostream &fout);
 	void LoadBarriers(istream &fin);
 
