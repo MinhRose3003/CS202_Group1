@@ -12,12 +12,12 @@ void Game::InitBarriers()
 	mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 	barrierSpeed = 1.f;
-	lCount = 400; 
-	rCount = 800; 
+	lCount = 700; 
+	rCount = 1000; 
 
 	count.assign(8, 0);
 	for (int i = 0; i < 8; ++i) {
-		countMax[i] = uniform_int_distribution<int>(1, 1000)(rng);
+		countMax[i] = uniform_int_distribution<int>(1, 500)(rng);
 	}
 }
 void Game::UpgradeBarriers()
@@ -31,13 +31,13 @@ void Game::UpgradeBarriers()
 
 	mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
-	barrierSpeed += 0.5;
-	lCount = max(100, lCount - 30);
-	rCount = max(200, rCount - 50);
+	barrierSpeed += 0.2;
+	lCount = max(50, lCount - 50);
+	rCount = max(100, rCount - 50);
 
 	count.assign(8, 0);
 	for (int i = 0; i < 8; ++i) {
-		countMax[i] = uniform_int_distribution<int>(1, 1000)(rng);
+		countMax[i] = uniform_int_distribution<int>(1, 500)(rng);
 	}
 }
 void Game::SaveBarriers(ostream &fout)
