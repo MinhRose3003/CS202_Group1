@@ -75,6 +75,7 @@ void Game::InitMenu()
 {
 	menu = new Menu(width, height, { "Cross The Road", "Play", "Load", "Exit" });
 	pauseMenu = new Menu(width, height, { "Pause", "Resume", "Save", "Load", "Return" });
+	loseMenu = new Menu(width, height, { "You Lose", "Retry", "Return" });
 }
 
 Game::Game()

@@ -4,6 +4,7 @@ using namespace sf;
 void Game::InitLevel()
 {
 	isPlaying = true;
+	isCollided = false;
 	level = 1;
 	InitPlayer();
 	InitBarriers();
@@ -22,6 +23,7 @@ void Game::CheckLevelUp()
 	UpgradeBarriers();
 	InitCoin();
 
+	SaveGame(true);
 	//cout << "Level: " << level << '\n';
 }
 void Game::Update()
@@ -38,6 +40,7 @@ void Game::CheckColide()
 				player->GetImage(), barriers[j][i]->GetImage())) {
 				cout << "Colide!\n";
 				isPlaying = false;
+				isCollided = true;
 				return;
 			}
 		}
@@ -102,6 +105,7 @@ void Game::Run()
 					switch (menu->GetItem()) {
 					case 1:
 						InitLevel();
+						SaveGame(true);
 						while (isPlaying) {
 							PollingEvent();
 							Update();
@@ -109,10 +113,13 @@ void Game::Run()
 							CheckColide();
 							CheckLevelUp();
 							GetCoin();
+							if (isCollided)
+								Lose();
 						}
 						break;
 					case 2:
 						LoadGame();
+						SaveGame(true);
 						Pause();
 						while (isPlaying) {
 							PollingEvent();
@@ -121,6 +128,8 @@ void Game::Run()
 							CheckColide();
 							CheckLevelUp();
 							GetCoin();
+							if (isCollided)
+								Lose();
 						}
 						break;
 					case 3:
@@ -183,9 +192,53 @@ void Game::Pause()
 		RenderPauseMenu();
 	}
 }
-void Game::SaveGame()
+void Game::Lose()
 {
-	string input = GetFilename();
+	while (window.isOpen())
+	{
+		while (window.pollEvent(event))
+		{
+			switch (this->event.type)
+			{
+			case Event::Closed:
+				window.close();
+				break;
+			case Event::KeyReleased:
+				switch (event.key.code)
+				{
+				case Keyboard::Up:
+				case Keyboard::W:
+					loseMenu->MoveUp();
+					break;
+				case Keyboard::Down:
+				case Keyboard::S:
+					loseMenu->MoveDown();
+					break;
+				case Keyboard::Return:
+					switch (loseMenu->GetItem()) {
+					case 1:
+						LoadGame(true);
+						return;
+					case 2:
+						return;
+					}
+					break;
+				/*case Keyboard::Escape:
+					return;*/
+				}
+			}
+		}
+
+		RenderLoseMenu();
+	}
+}
+void Game::SaveGame(bool autosave)
+{
+	string input;
+	if (!autosave)
+		input = GetFilename();
+	else
+		input = "autosave.bin";
 	ofstream fout("save/" + input, ios::out | ios::binary);
 	if (!fout) {
 		cout << "Cannot open file save/" + input << '\n';
@@ -199,9 +252,13 @@ void Game::SaveGame()
 
 	fout.close();
 }
-void Game::LoadGame()
+void Game::LoadGame(bool autosave)
 {
-	string input = GetFilename();
+	string input;
+	if (!autosave)
+		input = GetFilename();
+	else
+		input = "autosave.bin";
 	ifstream fin("save/" + input, ios::out | ios::binary);
 	if (!fin) {
 		cout << "Cannot open file save/" + input << '\n';
@@ -209,6 +266,7 @@ void Game::LoadGame()
 	}
 
 	isPlaying = true;
+	isCollided = false;
 
 	fin.read((char*)&level, sizeof(int));
 	LoadPlayer(fin);
@@ -292,6 +350,21 @@ void Game::RenderPauseMenu()
 	RenderPlayer(true);
 	RenderTexts(true);
 	pauseMenu->Draw(window);
+
+	window.display();
+}
+void Game::RenderLoseMenu()
+{
+	window.clear();
+
+	Background.setColor(sf::Color(80, 80, 80));
+	window.draw(Background);
+
+	RenderCoin(true);
+	RenderBarriers(true);
+	RenderPlayer(true);
+	RenderTexts(true);
+	loseMenu->Draw(window);
 
 	window.display();
 }

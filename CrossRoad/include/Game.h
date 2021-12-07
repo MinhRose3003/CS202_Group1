@@ -28,7 +28,7 @@ private:
 	Sprite Background;
 
 	// menu
-	Menu *menu, *pauseMenu;
+	Menu *menu, *pauseMenu, *loseMenu;
 	
 	// default
 	int width, height;
@@ -55,6 +55,7 @@ private:
 
 	int level;
 	bool isPlaying;
+	bool isCollided;
 public:
 	Game();
 	virtual ~Game();
@@ -76,13 +77,15 @@ public:
 	void PollingEvent(); // hotkeys / escape while playing
 	void Run(); // main
 	void Pause(); // pause menu
+	void Lose(); // lose menu
 	string GetFilename();
-	void SaveGame(); // save to text file or bin file or something
-	void LoadGame(); // load from text file or bin file or something (miss)
+	void SaveGame(bool autosave = false); // save to text file or bin file or something
+	void LoadGame(bool autosave = false); // load from text file or bin file or something (miss)
 	// render
 	void Render(); // draw game
 	void RenderMenu(); // draw menu
 	void RenderPauseMenu(); // draw pause menu
+	void RenderLoseMenu(); // draw lose menu
 	void RenderGetFilename(); // draw get filename screen
 	void RenderTexts(bool dark = false); // draw texts
 
