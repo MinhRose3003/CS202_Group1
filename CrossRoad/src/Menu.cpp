@@ -1,14 +1,14 @@
 #include "../include/Menu.h"
 
-Menu::Menu(int width, int height)
+Menu::Menu(int width, int height, vector<string> context)
 {
 	if (!font.loadFromFile("font/Kenta-qZ3O1.ttf"))
 	{
 		cout << "Cannot load font from font/Kenta-qZ3O1.ttf\n";
 	}
 
-	nItem = 4;
-	context = { "Cross The Road", "Play", "Load", "Exit" };
+	this->context = context;
+	nItem = context.size();
 	menu.resize(nItem);
 
 	menu[0].setCharacterSize(50);

@@ -15,7 +15,7 @@ private:
 	vector<string> context;
 public:
 	Menu() {}
-	Menu(int width, int height);
+	Menu(int width, int height, vector<string> context);
 	~Menu();
 
 	void Draw(RenderWindow &window);
