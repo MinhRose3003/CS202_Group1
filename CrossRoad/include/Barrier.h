@@ -21,7 +21,7 @@ public:
 	void InitVariable(bool isRight, float speed);
 
 	void UpdateMovement();
-	void Render(RenderTarget &window);
+	void Render(RenderTarget &window, bool dark = false);
 
 	virtual Sprite GetHitbox() = 0;
 	virtual Image GetImage() = 0;

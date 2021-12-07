@@ -17,11 +17,11 @@ void Game::InitCoin()
 		coinList.push_back(coin);
 	}
 }
-void Game::RenderCoin()
+void Game::RenderCoin(bool dark)
 {
 	for (int i = 0; i < coinList.size(); i++)
 	{
-		coinList[i]->RenderCoin(window);
+		coinList[i]->RenderCoin(window, dark);
 	}
 }
 

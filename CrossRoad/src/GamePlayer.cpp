@@ -10,11 +10,15 @@ void Game::UpgradePlayer()
 	sp += 0.05;
 	player->Init(xp, yp, sp, player->GetPoint());
 }
+void Game::SavePlayer(ostream &fout)
+{
+
+}
 void Game::UpdatePlayer()
 {
 	player->Update(window);
 }
-void Game::RenderPlayer()
+void Game::RenderPlayer(bool dark)
 {
-	player->Render(window);
+	player->Render(window, dark);
 }

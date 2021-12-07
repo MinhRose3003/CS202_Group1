@@ -8,10 +8,10 @@
 enum PLAYER_ANIMATION_STATE
 {
 	IDLE = 0 ,
-	MOVING_LEFT , 
-	MOVING_RIGHT , 
-	MOVING_UP , 
-	MOVING_DOWN
+	MOVING_LEFT = 1, 
+	MOVING_RIGHT = 2, 
+	MOVING_UP = 3, 
+	MOVING_DOWN = 4
 };
 
 class Player
@@ -39,10 +39,10 @@ public:
 	void InitImage();
 	void InitTexture();
 	void InitSprite(float x, float y);
-	void InitVariable(float speed, int point);
+	void InitVariable(float speed, int point, int state = 3);
 	void InitAnimation();
 
-	void Init(float x, float y, float speed, int point = 0);
+	void Init(float x, float y, float speed, int point = 0, int state = 3);
 	
 	//update
 	void UpdateMovement();
@@ -51,7 +51,7 @@ public:
 	void Update(RenderTarget &window);
 
 	//render
-	void Render(RenderTarget &window);
+	void Render(RenderTarget &window, bool dark = false);
 
 	//collision check
 	Sprite GetHitbox();
@@ -61,6 +61,9 @@ public:
 	//Get-Set
 	void AddPoint();
 	int GetPoint();
+	Vector2f GetPosition() { return sprite.getPosition(); }
+	float GetSpeed() { return moveSpeed; }
+	int GetState() { return (int)animationState; }
 };
 
 #endif

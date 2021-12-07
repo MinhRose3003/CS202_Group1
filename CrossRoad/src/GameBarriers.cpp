@@ -12,8 +12,8 @@ void Game::InitBarriers()
 	mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 	barrierSpeed = 1.f;
-	lCount = 400; // level-up
-	rCount = 800; // level-up
+	lCount = 400; 
+	rCount = 800; 
 
 	count.assign(8, 0);
 	countMax.assign(8, 0);
@@ -75,12 +75,12 @@ void Game::UpdateBarriers()
 	}
 
 }
-void Game::RenderBarries()
+void Game::RenderBarriers(bool dark)
 {
 	for (int j = 0; j < 8; ++j) {
 		for (int i = 0; i < barriers[j].size(); i++)
 		{
-			barriers[j][i]->Render(window);
+			barriers[j][i]->Render(window, dark);
 		}
 	}
 }

@@ -23,7 +23,7 @@ public :
 	void UpdateCoin();
 	void UpdateAnimation();
 
-	void RenderCoin(RenderTarget& window);
+	void RenderCoin(RenderTarget& window, bool dark = false);
 
 	Sprite GetHitbox();
 	Image GetImage();

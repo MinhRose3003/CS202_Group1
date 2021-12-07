@@ -54,8 +54,12 @@ void Coin::UpdateCoin()
 {
 	UpdateAnimation();
 }
-void Coin::RenderCoin(RenderTarget & window)
+void Coin::RenderCoin(RenderTarget & window, bool dark)
 {
+	if (dark)
+		sprite.setColor(Color(80, 80, 80));
+	else
+		sprite.setColor(Color(255, 255, 255));
 	window.draw(sprite);
 }
 
