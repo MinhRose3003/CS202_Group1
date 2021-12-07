@@ -11,6 +11,7 @@ protected:
 	Texture texture;
 	Sprite sprite;
 	float moveSpeed;
+	bool isRight;
 
 public:
 	virtual ~Barrier() {}
@@ -25,6 +26,10 @@ public:
 
 	virtual Sprite GetHitbox() = 0;
 	virtual Image GetImage() = 0;
+
+	Vector2f GetPosition() { return sprite.getPosition(); }
+	bool GetIsRight() { return isRight; }
+	float GetSpeed() { return moveSpeed; }
 };
 
 #endif

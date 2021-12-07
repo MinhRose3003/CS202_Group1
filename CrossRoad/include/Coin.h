@@ -28,6 +28,8 @@ public :
 	Sprite GetHitbox();
 	Image GetImage();
 	~Coin();
+
+	Vector2f GetPosition() { return sprite.getPosition(); }
 };
 
 

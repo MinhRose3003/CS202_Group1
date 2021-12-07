@@ -3,6 +3,7 @@
 void Barrier::InitVariable(bool isRight, float speed) {
 	if (isRight) moveSpeed = speed;
 	else moveSpeed = -speed;
+	this->isRight = isRight;
 }
 
 void Barrier::UpdateMovement() {
