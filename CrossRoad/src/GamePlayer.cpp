@@ -7,7 +7,7 @@ void Game::InitPlayer()
 }
 void Game::UpgradePlayer()
 {
-	sp += 0.05;
+	sp += 0.1;
 	player->Init(xp, yp, sp, player->GetPoint());
 }
 void Game::SavePlayer(ostream &fout)
