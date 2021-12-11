@@ -11,13 +11,13 @@ Dinausor :: Dinausor(float x, float y, bool isRight, float speed )
 void Dinausor::InitImage(bool isRight)
 {
 	if (isRight) {
-		if (!image.loadFromFile("Sprite/Dinausor.png"))
+		if (!image.loadFromFile("Sprite/Dinausor-right.png"))
 		{
 			cout << "Cannot find Sprite/Dinausor.png" << '\n';
 		}
 	}
 	else {
-		if (!image.loadFromFile("Sprite/Dinausor.png"))
+		if (!image.loadFromFile("Sprite/Dinauso-left.png"))
 		{
 			cout << "Cannot find Sprite/Dinausor.png" << '\n';
 		}
@@ -26,13 +26,13 @@ void Dinausor::InitImage(bool isRight)
 void Dinausor::InitTexture(bool isRight)
 {
 	if (isRight) {
-		if (!texture.loadFromFile("Sprite/Dinausor.png"))
+		if (!texture.loadFromFile("Sprite/Dinausor-right.png"))
 		{
 			cout << "Cannot find Sprite/Dinausor.png" << '\n';
 		}
 	}
 	else {
-		if (!texture.loadFromFile("Sprite/Dinausor.png"))
+		if (!texture.loadFromFile("Sprite/Dinausor-left.png"))
 		{
 			cout << "Cannot find Sprite/Dinausor.png" << '\n';
 		}
@@ -43,7 +43,7 @@ void Dinausor::InitSprite(float x, float y)
 	sprite.setTexture(texture);
 	 currenFrame = IntRect(0, 0, 179, 100);
 	sprite.setTextureRect(currenFrame);
-	sprite.setScale(1.2, 1.2);
+	sprite.setScale(0.5,0.5);
 	sprite.setPosition(x, y);
 }
 

@@ -11,13 +11,13 @@ Bird :: Bird (float x, float y, bool isRight, float speed)
 void Bird::InitImage(bool isRight)
 {
 	if (isRight) {
-		if (!image.loadFromFile("Sprite/Bird.png"))
+		if (!image.loadFromFile("Sprite/Bird-right.png"))
 		{
 			cout << "Cannot find Sprite/Bird.png" << '\n';
 		}
 	}
 	else {
-		if (!image.loadFromFile("Sprite/Bird.png"))
+		if (!image.loadFromFile("Sprite/Bird-left.png"))
 		{
 			cout << "Cannot find Sprite/Bird.png" << '\n';
 		}
@@ -26,13 +26,13 @@ void Bird::InitImage(bool isRight)
 void Bird::InitTexture(bool isRight)
 {
 	if (isRight) {
-		if (!texture.loadFromFile("Sprite/Bird.png"))
+		if (!texture.loadFromFile("Sprite/Bird-right.png"))
 		{
 			cout << "Cannot find Sprite/Bird.png" << '\n';
 		}
 	}
 	else {
-		if (!texture.loadFromFile("Sprite/Bird.png"))
+		if (!texture.loadFromFile("Sprite/Bird-left.png"))
 		{
 			cout << "Cannot find Sprite/Bird.png" << '\n';
 		}
@@ -43,7 +43,7 @@ void Bird::InitSprite(float x, float y)
 	sprite.setTexture(texture);
 	 currenFrame = IntRect(0, 0, 120.8f,101);
 	sprite.setTextureRect(currenFrame);
-	sprite.setScale(1.2, 1.2);
+	sprite.setScale(0.5, 0.5);
 	sprite.setPosition(x, y);
 }
 
