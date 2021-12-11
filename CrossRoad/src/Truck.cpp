@@ -60,3 +60,7 @@ Image Truck::GetImage()
 {
 	return image;
 }
+void Truck::UpdateAnimation()
+{
+
+}

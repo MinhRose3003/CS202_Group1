@@ -1,6 +1,6 @@
 #include "../include/Game.h"
 
-void Game::InitBarriers() 
+void Game::InitBarriers()
 {
 	for (int j = 0; j < 8; ++j) {
 		for (int i = 0; i < barriers[j].size(); ++i) {
@@ -12,8 +12,8 @@ void Game::InitBarriers()
 	mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 	barrierSpeed = 1.f;
-	lCount = 700; 
-	rCount = 1000; 
+	lCount = 700;
+	rCount = 1000;
 
 	count.assign(8, 0);
 	for (int i = 0; i < 8; ++i) {
@@ -40,7 +40,7 @@ void Game::UpgradeBarriers()
 		countMax[i] = uniform_int_distribution<int>(1, 500)(rng);
 	}
 }
-void Game::SaveBarriers(ostream &fout)
+void Game::SaveBarriers(ostream& fout)
 {
 	for (int j = 0; j < 8; ++j) {
 		int n = barriers[j].size();
@@ -70,7 +70,7 @@ void Game::SaveBarriers(ostream &fout)
 		fout.write((char*)&countMax[i], sizeof(int));
 	}
 }
-void Game::LoadBarriers(istream &fin)
+void Game::LoadBarriers(istream& fin)
 {
 	for (int j = 0; j < 8; ++j) {
 		for (int i = 0; i < barriers[j].size(); ++i) {
@@ -172,7 +172,7 @@ Barrier* Game::GetBarrier(int type, float x, float y, bool isRight, float speed)
 	}
 	else if (type == 2)
 	{
-		return new Truck(x, y, isRight, speed );
+		return new Truck(x, y, isRight, speed);
 	}
 	else if (type == 3)
 	{
@@ -182,7 +182,7 @@ Barrier* Game::GetBarrier(int type, float x, float y, bool isRight, float speed)
 	{
 		return new Dinausor(x, y, isRight, speed);
 	}
-	return new Car(x, y, isRight, speed ); // default
+	return new Car(x, y, isRight, speed); // default
 }
 Barrier* Game::GetBarrier(float x, float y, bool isRight, float speed)
 {

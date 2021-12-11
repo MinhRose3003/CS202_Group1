@@ -6,12 +6,16 @@
 
 class Bird : public Animal
 {
+private:
+	Clock timeAnimation;
+	IntRect currenFrame;
 public:
 	Bird(float x, float y, bool isRight, float speed);
 
 	void InitImage(bool isRight);
 	void InitTexture(bool isRight);
 	void InitSprite(float x, float y);
+	void UpdateAnimation();
 
 	Sprite GetHitbox();
 	Image GetImage();

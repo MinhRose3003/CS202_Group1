@@ -15,6 +15,7 @@ public:
 	void InitImage(bool isRight);
 	void InitTexture(bool isRight);
 	void InitSprite(float x, float y);
+	void UpdateAnimation();
 	Sprite GetHitbox();
 	Image GetImage();
 };

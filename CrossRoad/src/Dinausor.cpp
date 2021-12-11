@@ -55,3 +55,17 @@ Image Dinausor::GetImage()
 {
 	return image;
 }
+void Dinausor::UpdateAnimation()
+{
+	if (timeAnimation.getElapsedTime().asSeconds() >= 0.2f)
+	{
+		currenFrame.top = 0.f;
+		currenFrame.left += 179;
+		if (currenFrame.left >= 895)
+		{
+			currenFrame.left = 0.f;
+		}
+		timeAnimation.restart();
+		sprite.setTextureRect(currenFrame);
+	}
+}

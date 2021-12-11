@@ -64,3 +64,8 @@ Image Car::GetImage()
 {
 	return image;
 }
+
+void Car::UpdateAnimation()
+{
+
+}

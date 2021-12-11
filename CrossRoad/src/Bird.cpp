@@ -55,3 +55,18 @@ Image Bird::GetImage()
 {
 	return image;
 }
+
+void Bird:: UpdateAnimation()
+{
+	if (timeAnimation.getElapsedTime().asSeconds() >= 0.2f)
+	{
+		currenFrame.top = 0.f;
+		currenFrame.left += 120.8f;
+		if (currenFrame.left >= 604.f)
+		{
+			currenFrame.left = 0.f;
+		}
+		timeAnimation.restart();
+		sprite.setTextureRect(currenFrame);
+	}
+}
