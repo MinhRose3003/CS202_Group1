@@ -41,8 +41,8 @@ void Bird::InitTexture(bool isRight)
 void Bird::InitSprite(float x, float y)
 {
 	sprite.setTexture(texture);
-	IntRect currentFrame = IntRect(0, 0, 120.8f,101);
-	sprite.setTextureRect(currentFrame);
+	 currenFrame = IntRect(0, 0, 120.8f,101);
+	sprite.setTextureRect(currenFrame);
 	sprite.setScale(1.2, 1.2);
 	sprite.setPosition(x, y);
 }

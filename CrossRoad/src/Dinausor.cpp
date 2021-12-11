@@ -41,8 +41,8 @@ void Dinausor::InitTexture(bool isRight)
 void Dinausor::InitSprite(float x, float y)
 {
 	sprite.setTexture(texture);
-	IntRect currentFrame = IntRect(0, 0, 178, 100);
-	sprite.setTextureRect(currentFrame);
+	 currenFrame = IntRect(0, 0, 179, 100);
+	sprite.setTextureRect(currenFrame);
 	sprite.setScale(1.2, 1.2);
 	sprite.setPosition(x, y);
 }

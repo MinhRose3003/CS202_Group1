@@ -186,7 +186,7 @@ Barrier* Game::GetBarrier(int type, float x, float y, bool isRight, float speed)
 }
 Barrier* Game::GetBarrier(float x, float y, bool isRight, float speed)
 {
-	int random = rand() % (2 - 1 + 1) + 1;
+	int random = rand() % (4 - 1 + 1) + 1;
 	return GetBarrier(random, x, y, isRight, speed);
 }
 
