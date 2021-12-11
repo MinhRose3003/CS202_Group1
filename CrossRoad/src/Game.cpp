@@ -54,6 +54,7 @@ void Game::GetCoin()
 			player->GetImage(), coinList[i]->GetImage()))
 		{
 			player->AddPoint();
+			this->soundCoin.play();
 			coinList.erase(coinList.begin() + i);
 			break;
 		}

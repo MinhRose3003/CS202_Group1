@@ -35,13 +35,23 @@ void Game::InitBackGround()
 }
 void Game::InitMusic()
 {
-	if (!soundBuffer.loadFromFile("Sound/musicGame.wav"))
+	if (!soundBuffer.loadFromFile("Sound/SoundGame.wav"))
 	{
 		cout << "ERROR LOAD MUSIC" << endl;
 	}
 	sound.setBuffer(soundBuffer);
 	sound.setLoop(true);
 	//sound.play();
+}
+void Game::InitSFX()
+{
+	if (!soundCoinBuffer.loadFromFile("Sound/SoundCoin.wav"))
+	{
+		cout << "ERROR LOAD MUSIC" << endl;
+	}
+	soundCoin.setBuffer(soundCoinBuffer);
+	soundCoin.setLoop(false);
+	
 }
 void Game::InitTexts()
 {
@@ -89,6 +99,8 @@ Game::Game()
 	InitWindow();
 
 	InitMusic();
+
+	InitSFX();
 
 	InitBackGround();
 

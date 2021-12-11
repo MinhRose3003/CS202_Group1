@@ -23,6 +23,7 @@ void Coin::InitSprite(float x , float y)
 	sprite.setPosition(x, y);
 	sprite.setScale(0.3f, 0.3f);
 }
+
 Coin::Coin(float x, float y)
 {
 	InitImage();
@@ -71,3 +72,4 @@ Image Coin::GetImage()
 {
 	return image;
 }
+
