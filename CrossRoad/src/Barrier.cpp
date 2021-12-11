@@ -1,10 +1,9 @@
 #include "../include/Barrier.h"
 
-void Barrier::InitVariable(bool isRight, float speed, bool hasAnimation) {
+void Barrier::InitVariable(bool isRight, float speed) {
 	if (isRight) moveSpeed = speed;
 	else moveSpeed = -speed;
 	this->isRight = isRight;
-	this->hasAnimation = hasAnimation;
 }
 
 void Barrier::UpdateMovement() {

@@ -1,8 +1,8 @@
 #include "../include/Truck.h"
 
-Truck :: Truck(float x, float y, bool isRight, float speed,bool hasAnimation)
+Truck :: Truck(float x, float y, bool isRight, float speed )
 {
-	InitVariable(isRight, speed , hasAnimation);
+	InitVariable(isRight, speed );
 	InitImage(isRight);
 	InitTexture(isRight);
 	InitSprite(x, y);

@@ -168,21 +168,21 @@ Barrier* Game::GetBarrier(int type, float x, float y, bool isRight, float speed)
 {
 	if (type == 1)
 	{
-		return new Car(x, y, isRight, speed, false);
+		return new Car(x, y, isRight, speed);
 	}
 	else if (type == 2)
 	{
-		return new Truck(x, y, isRight, speed , false);
+		return new Truck(x, y, isRight, speed );
 	}
-	/*else if (type == 3)
+	else if (type == 3)
 	{
 		return new Bird(x, y, isRight, speed);
 	}
 	else if (type == 4)
 	{
 		return new Dinausor(x, y, isRight, speed);
-	}*/
-	return new Car(x, y, isRight, speed , false); // default
+	}
+	return new Car(x, y, isRight, speed ); // default
 }
 Barrier* Game::GetBarrier(float x, float y, bool isRight, float speed)
 {
