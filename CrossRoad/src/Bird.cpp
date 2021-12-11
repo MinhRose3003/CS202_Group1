@@ -41,9 +41,9 @@ void Bird::InitTexture(bool isRight)
 void Bird::InitSprite(float x, float y)
 {
 	sprite.setTexture(texture);
-	 currenFrame = IntRect(0, 0, 120.8f,101);
+	 currenFrame = IntRect(0, 0, 120.8,101);
 	sprite.setTextureRect(currenFrame);
-	sprite.setScale(0.5, 0.5);
+	sprite.setScale(0.7, 0.7);
 	sprite.setPosition(x, y);
 }
 
@@ -58,11 +58,11 @@ Image Bird::GetImage()
 
 void Bird:: UpdateAnimation()
 {
-	if (timeAnimation.getElapsedTime().asSeconds() >= 0.2f)
+	if (timeAnimation.getElapsedTime().asSeconds() >= 0.3f)
 	{
 		currenFrame.top = 0.f;
-		currenFrame.left += 120.8f;
-		if (currenFrame.left >= 604.f)
+		currenFrame.left += 120.8;
+		if (currenFrame.left >= (483.2f))
 		{
 			currenFrame.left = 0.f;
 		}

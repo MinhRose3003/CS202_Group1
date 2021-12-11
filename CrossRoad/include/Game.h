@@ -22,6 +22,8 @@ private:
 	//Music 
 	Sound sound;
 	SoundBuffer  soundBuffer;
+	Sound soundCoin;
+	SoundBuffer soundCoinBuffer;
 
 	// background
 	Texture BackGroundTexture;
@@ -65,6 +67,7 @@ public:
 	void InitWindow(); // create window
 	void InitBackGround(); // load background + darken background image
 	void InitMusic(); // load and play background sound
+	void InitSFX();
 	void InitTexts(); // create texts box
 	void InitMenu(); // create Menu (list of text box)
 	// game function

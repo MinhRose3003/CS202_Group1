@@ -11,30 +11,30 @@ Dinausor :: Dinausor(float x, float y, bool isRight, float speed )
 void Dinausor::InitImage(bool isRight)
 {
 	if (isRight) {
-		if (!image.loadFromFile("Sprite/Dinausor-right.png"))
+		if (!image.loadFromFile("Sprite/dinosaur-right.png"))
 		{
-			cout << "Cannot find Sprite/Dinausor.png" << '\n';
+			cout << "Cannot find Sprite/dinosaur.png" << '\n';
 		}
 	}
 	else {
-		if (!image.loadFromFile("Sprite/Dinauso-left.png"))
+		if (!image.loadFromFile("Sprite/dinosaur-left.png"))
 		{
-			cout << "Cannot find Sprite/Dinausor.png" << '\n';
+			cout << "Cannot find Sprite/dinosaur.png" << '\n';
 		}
 	}
 }
 void Dinausor::InitTexture(bool isRight)
 {
 	if (isRight) {
-		if (!texture.loadFromFile("Sprite/Dinausor-right.png"))
+		if (!texture.loadFromFile("Sprite/dinosaur-right.png"))
 		{
-			cout << "Cannot find Sprite/Dinausor.png" << '\n';
+			cout << "Cannot find Sprite/dinosaur.png" << '\n';
 		}
 	}
 	else {
-		if (!texture.loadFromFile("Sprite/Dinausor-left.png"))
+		if (!texture.loadFromFile("Sprite/dinosaur-left.png"))
 		{
-			cout << "Cannot find Sprite/Dinausor.png" << '\n';
+			cout << "Cannot find Sprite/dinosaur.png" << '\n';
 		}
 	}
 }
@@ -43,7 +43,7 @@ void Dinausor::InitSprite(float x, float y)
 	sprite.setTexture(texture);
 	 currenFrame = IntRect(0, 0, 179, 100);
 	sprite.setTextureRect(currenFrame);
-	sprite.setScale(0.5,0.5);
+	sprite.setScale(0.7,0.7);
 	sprite.setPosition(x, y);
 }
 
@@ -57,7 +57,7 @@ Image Dinausor::GetImage()
 }
 void Dinausor::UpdateAnimation()
 {
-	if (timeAnimation.getElapsedTime().asSeconds() >= 0.2f)
+	if (timeAnimation.getElapsedTime().asSeconds() >= 0.3f)
 	{
 		currenFrame.top = 0.f;
 		currenFrame.left += 179;

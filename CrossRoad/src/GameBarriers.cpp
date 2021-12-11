@@ -138,6 +138,7 @@ void Game::UpdateBarriers()
 		for (int i = 0; i < barriers[j].size(); ++i)
 		{
 			barriers[j][i]->UpdateMovement();
+			barriers[j][i]->UpdateAnimation();
 		}
 	}
 
