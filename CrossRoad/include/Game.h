@@ -10,6 +10,7 @@
 #include "Bird.h"
 #include "Dinausor.h"
 #include "Coin.h"
+#include "Traffic.h"
 
 class Game
 {
@@ -51,6 +52,9 @@ private:
 	vector<Barrier*> barriers[8];
 	vector<int> count;
 	vector<int> countMax;
+
+	//Traffic 
+	vector<>
 
 	// Coin 
 	vector <Coin *> coinList;
