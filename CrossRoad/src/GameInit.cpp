@@ -41,17 +41,25 @@ void Game::InitMusic()
 	}
 	sound.setBuffer(soundBuffer);
 	sound.setLoop(true);
-	//sound.play();
+	sound.play();
 }
 void Game::InitSFX()
 {
+	//COIN_SFX
 	if (!soundCoinBuffer.loadFromFile("Sound/SoundCoin.wav"))
 	{
 		cout << "ERROR LOAD MUSIC" << endl;
 	}
 	soundCoin.setBuffer(soundCoinBuffer);
 	soundCoin.setLoop(false);
-	
+
+	//Collision_SFX
+	if (!soundCollisionBuffer.loadFromFile("Sound/SoundCollision.wav"))
+	{
+		cout << "ERROR LOAD MUSIC" << endl;
+	}
+	soundCollision.setBuffer(soundCollisionBuffer);
+	soundCollision.setLoop(false);
 }
 void Game::InitTexts()
 {

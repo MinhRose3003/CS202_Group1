@@ -22,8 +22,12 @@ private:
 	//Music 
 	Sound sound;
 	SoundBuffer  soundBuffer;
+
 	Sound soundCoin;
 	SoundBuffer soundCoinBuffer;
+
+	Sound soundCollision;
+	SoundBuffer soundCollisionBuffer;
 
 	// background
 	Texture BackGroundTexture;

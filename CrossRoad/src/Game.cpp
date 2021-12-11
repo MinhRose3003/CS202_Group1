@@ -39,6 +39,7 @@ void Game::CheckColide()
 			if (PixelPerfectCollision(player->GetHitbox(), barriers[j][i]->GetHitbox(),
 				player->GetImage(), barriers[j][i]->GetImage())) {
 				cout << "Colide!\n";
+				soundCollision.play();				
 				isPlaying = false;
 				isCollided = true;
 				return;
