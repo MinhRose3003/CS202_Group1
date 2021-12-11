@@ -7,7 +7,7 @@
 class Truck : public Vehicle
 {
 public:
-	Truck(float x, float y, bool isRight, float speed);
+	Truck(float x, float y, bool isRight, float speed, bool hasAnimation);
 
 	void InitImage(bool isRight);
 	void InitTexture(bool isRight);

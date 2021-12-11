@@ -7,7 +7,7 @@
 class Dinausor : public Animal
 {
 public:
-	Dinausor(float x, float y, bool isRight, float speed);
+	Dinausor(float x, float y, bool isRight, float speed , bool hasAnimation);
 
 	void InitImage(bool isRight);
 	void InitTexture(bool isRight);

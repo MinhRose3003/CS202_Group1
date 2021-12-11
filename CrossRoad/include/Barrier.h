@@ -13,13 +13,15 @@ protected:
 	float moveSpeed;
 	bool isRight;
 
+	bool hasAnimation;
+
 public:
 	virtual ~Barrier() {}
 
 	virtual void InitImage(bool isRight) = 0;
 	virtual void InitTexture(bool isRight) = 0;
 	virtual void InitSprite(float x, float y) = 0;
-	void InitVariable(bool isRight, float speed);
+	void InitVariable(bool isRight, float speed, bool hasAnimation);
 
 	void UpdateMovement();
 	void Render(RenderTarget &window, bool dark = false);

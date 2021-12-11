@@ -1,8 +1,8 @@
 #include "../include/Dinausor.h"
 
-Dinausor :: Dinausor(float x, float y, bool isRight, float speed)
+Dinausor :: Dinausor(float x, float y, bool isRight, float speed , bool hasAnimation)
 {
-	InitVariable(isRight, speed);
+	InitVariable(isRight, speed, hasAnimation);
 	InitImage(isRight);
 	InitTexture(isRight);
 	InitSprite(x,y);

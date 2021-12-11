@@ -1,7 +1,7 @@
 #include "../include/Car.h"
 
-Car::Car(float x, float y, bool isRight, float speed) {
-	InitVariable(isRight, speed);
+Car::Car(float x, float y, bool isRight, float speed, bool hasAnimation) {
+	InitVariable(isRight, speed, hasAnimation);
 	InitImage(isRight);
 	InitTexture(isRight);
 	InitSprite(x, y);

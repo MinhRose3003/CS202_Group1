@@ -7,7 +7,7 @@
 class Bird : public Animal
 {
 public:
-	Bird(float x, float y, bool isRight, float speed);
+	Bird(float x, float y, bool isRight, float speed, bool hasAnimation);
 
 	void InitImage(bool isRight);
 	void InitTexture(bool isRight);
