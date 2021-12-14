@@ -2,16 +2,29 @@
 #ifndef traffic_h_
 #define traffic_h_
 
-#include "include/Support.h"
+#include "../include/Support.h"
 
 class Traffic
 {
 private:
-	RectangleShape traffic;
+	Texture greenTexture;
+	Texture redTexture;
+
+	Sprite greenSprite;
+	Sprite redSprite;
+	float x, y; 
+
+	Clock clock;
+	float timeCanMove;
+
+	bool canMove;
 public:
-	Traffic();
-	void Change();
-	void Render(RenderTarget& window);
+	Traffic(float x , float  y );
+	void InitTraffic();
+	void RenderTraffic(RenderTarget& window, bool dark);
+	bool CanMove();
+	
+	void UpdateTraffic();
 	~Traffic();
 };
 

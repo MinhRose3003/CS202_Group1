@@ -54,7 +54,7 @@ private:
 	vector<int> countMax;
 
 	//Traffic 
-	vector<>
+	vector<Traffic> trafficList;
 
 	// Coin 
 	vector <Coin *> coinList;
@@ -78,6 +78,7 @@ public:
 	void InitSFX();
 	void InitTexts(); // create texts box
 	void InitMenu(); // create Menu (list of text box)
+	
 	// game function
 	void InitLevel(); // init game level settings (reset player + barriers + coin)
 	void CheckLevelUp(); // change settings when level up (upgrade player + barriers, reset coin) 
@@ -127,6 +128,10 @@ public:
 	void SaveCoin(ostream &fout);
 	void LoadCoin(istream &fin);
 
+	//Traffic 
+	void InitTraffic();
+	void UpdateTraffic();
+	void RenderTraffic(bool dark = false); // draw Traffic light 
 };
 
 #endif

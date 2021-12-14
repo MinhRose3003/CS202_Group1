@@ -31,6 +31,7 @@ void Game::Update()
 	UpdateBarriers();
 	UpdatePlayer();
 	UpdateCoin();
+	UpdateTraffic();
 }
 void Game::CheckColide()
 {
@@ -352,6 +353,7 @@ void Game::RenderPauseMenu()
 	RenderBarriers(true);
 	RenderPlayer(true);
 	RenderTexts(true);
+	RenderTraffic(true);
 	pauseMenu->Draw(window);
 
 	window.display();
@@ -367,6 +369,7 @@ void Game::RenderLoseMenu()
 	RenderBarriers(true);
 	RenderPlayer(true);
 	RenderTexts(true);
+	RenderTraffic(true);
 	loseMenu->Draw(window);
 
 	window.display();
@@ -393,6 +396,7 @@ void Game::Render()
 	RenderBarriers();
 	RenderPlayer();
 	RenderTexts();
+	RenderTraffic();
 
 	window.display();
 }

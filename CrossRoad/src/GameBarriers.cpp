@@ -137,7 +137,7 @@ void Game::UpdateBarriers()
 	for (int j = 0; j < 8; ++j) {
 		for (int i = 0; i < barriers[j].size(); ++i)
 		{
-			barriers[j][i]->UpdateMovement();
+			barriers[j][i]->UpdateMovement(trafficList[j].CanMove());
 			barriers[j][i]->UpdateAnimation();
 		}
 	}
@@ -196,4 +196,18 @@ bool Game::visible(Barrier* barrier)
 	Sprite n_sprite = barrier->GetHitbox();
 	FloatRect n_rect = n_sprite.getGlobalBounds();
 	return n_rect.intersects(FloatRect(0, 0, (float)width, (float)height));
+}
+void Game::RenderTraffic(bool dark)
+{
+	for (int i = 0; i < trafficList.size(); i++)
+	{
+		trafficList[i].RenderTraffic(window, dark);
+	}
+}
+void Game::UpdateTraffic()
+{
+	for (int i = 0; i < trafficList.size(); i++)
+	{
+		trafficList[i].UpdateTraffic();
+	}
 }

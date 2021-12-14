@@ -20,7 +20,7 @@ public:
 	virtual void InitSprite(float x, float y) = 0;
 	void InitVariable(bool isRight, float speed);
 
-	void UpdateMovement();
+	void UpdateMovement(bool canMove);
 	virtual void UpdateAnimation() = 0;
 	void Render(RenderTarget &window, bool dark = false);
 

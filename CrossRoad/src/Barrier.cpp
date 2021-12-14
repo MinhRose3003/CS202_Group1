@@ -6,8 +6,15 @@ void Barrier::InitVariable(bool isRight, float speed) {
 	this->isRight = isRight;
 }
 
-void Barrier::UpdateMovement() {
-	sprite.move(moveSpeed, 0.f);
+void Barrier::UpdateMovement(bool canMove) {
+	if (canMove)
+	{
+		sprite.move(moveSpeed, 0.f);
+	}
+	else
+	{
+		sprite.move(0.f, 0.f);
+	}
 }
 void Barrier::Render(RenderTarget &window, bool dark) {
 	if (dark)

@@ -95,6 +95,15 @@ void Game::InitMenu()
 	pauseMenu = new Menu(width, height, { "Pause", "Resume", "Save", "Load", "Return" });
 	loseMenu = new Menu(width, height, { "You Lose", "Retry", "Return" });
 }
+void Game::InitTraffic()
+{
+	trafficList.clear();
+	for (int i = 0; i < line.size(); i++)
+	{
+		Traffic traffic(50.f, (float)line[i]);
+		trafficList.push_back(traffic);
+	}
+}
 
 Game::Game()
 {
@@ -115,6 +124,8 @@ Game::Game()
 	InitTexts();
 
 	InitMenu();
+
+	InitTraffic();
 }
 
 Game::~Game()
