@@ -10,20 +10,22 @@ private:
 	Texture greenTexture;
 	Texture redTexture;
 
-	Sprite greenSprite;
-	Sprite redSprite;
-	float x, y; 
+	Sprite sprite;
+	float x, y;
 
 	Clock clock;
 	float timeCanMove;
 
 	bool canMove;
+	bool start;
+
+	IntRect currentFrame;
+
 public:
 	Traffic(float x , float  y );
-	void InitTraffic();
+	void InitTraffic(float x , float y);
 	void RenderTraffic(RenderTarget& window, bool dark);
 	bool CanMove();
-	
 	void UpdateTraffic();
 	~Traffic();
 };

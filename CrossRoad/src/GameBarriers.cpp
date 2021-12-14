@@ -94,7 +94,7 @@ void Game::LoadBarriers(istream& fin)
 			fin.read((char*)&isRight, sizeof(bool));
 			fin.read((char*)&speed, sizeof(float));
 
-			barriers[j].push_back(GetBarrier(type, x, y, isRight, speed));
+			barriers[j].push_back(GetBarrier(type, x, y, isRight, speed,j));
 		}
 	}
 
@@ -122,9 +122,9 @@ void Game::UpdateBarriers()
 		if (count[j] >= countMax[j])
 		{
 			if (j & 1)
-				barriers[j].push_back(GetBarrier((float)width, (float)line[j], 0, barrierSpeed));
+				barriers[j].push_back(GetBarrier((float)width, (float)line[j], 0, barrierSpeed,j));
 			else
-				barriers[j].push_back(GetBarrier(-64, (float)line[j], 1, barrierSpeed));
+				barriers[j].push_back(GetBarrier(-64, (float)line[j], 1, barrierSpeed,j));
 			count[j] = 0;
 			countMax[j] = uniform_int_distribution<int>(lCount, rCount)(rng);
 		}
@@ -165,30 +165,30 @@ int Game::TypeOfBarrier(Barrier* barrier)
 	cout << "cannot identify\n";
 	return 1; // default
 }
-Barrier* Game::GetBarrier(int type, float x, float y, bool isRight, float speed)
+Barrier* Game::GetBarrier(int type, float x, float y, bool isRight, float speed , int line)
 {
 	if (type == 1)
 	{
-		return new Car(x, y, isRight, speed);
+		return new Car(x, y, isRight, speed, -1);
 	}
 	else if (type == 2)
 	{
-		return new Truck(x, y, isRight, speed);
+		return new Truck(x, y, isRight, speed , -1);
 	}
 	else if (type == 3)
 	{
-		return new Bird(x, y, isRight, speed);
+		return new Bird(x, y, isRight, speed , line);
 	}
 	else if (type == 4)
 	{
-		return new Dinausor(x, y, isRight, speed);
+		return new Dinausor(x, y, isRight, speed , line);
 	}
-	return new Car(x, y, isRight, speed); // default
+	return new Car(x, y, isRight, speed , -1); // default
 }
-Barrier* Game::GetBarrier(float x, float y, bool isRight, float speed)
+Barrier* Game::GetBarrier(float x, float y, bool isRight, float speed, int line)
 {
 	int random = rand() % (4 - 1 + 1) + 1;
-	return GetBarrier(random, x, y, isRight, speed);
+	return GetBarrier(random, x, y, isRight, speed, line);
 }
 
 bool Game::visible(Barrier* barrier)

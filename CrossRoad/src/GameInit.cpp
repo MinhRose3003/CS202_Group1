@@ -121,11 +121,13 @@ Game::Game()
 
 	InitBackGround();
 
+	InitTraffic();
+
 	InitTexts();
 
 	InitMenu();
 
-	InitTraffic();
+
 }
 
 Game::~Game()

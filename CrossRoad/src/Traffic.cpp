@@ -1,51 +1,50 @@
 #include "../include/Traffic.h"
 
 
-void Traffic :: InitTraffic()
+void Traffic :: InitTraffic(float x , float y)
 {
-	if (!redTexture.loadFromFile("Sprite/RedTraffic"))
+	if (!redTexture.loadFromFile("Sprite/red.png"))
 	{
 		cout << "ERROR LOAD TRAFFIC" << endl;
 	}
-	if (!greenTexture.loadFromFile("Sprite/GreenTraffic"))
+	if (!greenTexture.loadFromFile("Sprite/green.png"))
 	{
 		cout << "ERROR LOAD TRAFFIC " << endl;
 	}
-	redSprite.setTexture(redTexture);
-	IntRect currentFrame = IntRect(0, 0, 0, 0);
-	redSprite.setTextureRect(currentFrame);
 
-	greenSprite.setTexture(greenTexture);
-	IntRect tmp = IntRect(0, 0, 0, 0);
-	greenSprite.setTextureRect(tmp);
+	sprite.setTexture(greenTexture);
+	currentFrame = IntRect(0, 0, 454, 459);
+	sprite.setTextureRect(currentFrame);
+	sprite.setPosition(x, y);
+	sprite.setScale(0.28 / 5, 0.28 / 5);
+	 
+	 
 }
 Traffic::Traffic(float x , float y)
 {
 	this->x = x;
-	this ->y = y;
+	this->y = y;
 
 	int a = rand() % (6 - 4 + 1) + 4;
 	timeCanMove = (float)a;
 	
 	canMove = true;
+	start = true;
 
-	InitTraffic();
+	InitTraffic(x,y);
 	clock.restart();
 }
 void Traffic::RenderTraffic(RenderTarget& window, bool dark)
 {
-	if (dark)
-	{
-		redSprite.setColor(Color(80, 80, 80));
-		greenSprite.setColor(Color(80, 80, 80));
+	if (dark )
+	{		
+		sprite.setColor(Color(80, 80, 80));
 	}
 	else
 	{
-		redSprite.setColor(Color(255, 255, 255));
-		greenSprite.setColor(Color(255, 255, 255));
+		sprite.setColor(Color(255, 255, 255));
 	}
-	window.draw(redSprite);
-	window.draw(greenSprite);
+	window.draw(sprite);
 }
 bool Traffic::CanMove()
 {
@@ -53,12 +52,24 @@ bool Traffic::CanMove()
 }
 void Traffic::UpdateTraffic()
 {
+	if (start)
+	{
+		sprite.setTexture(greenTexture);
+		currentFrame = IntRect(0, 0, 454, 459);
+		sprite.setTextureRect(currentFrame);
+		sprite.setPosition(x, y);
+		sprite.setScale(0.28 / 5, 0.28 / 5);
+		start = !start;
+	}
 	if (canMove)
 	{
 		if (clock.getElapsedTime().asSeconds() >= timeCanMove)
 		{
-			redSprite.setColor(Color(255, 255, 255));
-			greenSprite.setColor(Color(80, 80, 80));
+			sprite.setTexture(redTexture);
+			currentFrame = IntRect(0, 0, 407, 403);
+			sprite.setTextureRect(currentFrame);
+			sprite.setPosition(x, y);
+			sprite.setScale(0.3/5, 0.3/5);
 			clock.restart();
 			canMove = !canMove;
 		}
@@ -67,15 +78,15 @@ void Traffic::UpdateTraffic()
 	{
 		if (clock.getElapsedTime().asSeconds() >= 3.f)
 		{
-			greenSprite.setColor(Color(255, 255, 255));
-			redSprite.setColor(Color(80, 80, 80));
+			sprite.setTexture(greenTexture);
+			currentFrame = IntRect(0, 0, 454, 459);
+			sprite.setTextureRect(currentFrame);
+			sprite.setPosition(x, y);
+			sprite.setScale(0.28/5, 0.28/5);
 			clock.restart();
 			canMove = !canMove;
 		}
 	}
 }
 
-Traffic ::~Traffic()
-{
-
-}
+Traffic ::~Traffic() {}

@@ -10,7 +10,7 @@ private :
 	Clock timeAnimation;
 	IntRect currenFrame;
 public:
-	Dinausor(float x, float y, bool isRight, float speed  );
+	Dinausor(float x, float y, bool isRight, float speed , int line );
 
 	void InitImage(bool isRight);
 	void InitTexture(bool isRight);

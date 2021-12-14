@@ -1,8 +1,9 @@
 #include "../include/Barrier.h"
 
-void Barrier::InitVariable(bool isRight, float speed) {
+void Barrier::InitVariable(bool isRight, float speed , int line ) {
 	if (isRight) moveSpeed = speed;
 	else moveSpeed = -speed;
+	this->line = line;
 	this->isRight = isRight;
 }
 

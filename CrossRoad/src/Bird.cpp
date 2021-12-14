@@ -1,8 +1,8 @@
 #include "../include/Bird.h"
 
-Bird :: Bird (float x, float y, bool isRight, float speed)
+Bird::Bird(float x, float y, bool isRight, float speed, int line )
 {
-	InitVariable(isRight, speed);
+	InitVariable(isRight, speed, line);
 	InitImage(isRight);
 	InitTexture(isRight);
 	InitSprite(x, y);
@@ -41,7 +41,7 @@ void Bird::InitTexture(bool isRight)
 void Bird::InitSprite(float x, float y)
 {
 	sprite.setTexture(texture);
-	 currenFrame = IntRect(0, 0, 120.8,101);
+	currenFrame = IntRect(0, 0, 120.8, 101);
 	sprite.setTextureRect(currenFrame);
 	sprite.setScale(0.7, 0.7);
 	sprite.setPosition(x, y);
@@ -56,9 +56,10 @@ Image Bird::GetImage()
 	return image;
 }
 
-void Bird:: UpdateAnimation()
+void Bird::UpdateAnimation()
 {
-	if (timeAnimation.getElapsedTime().asSeconds() >= 0.3f)
+
+	if (timeAnimation.getElapsedTime().asSeconds() >= 0.15f)
 	{
 		currenFrame.top = 0.f;
 		currenFrame.left += 120.8;
@@ -66,7 +67,8 @@ void Bird:: UpdateAnimation()
 		{
 			currenFrame.left = 0.f;
 		}
-		timeAnimation.restart();
-		sprite.setTextureRect(currenFrame);
 	}
+	timeAnimation.restart();
+	sprite.setTextureRect(currenFrame);
 }
+

@@ -1,11 +1,11 @@
 #include "../include/Dinausor.h"
 
-Dinausor :: Dinausor(float x, float y, bool isRight, float speed )
+Dinausor::Dinausor(float x, float y, bool isRight, float speed, int line)
 {
-	InitVariable(isRight, speed);
+	InitVariable(isRight, speed, line);
 	InitImage(isRight);
 	InitTexture(isRight);
-	InitSprite(x,y);
+	InitSprite(x, y);
 }
 
 void Dinausor::InitImage(bool isRight)
@@ -41,9 +41,9 @@ void Dinausor::InitTexture(bool isRight)
 void Dinausor::InitSprite(float x, float y)
 {
 	sprite.setTexture(texture);
-	 currenFrame = IntRect(0, 0, 179, 100);
+	currenFrame = IntRect(0, 0, 179, 100);
 	sprite.setTextureRect(currenFrame);
-	sprite.setScale(0.7,0.7);
+	sprite.setScale(0.7, 0.7);
 	sprite.setPosition(x, y);
 }
 
@@ -57,7 +57,7 @@ Image Dinausor::GetImage()
 }
 void Dinausor::UpdateAnimation()
 {
-	if (timeAnimation.getElapsedTime().asSeconds() >= 0.3f)
+	if (timeAnimation.getElapsedTime().asSeconds() >= 0.15f)
 	{
 		currenFrame.top = 0.f;
 		currenFrame.left += 179;
@@ -65,7 +65,9 @@ void Dinausor::UpdateAnimation()
 		{
 			currenFrame.left = 0.f;
 		}
+
 		timeAnimation.restart();
 		sprite.setTextureRect(currenFrame);
 	}
+
 }

@@ -10,7 +10,7 @@ private:
 	Clock timeAnimation;
 	IntRect currenFrame;
 public:
-	Bird(float x, float y, bool isRight, float speed);
+	Bird(float x, float y, bool isRight, float speed , int line );
 
 	void InitImage(bool isRight);
 	void InitTexture(bool isRight);
