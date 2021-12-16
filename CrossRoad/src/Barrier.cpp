@@ -11,10 +11,12 @@ void Barrier::UpdateMovement(bool canMove) {
 	if (canMove)
 	{
 		sprite.move(moveSpeed, 0.f);
+		idle = false;
 	}
 	else
 	{
 		sprite.move(0.f, 0.f);
+		idle = true;
 	}
 }
 void Barrier::Render(RenderTarget &window, bool dark) {

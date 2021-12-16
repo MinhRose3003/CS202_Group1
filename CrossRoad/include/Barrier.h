@@ -14,6 +14,7 @@ protected:
 	float moveSpeed;
 	bool isRight;
 	int line;
+	bool idle;
 public:
 	virtual ~Barrier() {}
 
