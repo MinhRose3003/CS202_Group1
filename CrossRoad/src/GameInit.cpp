@@ -6,7 +6,7 @@ void Game::InitVariable()
 	height = 840;
 	xp = 516;
 	yp = 725;
-	line = { 180, 235, 300, 360, 430, 490, 565, 615 };
+	line = { 220, 280, 345, 405, 480, 540, 605, 665 };
 }
 void Game::InitWindow()
 {
@@ -100,7 +100,7 @@ void Game::InitTraffic()
 	trafficList.clear();
 	for (int i = 0; i < line.size(); i++)
 	{
-		Traffic traffic(50.f, (float)line[i]);
+		Traffic traffic(50.f, (float)line[i] - 20);
 		trafficList.push_back(traffic);
 	}
 }

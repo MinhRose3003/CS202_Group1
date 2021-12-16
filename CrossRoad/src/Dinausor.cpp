@@ -43,8 +43,9 @@ void Dinausor::InitSprite(float x, float y)
 	sprite.setTexture(texture);
 	currenFrame = IntRect(0, 0, 179, 100);
 	sprite.setTextureRect(currenFrame);
-	sprite.setScale(0.7, 0.7);
+	sprite.setScale(0.9, 0.9);
 	sprite.setPosition(x, y);
+	sprite.setOrigin(0, 100);
 }
 
 Sprite Dinausor::GetHitbox()
@@ -59,12 +60,25 @@ void Dinausor::UpdateAnimation()
 {
 	if (timeAnimation.getElapsedTime().asSeconds() >= 0.15f)
 	{
-		currenFrame.top = 0.f;
-		currenFrame.left += 179;
-		if (currenFrame.left >= 895)
-		{
-			currenFrame.left = 0.f;
+		if (idle) {
+			currenFrame.left = 179 * 2;
 		}
+		else if (!isRight) {
+			currenFrame.left -= 179;
+			if (currenFrame.left < 0)
+			{
+				currenFrame.left = 179 * 4;
+			}
+		}
+		else {
+			currenFrame.left += 179;
+			if (currenFrame.left >= 179 * 5)
+			{
+				currenFrame.left = 0;
+			}
+		}
+
+		currenFrame.top = 0.f;
 
 		timeAnimation.restart();
 		sprite.setTextureRect(currenFrame);

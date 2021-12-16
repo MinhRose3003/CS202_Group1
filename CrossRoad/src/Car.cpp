@@ -41,8 +41,9 @@ void Car::InitSprite(float x, float y)
 	sprite.setTexture(texture);
 	IntRect currentFrame = IntRect(0, 0, 77, 42);
 	sprite.setTextureRect(currentFrame);
-	sprite.setScale(1.2, 1.2);
+	sprite.setScale(1.0, 1.0);
 	sprite.setPosition(x, y);
+	sprite.setOrigin(0, 42);
 }
 
 //bool Car::Intersect(FloatRect person)

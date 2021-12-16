@@ -44,7 +44,8 @@ void Truck::InitSprite(float x, float y)
 	IntRect currentFrame = IntRect(0, 0, 494, 306);
 	sprite.setTextureRect(currentFrame);
 	sprite.setPosition(x, y);
-	sprite.setScale(0.2f, 0.2f);
+	sprite.setScale(0.25f, 0.25f);
+	sprite.setOrigin(0, 306);
 }
 
 //bool Truck::Intersect(FloatRect person)

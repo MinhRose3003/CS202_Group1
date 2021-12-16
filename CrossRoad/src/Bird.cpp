@@ -41,10 +41,14 @@ void Bird::InitTexture(bool isRight)
 void Bird::InitSprite(float x, float y)
 {
 	sprite.setTexture(texture);
-	currenFrame = IntRect(0, 0, 120.8, 101);
+	if (!isRight)
+		currenFrame = IntRect(0, 0, 156, 142);
+	else
+		currenFrame = IntRect(156 * 4, 0, 156, 142);
 	sprite.setTextureRect(currenFrame);
-	sprite.setScale(0.7, 0.7);
-	sprite.setPosition(x, y);
+	sprite.setScale(0.4, 0.4);
+	sprite.setPosition(x, y - 15);
+	sprite.setOrigin(0, 156);
 }
 
 Sprite Bird::GetHitbox()
@@ -61,14 +65,31 @@ void Bird::UpdateAnimation()
 
 	if (timeAnimation.getElapsedTime().asSeconds() >= 0.15f)
 	{
-		currenFrame.top = 0.f;
-		currenFrame.left += 120.8;
-		if (currenFrame.left >= (483.2f))
-		{
-			currenFrame.left = 0.f;
+		if (!isRight) {
+			currenFrame.left -= 156;
+			if (currenFrame.left < 0)
+			{
+				if (currenFrame.top == 0)
+					currenFrame.top = 142;
+				else
+					currenFrame.top = 0;
+				currenFrame.left = 156 * 4;
+			}
 		}
+		else {
+			currenFrame.left += 156;
+			if (currenFrame.left >= 156 * 5) 
+			{
+				if (currenFrame.top == 0)
+					currenFrame.top = 142;
+				else
+					currenFrame.top = 0;
+				currenFrame.left = 0;
+			}
+		}
+
+		timeAnimation.restart();
+		sprite.setTextureRect(currenFrame);
 	}
-	timeAnimation.restart();
-	sprite.setTextureRect(currenFrame);
 }
 

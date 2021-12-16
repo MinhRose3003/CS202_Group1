@@ -17,8 +17,7 @@ void Traffic :: InitTraffic(float x , float y)
 	sprite.setTextureRect(currentFrame);
 	sprite.setPosition(x, y);
 	sprite.setScale(0.28 / 5, 0.28 / 5);
-	 
-	 
+	sprite.setOrigin(0, 459);
 }
 Traffic::Traffic(float x , float y)
 {
