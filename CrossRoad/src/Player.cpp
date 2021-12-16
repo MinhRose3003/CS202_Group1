@@ -8,7 +8,7 @@ void Player::InitVariable(float speed, int point, int state)
 
 	width = 32;
 	height = 48;
-	scale = 1.2;
+	scale = 1.0;
 }
 void Player::InitImage()
 {
@@ -185,7 +185,7 @@ Sprite Player::GetHitbox()
 {
 	Sprite n_sprite = sprite;
 	IntRect n_frame = currentFrame;
-	int hitbox = 10;
+	int hitbox = 20;
 
 	n_frame.top = n_frame.top + n_frame.height - hitbox;
 	n_frame.height = hitbox;
