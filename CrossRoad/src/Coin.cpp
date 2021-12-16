@@ -18,10 +18,11 @@ void Coin::InitTexture()
 void Coin::InitSprite(float x , float y)
 {
 	sprite.setTexture(texture);
-	currenFrame = IntRect(0, 0, 860/6, 167);
+	currenFrame = IntRect(0, 0, 860.f/6, 167);
 	sprite.setTextureRect(currenFrame);
 	sprite.setPosition(x, y);
 	sprite.setScale(0.3f, 0.3f);
+	sprite.setOrigin(0, 167);
 }
 
 Coin::Coin(float x, float y)
