@@ -21,21 +21,15 @@ private:
 	Event event;
 
 	//Music 
-	Sound sound;
-	SoundBuffer  soundBuffer;
-
-	Sound soundCoin;
-	SoundBuffer soundCoinBuffer;
-
-	Sound soundCollision;
-	SoundBuffer soundCollisionBuffer;
+	Sound sound, soundCoin, soundCollision, soundComplete, soundEnter;
+	SoundBuffer  soundBuffer, soundCoinBuffer, soundCollisionBuffer, soundCompleteBuffer, soundEnterBuffer;
 
 	// background
 	Texture BackGroundTexture;
 	Sprite Background;
 
 	// menu
-	Menu *menu, *pauseMenu, *loseMenu;
+	Menu *menu, *pauseMenu, *loseMenu, *completeMenu;
 	
 	// default
 	int width, height;
@@ -64,8 +58,8 @@ private:
 	Text textPoint, textInput, textLevel;
 
 	int level;
-	bool isPlaying;
-	bool isCollided;
+	bool isPlaying; // check game is running, false if "Return" in menu
+	bool isCollided; // check lose game
 public:
 	Game();
 	virtual ~Game();
@@ -90,6 +84,7 @@ public:
 	void Run(); // main
 	void Pause(); // pause menu
 	void Lose(); // lose menu
+	void Complete(); // complete menu
 	string GetFilename();
 	void SaveGame(bool autosave = false); // save to text file or bin file or something
 	void LoadGame(bool autosave = false); // load from text file or bin file or something (miss)
@@ -98,6 +93,7 @@ public:
 	void RenderMenu(); // draw menu
 	void RenderPauseMenu(); // draw pause menu
 	void RenderLoseMenu(); // draw lose menu
+	void RenderCompleteMenu(); // draw complete menu
 	void RenderGetFilename(); // draw get filename screen
 	void RenderTexts(bool dark = false); // draw texts
 

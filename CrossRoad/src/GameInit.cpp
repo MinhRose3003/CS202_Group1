@@ -41,6 +41,8 @@ void Game::InitMusic()
 	}
 	sound.setBuffer(soundBuffer);
 	sound.setLoop(true);
+	sound.setVolume(50);
+
 	sound.play();
 }
 void Game::InitSFX()
@@ -52,6 +54,7 @@ void Game::InitSFX()
 	}
 	soundCoin.setBuffer(soundCoinBuffer);
 	soundCoin.setLoop(false);
+	soundCoin.setVolume(50);
 
 	//Collision_SFX
 	if (!soundCollisionBuffer.loadFromFile("Sound/SoundCollision.wav"))
@@ -60,6 +63,22 @@ void Game::InitSFX()
 	}
 	soundCollision.setBuffer(soundCollisionBuffer);
 	soundCollision.setLoop(false);
+
+	//Complete_SFX
+	if (!soundCompleteBuffer.loadFromFile("Sound/SoundComplete.wav"))
+	{
+		cout << "ERROR LOAD MUSIC" << endl;
+	}
+	soundComplete.setBuffer(soundCompleteBuffer);
+	soundComplete.setLoop(false);
+
+	//Enter_SFX
+	if (!soundEnterBuffer.loadFromFile("Sound/SoundEnter.wav"))
+	{
+		cout << "ERROR LOAD MUSIC : Enter" << endl;
+	}
+	soundEnter.setBuffer(soundEnterBuffer);
+	soundEnter.setLoop(false);
 }
 void Game::InitTexts()
 {
@@ -94,6 +113,7 @@ void Game::InitMenu()
 	menu = new Menu(width, height, { "Cross The Road", "Play", "Load", "Exit" });
 	pauseMenu = new Menu(width, height, { "Pause", "Resume", "Save", "Load", "Return" });
 	loseMenu = new Menu(width, height, { "You Lose", "Retry", "Return" });
+	completeMenu = new Menu(width, height, { "Complete", "Next", "Return" });
 }
 void Game::InitTraffic()
 {

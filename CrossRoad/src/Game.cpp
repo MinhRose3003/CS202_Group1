@@ -18,6 +18,10 @@ void Game::CheckLevelUp()
 	float top = n_sprite.getGlobalBounds().top;
 	if (top > 110) return;
 
+	soundComplete.play();
+	Complete();
+	if (!isPlaying) return;
+
 	level += 1;
 	UpgradePlayer();
 	UpgradeBarriers();
@@ -39,7 +43,7 @@ void Game::CheckColide()
 		for (int i = 0; i < barriers[j].size(); ++i) {
 			if (PixelPerfectCollision(player->GetHitbox(), barriers[j][i]->GetHitbox(),
 				player->GetImage(), barriers[j][i]->GetImage())) {
-				cout << "Colide!\n";
+				//cout << "Colide!\n";
 				soundCollision.play();				
 				isPlaying = false;
 				isCollided = true;
@@ -105,6 +109,7 @@ void Game::Run()
 					menu->MoveDown();
 					break;
 				case Keyboard::Return:
+					soundEnter.play();
 					switch (menu->GetItem()) {
 					case 1:
 						InitLevel();
@@ -172,6 +177,7 @@ void Game::Pause()
 					pauseMenu->MoveDown();
 					break;
 				case Keyboard::Return:
+					soundEnter.play();
 					switch (pauseMenu->GetItem()) {
 					case 1:
 						return;
@@ -219,6 +225,7 @@ void Game::Lose()
 					loseMenu->MoveDown();
 					break;
 				case Keyboard::Return:
+					soundEnter.play();
 					switch (loseMenu->GetItem()) {
 					case 1:
 						LoadGame(true);
@@ -234,6 +241,47 @@ void Game::Lose()
 		}
 
 		RenderLoseMenu();
+	}
+}
+void Game::Complete()
+{
+	while (window.isOpen())
+	{
+		while (window.pollEvent(event))
+		{
+			switch (this->event.type)
+			{
+			case Event::Closed:
+				window.close();
+				break;
+			case Event::KeyReleased:
+				switch (event.key.code)
+				{
+				case Keyboard::Up:
+				case Keyboard::W:
+					completeMenu->MoveUp();
+					break;
+				case Keyboard::Down:
+				case Keyboard::S:
+					completeMenu->MoveDown();
+					break;
+				case Keyboard::Return:
+					soundEnter.play();
+					switch (completeMenu->GetItem()) {
+					case 1:
+						return;
+					case 2:
+						isPlaying = false;
+						return;
+					}
+					break;
+					/*case Keyboard::Escape:
+						return;*/
+				}
+			}
+		}
+
+		RenderCompleteMenu();
 	}
 }
 void Game::SaveGame(bool autosave)
@@ -371,6 +419,22 @@ void Game::RenderLoseMenu()
 	RenderTexts(true);
 	RenderTraffic(true);
 	loseMenu->Draw(window);
+
+	window.display();
+}
+void Game::RenderCompleteMenu()
+{
+	window.clear();
+
+	Background.setColor(sf::Color(80, 80, 80));
+	window.draw(Background);
+
+	RenderCoin(true);
+	RenderBarriers(true);
+	RenderPlayer(true);
+	RenderTexts(true);
+	RenderTraffic(true);
+	completeMenu->Draw(window);
 
 	window.display();
 }
