@@ -3,12 +3,12 @@
 void Game::InitPlayer()
 {
 	sp = 2.f;
-	player->Init(xp, yp, sp);
+	player->Init(xp, yp, sp * difficult);
 }
 void Game::UpgradePlayer()
 {
 	sp += 0.1;
-	player->Init(xp, yp, sp, player->GetPoint());
+	player->Init(xp, yp, sp * difficult, player->GetPoint());
 }
 void Game::SavePlayer(ostream &fout)
 {

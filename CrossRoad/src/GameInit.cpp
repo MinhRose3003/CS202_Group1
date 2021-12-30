@@ -41,8 +41,7 @@ void Game::InitMusic()
 	}
 	sound.setBuffer(soundBuffer);
 	sound.setLoop(true);
-	sound.setVolume(50);
-
+	sound.setVolume(0);
 	sound.play();
 }
 void Game::InitSFX()
@@ -54,7 +53,6 @@ void Game::InitSFX()
 	}
 	soundCoin.setBuffer(soundCoinBuffer);
 	soundCoin.setLoop(false);
-	soundCoin.setVolume(50);
 
 	//Collision_SFX
 	if (!soundCollisionBuffer.loadFromFile("Sound/SoundCollision.wav"))
@@ -101,6 +99,14 @@ void Game::InitTexts()
 	textLevel.setOrigin(textLevel.getLocalBounds().width / 2, textLevel.getLocalBounds().height / 2);
 	textLevel.setPosition(50.f, 40.f);
 
+	// Difficult ...
+	textDifficult.setCharacterSize(30);
+	textDifficult.setFont(font);
+	textDifficult.setFillColor(Color::Black);
+	textDifficult.setOrigin(textLevel.getLocalBounds().width / 2, textLevel.getLocalBounds().height / 2);
+	textDifficult.setPosition(900.f, 40.f);
+
+
 	// PlayerInput ...
 	textInput.setCharacterSize(50);
 	textInput.setFont(font);
@@ -110,10 +116,15 @@ void Game::InitTexts()
 }
 void Game::InitMenu()
 {
-	menu = new Menu(width, height, { "Cross The Road", "Play", "Load", "Exit" });
-	pauseMenu = new Menu(width, height, { "Pause", "Resume", "Save", "Load", "Return" });
-	loseMenu = new Menu(width, height, { "You Lose", "Retry", "Return" });
-	completeMenu = new Menu(width, height, { "Complete", "Next", "Return" });
+	menu = new Menu(width, height, { "Cross The Road", "Play", "Load", "Settings", "Exit" }, vector<vector<string> > (5));
+	pauseMenu = new Menu(width, height, { "Pause", "Resume", "Save", "Load", "Settings", "Return" }, vector<vector<string> >(6));
+	loseMenu = new Menu(width, height, { "You Lose", "Retry", "Return" }, vector<vector<string> >(3));
+	completeMenu = new Menu(width, height, { "Complete", "Next", "Return" }, vector<vector<string> >(3));
+	settingsMenu = new Menu(width, height, { "Settings", "Difficult", "Sound", "Save and Return"}, { {}, {"Normal", "Hard", "Insane"}, {"On", "Off"}, {} });
+	
+	settingsMenu->LoadOption();
+	SetDifficult(settingsMenu->GetOption(1));
+	SetSound(settingsMenu->GetOption(2));
 }
 void Game::InitTraffic()
 {

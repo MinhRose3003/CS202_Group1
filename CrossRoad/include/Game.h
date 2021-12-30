@@ -29,7 +29,7 @@ private:
 	Sprite Background;
 
 	// menu
-	Menu *menu, *pauseMenu, *loseMenu, *completeMenu;
+	Menu *menu, *pauseMenu, *loseMenu, *completeMenu, *settingsMenu;
 	
 	// default
 	int width, height;
@@ -55,9 +55,10 @@ private:
 
 	// text
 	Font font;
-	Text textPoint, textInput, textLevel;
+	Text textPoint, textInput, textLevel, textDifficult;
 
 	int level;
+	int difficult;
 	bool isPlaying; // check game is running, false if "Return" in menu
 	bool isCollided; // check lose game
 public:
@@ -79,12 +80,15 @@ public:
 	void Update(); // update animation + position of objects
 	void CheckColide(); // check colide between player and barriers
 	void GetCoin(); // +10 if player collects coin
+	void SetDifficult(int x);
+	void SetSound(int x);
 	// UI 
 	void PollingEvent(); // hotkeys / escape while playing
 	void Run(); // main
 	void Pause(); // pause menu
 	void Lose(); // lose menu
 	void Complete(); // complete menu
+	void Settings(); // settings menu
 	string GetFilename();
 	void SaveGame(bool autosave = false); // save to text file or bin file or something
 	void LoadGame(bool autosave = false); // load from text file or bin file or something (miss)
@@ -94,6 +98,7 @@ public:
 	void RenderPauseMenu(); // draw pause menu
 	void RenderLoseMenu(); // draw lose menu
 	void RenderCompleteMenu(); // draw complete menu
+	void RenderSettingsMenu(); // draw settings menu
 	void RenderGetFilename(); // draw get filename screen
 	void RenderTexts(bool dark = false); // draw texts
 

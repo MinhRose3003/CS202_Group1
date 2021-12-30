@@ -7,21 +7,30 @@
 class Menu
 {
 private:
-	int selectedItemIndex;
 	Font font;
 	vector<Text> menu;
 
+	int selectedItemIndex;
+	vector<int> selectedOption;
+
 	int nItem;
 	vector<string> context;
+	vector<vector<string> > options;
 public:
 	Menu() {}
-	Menu(int width, int height, vector<string> context);
+	Menu(int width, int height, vector<string> context, vector<vector<string> > options);
 	~Menu();
 
 	void Draw(RenderWindow &window);
 	void MoveUp();
 	void MoveDown();
+	void MoveLeft();
+	void MoveRight();
 	int GetItem() { return selectedItemIndex; }
+	int GetOption(int i) { return selectedOption[i]; }
+
+	void SaveOption();
+	void LoadOption();
 };
 
 #endif

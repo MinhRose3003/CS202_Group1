@@ -17,7 +17,7 @@ void Game::InitBarriers()
 
 	count.assign(8, 0);
 	for (int i = 0; i < 8; ++i) {
-		countMax[i] = uniform_int_distribution<int>(1, 500)(rng);
+		countMax[i] = uniform_int_distribution<int>(1, 500)(rng) * 1. / difficult;
 	}
 }
 void Game::UpgradeBarriers()
@@ -37,7 +37,7 @@ void Game::UpgradeBarriers()
 
 	count.assign(8, 0);
 	for (int i = 0; i < 8; ++i) {
-		countMax[i] = uniform_int_distribution<int>(1, 500)(rng);
+		countMax[i] = uniform_int_distribution<int>(1, 500)(rng) * 1. / difficult;
 	}
 }
 void Game::SaveBarriers(ostream& fout)
@@ -122,11 +122,11 @@ void Game::UpdateBarriers()
 		if (count[j] >= countMax[j])
 		{
 			if (j & 1)
-				barriers[j].push_back(GetBarrier((float)width, (float)line[j], 0, barrierSpeed,j));
+				barriers[j].push_back(GetBarrier((float)width, (float)line[j], 0, barrierSpeed * (difficult * (difficult + 1) / 2), j));
 			else
-				barriers[j].push_back(GetBarrier(-64, (float)line[j], 1, barrierSpeed,j));
+				barriers[j].push_back(GetBarrier(-64, (float)line[j], 1, barrierSpeed * (difficult * (difficult + 1) / 2), j));
 			count[j] = 0;
-			countMax[j] = uniform_int_distribution<int>(lCount, rCount)(rng);
+			countMax[j] = uniform_int_distribution<int>(lCount, rCount)(rng) * 1. / difficult;
 		}
 		else
 		{

@@ -67,6 +67,27 @@ void Game::GetCoin()
 	}
 
 }
+void Game::SetDifficult(int x)
+{
+	difficult = x + 1;
+}
+void Game::SetSound(int x)
+{
+	if (x == 0) {
+		sound.setVolume(50); 
+		soundCoin.setVolume(50); 
+		soundCollision.setVolume(100); 
+		soundComplete.setVolume(100); 
+		soundEnter.setVolume(100);
+	}
+	else {
+		sound.setVolume(0);
+		soundCoin.setVolume(0);
+		soundCollision.setVolume(0);
+		soundComplete.setVolume(0);
+		soundEnter.setVolume(0);
+	}
+}
 void Game::PollingEvent()
 {
 	while (window.pollEvent(event))
@@ -141,6 +162,9 @@ void Game::Run()
 						}
 						break;
 					case 3:
+						Settings();
+						break;
+					case 4:
 						window.close();
 						break;
 					}
@@ -189,6 +213,9 @@ void Game::Pause()
 						SaveGame(true);
 						break;
 					case 4:
+						Settings();
+						break;
+					case 5:
 						isPlaying = false;
 						return;
 					}
@@ -282,6 +309,58 @@ void Game::Complete()
 		}
 
 		RenderCompleteMenu();
+	}
+}
+void Game::Settings()
+{
+	while (window.isOpen())
+	{
+		while (window.pollEvent(event))
+		{
+			switch (this->event.type)
+			{
+			case Event::Closed:
+				window.close();
+				break;
+			case Event::KeyReleased:
+				switch (event.key.code)
+				{
+				case Keyboard::Up:
+				case Keyboard::W:
+					settingsMenu->MoveUp();
+					break;
+				case Keyboard::Down:
+				case Keyboard::S:
+					settingsMenu->MoveDown();
+					break;
+				case Keyboard::Left:
+				case Keyboard::A:
+					settingsMenu->MoveLeft();
+					break;
+				case Keyboard::Right:
+				case Keyboard::D:
+					settingsMenu->MoveRight();
+					break;
+				case Keyboard::Return:
+					soundEnter.play();
+					switch (settingsMenu->GetItem()) {
+					case 1:
+					case 2:
+						break;
+					case 3:
+						SetDifficult(settingsMenu->GetOption(1));
+						SetSound(settingsMenu->GetOption(2));
+						settingsMenu->SaveOption();
+						return;
+					}
+					break;
+					/*case Keyboard::Escape:
+						return;*/
+				}
+			}
+		}
+
+		RenderSettingsMenu();
 	}
 }
 void Game::SaveGame(bool autosave)
@@ -378,6 +457,10 @@ void Game::RenderTexts(bool dark)
 
 	textLevel.setString("Level  " + to_string(level));
 	window.draw(textLevel);
+
+	vector<string> dif = { "Normal", "Hard", "Insane" };
+	textDifficult.setString("Difficult  " + dif[difficult - 1]);
+	window.draw(textDifficult);
 }
 void Game::RenderMenu()
 {
@@ -435,6 +518,17 @@ void Game::RenderCompleteMenu()
 	RenderTexts(true);
 	RenderTraffic(true);
 	completeMenu->Draw(window);
+
+	window.display();
+}
+void Game::RenderSettingsMenu()
+{
+	window.clear();
+
+	Background.setColor(sf::Color(80, 80, 80));
+	window.draw(Background);
+
+	settingsMenu->Draw(window);
 
 	window.display();
 }
