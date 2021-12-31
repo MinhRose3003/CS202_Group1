@@ -131,6 +131,7 @@ void Game::Run()
 				case Keyboard::S:
 					menu->MoveDown();
 					break;
+				case Keyboard::Space:
 				case Keyboard::Return:
 					soundEnter.play();
 					switch (menu->GetItem()) {
@@ -202,6 +203,7 @@ void Game::Pause()
 				case Keyboard::S:
 					pauseMenu->MoveDown();
 					break;
+				case Keyboard::Space:
 				case Keyboard::Return:
 					soundEnter.play();
 					switch (pauseMenu->GetItem()) {
@@ -253,6 +255,7 @@ void Game::Lose()
 				case Keyboard::S:
 					loseMenu->MoveDown();
 					break;
+				case Keyboard::Space:
 				case Keyboard::Return:
 					soundEnter.play();
 					switch (loseMenu->GetItem()) {
@@ -294,6 +297,7 @@ void Game::Complete()
 				case Keyboard::S:
 					completeMenu->MoveDown();
 					break;
+				case Keyboard::Space:
 				case Keyboard::Return:
 					soundEnter.play();
 					switch (completeMenu->GetItem()) {
@@ -343,6 +347,7 @@ void Game::Settings()
 				case Keyboard::D:
 					settingsMenu->MoveRight();
 					break;
+				case Keyboard::Space:
 				case Keyboard::Return:
 					soundEnter.play();
 					switch (settingsMenu->GetItem()) {
@@ -394,7 +399,8 @@ void Game::LoadGame(bool autosave)
 		input = "autosave.bin";
 	ifstream fin("save/" + input, ios::out | ios::binary);
 	if (!fin) {
-		cout << "Cannot open file save/" + input << '\n';
+		if (!input.empty()) 
+			cout << "Cannot open file save/" + input << '\n';
 		return;
 	}
 
@@ -437,6 +443,7 @@ string Game::GetFilename()
 			case Event::KeyReleased:
 				switch (event.key.code) 
 				{
+				case Keyboard::Space:
 				case Keyboard::Return:
 					return input;
 					break;
@@ -597,16 +604,16 @@ void Game::RenderLoading()
 	Clock clock, clock2;
 	while (count < 138)
 	{
-		if (count < 5 && clock.getElapsedTime().asSeconds() >= 0.3f) {
+		if (count < 5 && clock.getElapsedTime().asSeconds() >= 0.15f) {
 			clock.restart(); count += 1;
 		}
-		else if (5 <= count && count < 30 && clock.getElapsedTime().asSeconds() >= 0.2f) {
+		else if (5 <= count && count < 30 && clock.getElapsedTime().asSeconds() >= 0.1f) {
 			clock.restart(); count += 1;
 		}
-		else if (30 <= count && count < 90 && clock.getElapsedTime().asSeconds() >= 0.1f) {
+		else if (30 <= count && count < 90 && clock.getElapsedTime().asSeconds() >= 0.05f) {
 			clock.restart(); count += 1;
 		}
-		else if (90 <= count && count < 138 && clock.getElapsedTime().asSeconds() >= 0.05f) {
+		else if (90 <= count && count < 138 && clock.getElapsedTime().asSeconds() >= 0.0125f) {
 			clock.restart(); count += 1;
 		}
 
