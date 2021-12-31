@@ -7,6 +7,7 @@
 #include "Barrier.h"
 #include "Car.h"
 #include "Truck.h"
+#include "Ambulance.h"
 #include "Bird.h"
 #include "Dinausor.h"
 #include "Coin.h"
@@ -21,8 +22,8 @@ private:
 	Event event;
 
 	//Music 
-	Sound sound, soundCoin, soundCollision, soundComplete, soundEnter;
-	SoundBuffer  soundBuffer, soundCoinBuffer, soundCollisionBuffer, soundCompleteBuffer, soundEnterBuffer;
+	Sound sound, soundCoin, soundCollision, soundComplete, soundEnter, soundAmbulance;
+	SoundBuffer  soundBuffer, soundCoinBuffer, soundCollisionBuffer, soundCompleteBuffer, soundEnterBuffer, soundAmbulanceBuffer;
 
 	// background
 	Texture BackGroundTexture;
@@ -46,6 +47,7 @@ private:
 	vector<Barrier*> barriers[8];
 	vector<int> count;
 	vector<int> countMax;
+	Ambulance* ambulance;
 
 	//Traffic 
 	vector<Traffic> trafficList;
@@ -61,6 +63,7 @@ private:
 	int difficult;
 	bool isPlaying; // check game is running, false if "Return" in menu
 	bool isCollided; // check lose game
+	bool AmbulancePassed;
 public:
 	Game();
 	virtual ~Game();
@@ -116,6 +119,9 @@ public:
 	void UpgradeBarriers(); // init barriers list, decrease counter's range
 	void UpdateBarriers(); // update barriers animation + position
 	void RenderBarriers(bool dark = false); // draw barriers
+	void InitAmbulance();
+	void UpdateAmbulance();
+	void RenderAmbulance();
 	bool visible(Barrier* barrier); // check if barrier is out of window
 	int TypeOfBarrier(Barrier* barrier);
 	Barrier* GetBarrier(float x, float y, bool isRight, float speed , int line ); // create new barrier 

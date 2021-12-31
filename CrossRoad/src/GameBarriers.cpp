@@ -211,3 +211,23 @@ void Game::UpdateTraffic()
 		trafficList[i].UpdateTraffic();
 	}
 }
+void Game::InitAmbulance()
+{
+	soundAmbulance.play();
+	AmbulancePassed = false;
+	int y = player->GetHitboxFull().getPosition().y;
+	ambulance->InitSprite(-90, y);
+}
+void Game::UpdateAmbulance()
+{
+	if (PixelPerfectCollision(player->GetHitboxFull(), ambulance->GetHitbox(), player->GetImage(), ambulance->GetImage())) {
+		AmbulancePassed = true;
+	}
+	if (visible(ambulance)) {
+		ambulance->UpdateMovement(true);
+	}
+}
+void Game::RenderAmbulance()
+{
+	ambulance->Render(window, true);
+}

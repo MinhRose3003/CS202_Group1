@@ -77,6 +77,14 @@ void Game::InitSFX()
 	}
 	soundEnter.setBuffer(soundEnterBuffer);
 	soundEnter.setLoop(false);
+
+	//Ambulance_SFX
+	if (!soundAmbulanceBuffer.loadFromFile("Sound/SoundAmbulance.wav"))
+	{
+		cout << "ERROR LOAD MUSIC : Ambulance" << endl;
+	}
+	soundAmbulance.setBuffer(soundAmbulanceBuffer);
+	soundAmbulance.setLoop(false);
 }
 void Game::InitTexts()
 {
@@ -139,6 +147,7 @@ void Game::InitTraffic()
 Game::Game()
 {
 	player = new Player;
+	ambulance = new Ambulance(0, 0, 1, 1.4f, -1);
 	count.assign(8, 0);
 	countMax.assign(8, 0);
 

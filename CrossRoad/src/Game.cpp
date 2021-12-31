@@ -79,6 +79,7 @@ void Game::SetSound(int x)
 		soundCollision.setVolume(100); 
 		soundComplete.setVolume(100); 
 		soundEnter.setVolume(100);
+		soundAmbulance.setVolume(50);
 	}
 	else {
 		sound.setVolume(0);
@@ -86,6 +87,7 @@ void Game::SetSound(int x)
 		soundCollision.setVolume(0);
 		soundComplete.setVolume(0);
 		soundEnter.setVolume(0);
+		soundAmbulance.setVolume(0);
 	}
 }
 void Game::PollingEvent()
@@ -140,11 +142,11 @@ void Game::Run()
 						SaveGame(true);
 						while (isPlaying) {
 							PollingEvent();
-							Update();
-							Render();
 							CheckColide();
 							CheckLevelUp();
 							GetCoin();
+							Update();
+							Render();
 							if (isCollided)
 								Lose();
 						}
@@ -155,11 +157,11 @@ void Game::Run()
 						Pause();
 						while (isPlaying) {
 							PollingEvent();
-							Update();
-							Render();
 							CheckColide();
 							CheckLevelUp();
 							GetCoin();
+							Update();
+							Render();
 							if (isCollided)
 								Lose();
 						}
@@ -235,6 +237,7 @@ void Game::Pause()
 }
 void Game::Lose()
 {
+	InitAmbulance();
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event))
@@ -257,6 +260,7 @@ void Game::Lose()
 					break;
 				case Keyboard::Space:
 				case Keyboard::Return:
+					soundAmbulance.stop();
 					soundEnter.play();
 					switch (loseMenu->GetItem()) {
 					case 1:
@@ -271,7 +275,7 @@ void Game::Lose()
 				}
 			}
 		}
-
+		UpdateAmbulance();
 		RenderLoseMenu();
 	}
 }
@@ -508,7 +512,8 @@ void Game::RenderLoseMenu()
 
 	RenderCoin(true);
 	RenderBarriers(true);
-	RenderPlayer(true);
+	if (!AmbulancePassed) RenderPlayer(true);
+	RenderAmbulance();
 	RenderTexts(true);
 	RenderTraffic(true);
 	loseMenu->Draw(window);
