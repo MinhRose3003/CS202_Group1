@@ -379,7 +379,8 @@ void Game::SaveGame(bool autosave)
 		input = "autosave.bin";
 	ofstream fout("save/" + input, ios::out | ios::binary);
 	if (!fout) {
-		cout << "Cannot open file save/" + input << '\n';
+		if (!input.empty())
+			cout << "Cannot open file save/" + input << '\n';
 		return;
 	}
 
