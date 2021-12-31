@@ -42,7 +42,7 @@ void Game::InitMusic()
 	sound.setBuffer(soundBuffer);
 	sound.setLoop(true);
 	sound.setVolume(0);
-	sound.play();
+	//sound.play();
 }
 void Game::InitSFX()
 {

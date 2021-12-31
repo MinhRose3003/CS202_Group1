@@ -109,6 +109,8 @@ void Game::PollingEvent()
 }
 void Game::Run()
 {
+	RenderLoading();
+	sound.play();
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event))
@@ -556,5 +558,76 @@ void Game::Render()
 	RenderTexts();
 	RenderTraffic();
 
+	window.display();
+}
+void Game::RenderLoading()
+{
+	Texture guiTexture;
+	Sprite leftBar, midBar, rightBar;
+
+	guiTexture.loadFromFile("Sprite/gui-kit.png");
+
+	leftBar.setTexture(guiTexture);
+	midBar.setTexture(guiTexture);
+	rightBar.setTexture(guiTexture);
+
+	IntRect leftBarFrame = IntRect(161, 352 + 2, 6, 29 - 4);
+	IntRect midBarFrame = IntRect(171 + 2, 352 + 2, 19 - 4, 29 - 4);
+	IntRect rightBarFrame = IntRect(194, 352 + 2, 6, 29 - 4);
+
+	leftBar.setTextureRect(leftBarFrame);
+	midBar.setTextureRect(midBarFrame);
+	rightBar.setTextureRect(rightBarFrame);
+
+	leftBar.setOrigin(leftBar.getLocalBounds().width / 2, leftBar.getLocalBounds().height / 2);
+	midBar.setOrigin(midBar.getLocalBounds().width / 2, midBar.getLocalBounds().height / 2);
+	rightBar.setOrigin(rightBar.getLocalBounds().width / 2, rightBar.getLocalBounds().height / 2);
+
+	leftBar.setPosition(70.f + 150.f, 420.f);
+	rightBar.setPosition(1070.f - 150.f, 420.f);
+
+	Text text;
+
+	text.setCharacterSize(50);
+	text.setFont(font);
+	text.setFillColor(Color::White);
+	text.setPosition(470.f, 300.f);
+
+	int count = 0, dots = 0;
+	Clock clock, clock2;
+	while (count < 138)
+	{
+		if (count < 5 && clock.getElapsedTime().asSeconds() >= 0.3f) {
+			clock.restart(); count += 1;
+		}
+		else if (5 <= count && count < 30 && clock.getElapsedTime().asSeconds() >= 0.2f) {
+			clock.restart(); count += 1;
+		}
+		else if (30 <= count && count < 90 && clock.getElapsedTime().asSeconds() >= 0.1f) {
+			clock.restart(); count += 1;
+		}
+		else if (90 <= count && count < 138 && clock.getElapsedTime().asSeconds() >= 0.05f) {
+			clock.restart(); count += 1;
+		}
+
+		if (clock2.getElapsedTime().asSeconds() >= 0.5f) {
+			clock2.restart(); dots = (dots + 1) % 4;
+		}
+
+		if (dots == 1) text.setString("Loading.");
+		else if (dots == 2) text.setString("Loading..");
+		else if (dots == 3) text.setString("Loading...");
+		else text.setString("Loading");
+
+		window.clear();
+		window.draw(text);
+		window.draw(leftBar);
+		for (int i = 0; i < count; ++i) {
+			midBar.setPosition(220.f + 11.f + i * 5, 420.f);
+			window.draw(midBar);
+		}
+		window.display();
+	}
+	window.draw(rightBar);
 	window.display();
 }

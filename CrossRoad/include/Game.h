@@ -93,6 +93,7 @@ public:
 	void SaveGame(bool autosave = false); // save to text file or bin file or something
 	void LoadGame(bool autosave = false); // load from text file or bin file or something (miss)
 	// render
+	void RenderLoading(); // draw loading bar
 	void Render(); // draw game
 	void RenderMenu(); // draw menu
 	void RenderPauseMenu(); // draw pause menu
